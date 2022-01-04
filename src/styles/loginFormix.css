@@ -1,0 +1,66 @@
+.form{
+    Font-family: Raleway;
+    overflow-x: hidden;
+    height: 100vh
+}
+
+label#email{
+    margin-top: 10px; 
+    font-weight: bold;
+    margin-left: 0;
+    align-items:flex-start;
+    text-align: left;
+}
+
+#emailinput{
+    margin-top: 10px; 
+    border-color:transparent; 
+    background: #F8F8F9;
+    border-radius: 8px
+}
+
+div#password{
+    margin-top: 10px; 
+    font-weight: bold;
+    text-align: left;
+}
+
+#passwordinput{
+    margin-top: 10px; 
+    border-color:transparent; 
+    background: #F8F8F9;
+    border-radius: 8px;
+}
+
+div#otherdata{
+    margin-top: 10px; 
+}
+
+#exampleCheck1{
+    border-color: #A5A8B3;
+    background-color: #FFFFFF;
+    border-radius: 0px;
+    
+
+}
+
+label#remember{
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0;
+    
+}
+
+div#forgotten{
+    color:#32D4A4;
+}
+
+button#login{
+    margin-top: 20px;
+    color:white; 
+    border-color:transparent;
+    width:100% ;
+    background-color:#32D4A4;
+    border-radius:10 ;
+    
+}

@@ -1,0 +1,55 @@
+div#everybody{
+    max-height:  100%;
+}
+
+div#image{
+    background:url(../resources/Image.png); 
+    background-size: 100%;
+    background-repeat:no-repeat; 
+    background-size: cover;
+    overflow-x: hidden;
+}
+
+div#login{
+    Font-family: Raleway;
+     overflow-x: hidden;
+     height: 100vh;
+     padding-left:2%; 
+    padding-right: 2%;
+}
+
+div#infor{
+    display: flex; 
+    justify-content: left; 
+    align-items: left; 
+    flex-direction: column;
+    
+}
+
+h2#title{
+    margin-top: 10%;
+    padding-left:0%; 
+    padding-right: 0%;
+    text-align: left;
+}
+
+div#form{
+    
+}
+
+div#copyright{
+    text-align: left;
+    
+    color: #A5A8B3;
+    
+
+}
+
+span#student{
+    color: #32D4A4
+}
+
+a#privacity{
+    letter-spacing: -2%href;
+    color: #A5A8B3;
+}
