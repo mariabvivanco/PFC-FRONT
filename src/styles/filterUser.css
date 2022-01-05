@@ -1,0 +1,63 @@
+div#general{
+    font-size:90% ;
+    padding-top: 10%;
+    font-family: FontAwesome;
+}
+
+p#title{
+    font-weight: bold;
+    text-align: left;
+    font-size:105% ;
+    
+}
+
+
+p{
+    font-weight: bold;
+    text-align: left;
+    padding-top: 5%;
+}
+
+select{
+    background: #F8F8F9;
+    border-radius: 8px;
+    border-color: transparent;
+    
+}
+
+input#check{
+    border-radius: 0;
+    align-items: left;
+    text-align: left;
+}
+
+label{
+    text-align: left;
+    padding-left: 2px;
+    
+}
+
+.tags{
+    background-color: #32D4A4; 
+    color: white;
+    border-radius: 15%;
+    font-size: 89%;
+    
+}
+
+button#tag {
+    border-radius: 20px;
+    font-size: 60%;
+    background-color:#E6E6EA;
+    border-color: transparent;
+    margin-Top: 5%;
+    width: max-content;
+    margin-left: 5%;
+
+} 
+
+i#trash{
+    color:#32D4A4; 
+    
+    
+}

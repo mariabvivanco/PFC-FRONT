@@ -3,6 +3,7 @@ import $ from 'jquery'
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import "../styles/userstudent.css"
+import FilterUser from '../components/pure/forms/filterUser';
 
 
 
@@ -41,11 +42,10 @@ const Userstudent = () => {
                             <div class="row" id="search_and_add">
                                 <div class="col col-sm-10" id="search">
                                     <a>Alumnos</a>   
-                                    <svg width="17" height="17" viewBox="-0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M7.33335 14C8.87169 14 10.2859 13.4708 11.4142 12.5933L15.0775 16.2566L16.2559 15.0783L12.5925 11.415C13.4709 10.2858 14 8.87162 14 7.33329C14 3.65746 11.0092 0.666626 7.33335 0.666626C3.65752 0.666626 0.666687 3.65746 0.666687 7.33329C0.666687 11.0091 3.65752 14 7.33335 14ZM7.33335 2.33329C10.0909 2.33329 12.3334 4.57579 12.3334 7.33329C12.3334 10.0908 10.0909 12.3333 7.33335 12.3333C4.57585 12.3333 2.33335 10.0908 2.33335 7.33329C2.33335 4.57579 4.57585 2.33329 7.33335 2.33329Z" fill="#515561"/>
-                                    </svg>
-                                            
-                                    <input type="search" name="search" id="search" placeholder="Buscar por nombre email o palabra clave"></input>
+                                    
+                                      
+                                    <input type="search" name="search" id="search" placeholder="&#xf002; Buscar por nombre email o palabra clave"></input>
+                                    
 
                                 </div>
                                 <div class="col col-sm-2" >
@@ -75,9 +75,9 @@ const Userstudent = () => {
                                             <td>641400005</td>
                                             <td>leonardo.valdes@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Python</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">React</span>
+                                                <span id="tags" >Python</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">React</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -87,9 +87,9 @@ const Userstudent = () => {
                                             <td>641400009</td>
                                             <td>greidy.valdes@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Python</span>
-                                                <span class="etiqueta">Ruby</span>
-                                                <span class="etiqueta">React</span>
+                                                <span id="tags" >Python</span>
+                                                <span id="tags">Ruby</span>
+                                                <span id="tags">React</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -99,9 +99,9 @@ const Userstudent = () => {
                                             <td>641400000</td>
                                             <td>ariel.bazan@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >React</span>
-                                                <span class="etiqueta">Angular</span>
-                                                <span class="etiqueta">Python</span>
+                                                <span id="tags" >React</span>
+                                                <span id="tags">Angular</span>
+                                                <span id="tags">Python</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -111,9 +111,9 @@ const Userstudent = () => {
                                             <td>5342346768</td>
                                             <td>beatriz.valdez@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">React</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">React</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -123,9 +123,9 @@ const Userstudent = () => {
                                             <td>6414000034</td>
                                             <td>leonardo.bode@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">PHP</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">PHP</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -135,9 +135,9 @@ const Userstudent = () => {
                                             <td>641400089</td>
                                             <td>roberto.hernandez@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >PHP</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">Scala</span>
+                                                <span id="tags" >PHP</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">Scala</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -147,9 +147,9 @@ const Userstudent = () => {
                                             <td>641400000</td>
                                             <td>arlenis.ching@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Python</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">PHP</span>
+                                                <span id="tags" >Python</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">PHP</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -159,8 +159,8 @@ const Userstudent = () => {
                                             <td>5345672345</td>
                                             <td>ramiro.rodriguez@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -170,10 +170,10 @@ const Userstudent = () => {
                                             <td>641400000</td>
                                             <td>maylid.diaz@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">React</span>
-                                                <span class="etiqueta">AWS</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">React</span>
+                                                <span id="tags">AWS</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -183,9 +183,9 @@ const Userstudent = () => {
                                             <td>6414540034</td>
                                             <td>leandro.bode@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">PHP</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">PHP</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -195,9 +195,9 @@ const Userstudent = () => {
                                             <td>641424089</td>
                                             <td>roberto.vivanco@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >PHP</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">Scala</span>
+                                                <span id="tags" >PHP</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">Scala</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -207,9 +207,9 @@ const Userstudent = () => {
                                             <td>641400024</td>
                                             <td>aimee.arencibiao@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Python</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">PHP</span>
+                                                <span id="tags" >Python</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">PHP</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -219,8 +219,8 @@ const Userstudent = () => {
                                             <td>5345672375</td>
                                             <td>reinier.diaz@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -230,10 +230,10 @@ const Userstudent = () => {
                                             <td>641400089</td>
                                             <td>eddy.diaz@gmail.com</td>
                                             <td >
-                                                <span class="etiqueta" >Spring</span>
-                                                <span class="etiqueta">Java</span>
-                                                <span class="etiqueta">React</span>
-                                                <span class="etiqueta">AWS</span>
+                                                <span id="tags" >Spring</span>
+                                                <span id="tags">Java</span>
+                                                <span id="tags">React</span>
+                                                <span id="tags">AWS</span>
                                             </td>
                                             </tr>
                                     </tbody>
@@ -242,7 +242,8 @@ const Userstudent = () => {
                             </div>
 
                         </div>
-                        <div class="col col-sm=2" id="filter">
+                        <div class="col col-sm-2" id="filter">
+                            <FilterUser></FilterUser>
                             
                         </div>
                         
