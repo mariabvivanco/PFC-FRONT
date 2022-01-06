@@ -2,7 +2,7 @@ body{
     Font-family: Raleway; 
     overflow-x: hidden; 
     background:#E5E5E5;
-   
+    text-align: left;
 }
 
 div#firstrow{
@@ -46,7 +46,7 @@ span#tags{
 
 select#username{
     background: #E5E5E5;  
-    background-image:url(../resources/userna.png);
+    background-image:url(../resources/userna1.png);
     background-repeat: no-repeat;
     background-position: 3px;
     padding-left: 50px;

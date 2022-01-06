@@ -1,0 +1,105 @@
+button#tag{
+    background: #E6E6EA;
+    border-radius: 20px;
+    border-color: transparent;
+}
+
+label{
+    font-weight: bold;
+    
+    width:100%
+}
+
+.col-6{
+    padding-left:5%; 
+    padding-top: 2%;
+}
+.col-12{
+    padding-left:5%;
+    padding-top: 2%;
+    padding-right: 5%;
+}
+
+.entry{
+    background: #F8F8F9;
+    border-radius: 8px;
+    margin: 12px 0px;
+    border-color: transparent;
+    width: 100%;
+}
+
+img#photo{
+    border: 4px solid #E6E6EA;
+    border-radius: 20px;
+    width: 100%;
+    height: "80%";
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.candidate-data{
+    background-color: #F8F8F9; 
+}
+
+button#update{
+    background: #A5A8B3;
+    font-family: FontAwesome;
+    background-repeat: no-repeat;
+    background-position: 3px;
+    border-radius: 8px; 
+    border: transparent; 
+    color: white;
+    
+}
+
+button#delete{
+    background-color: #F8F8F9; 
+    font-family: FontAwesome;
+    background-repeat: no-repeat;
+    background-position: 3px;
+    border-radius: 8px; 
+    border: transparent; 
+    color: black;
+    
+}
+
+
+button#back{
+    font-family: FontAwesome;
+    font-weight: bold; 
+    background-color: #FFFFFF;
+    background-repeat: no-repeat;
+    background-position: 3px;
+    padding-left: 40px;
+    border-radius: 8px; 
+    border-color: transparent;
+}
+
+
+a#map{
+    font-family: FontAwesome;
+}
+
+select#username{
+    background-image: url(../resources/user.png);
+    font-weight: bold; 
+    background-color: #FFFFFF;
+    background-repeat: no-repeat;
+    background-position: 3px;
+    padding-left: 40px;
+    border-radius: 8px; 
+    border-color: transparent;
+}
+label#lbStudentName{
+    font-weight: bold;
+    color:  #121625;
+    text-size-adjust: 50%;
+    text-align: left;
+
+}
+
+
+.city_country{
+    text-align: left;
+}
+
