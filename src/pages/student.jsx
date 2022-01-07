@@ -15,10 +15,10 @@ const Student = () => {
            
             <div class="row" id="firstrow">
                 <div  class="col-10"  >
-                    <button id="back" onClick={()=>{history.push("/userstudent")}}>&#xf060;Volver</button>
+                    <button style={{textAlign:"left"}} id="back" onClick={()=>{history.push("/userstudent")}}>&#xf060;          Volver</button>
                 </div>
                 <div  class="col-2">
-                    <select id="username">
+                    <select id="username"> 
                         <option>UserName</option>
                     </select>
 

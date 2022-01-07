@@ -38,6 +38,17 @@ const Userstudent = () => {
             history.push("/studentfile");
                         
         } );
+
+        
+ 
+            $('#studentadd').on('hidden.bs.modal', function (e) {
+                $(this).removeData('bs.modal');
+                $(this).find('.modal-content').empty();
+            })
+         
+            
+
+        
              
                 
             
@@ -294,6 +305,8 @@ const Userstudent = () => {
                         </div>
                     </div>
                 </div>
+
+                
             </div>
         );
     }
