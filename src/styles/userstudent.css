@@ -101,9 +101,7 @@ table{
     background-color: #FFFFFF;                
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    width: 100%;
-   
-
+    
 }
         
 div#filter{
@@ -111,6 +109,7 @@ div#filter{
     border: 1px solid #E6E6EA;
     box-sizing: border-box;
     border-radius: 20px;
+    margin-left: 0;
 
 }
 
@@ -127,6 +126,11 @@ button#discardd{
     color:white;
     font-weight: bold;
 
+}a
+
+div#studentadd{
+    
+    border-radius: 10px;
 }
 
 div#bodymodal{
@@ -135,8 +139,8 @@ div#bodymodal{
     border: 1px solid #E6E6EA;
     box-sizing: border-box;
     box-shadow: 0px 4px 16px rgba(117, 114, 150, 0.15);
-    border-radius: 20px;
-    
+    border-radius: 10px;
+    padding-top: 200px;
     font-family: Raleway;
     text-align: left;
     
@@ -144,18 +148,21 @@ div#bodymodal{
 }
 
 .modal-sm{
+    padding-top: 10%;
     width: 60%;
     height: 60%;
        
 }
 
 .modal-lg{
+    padding-top: 10%;
     width: 60%;
     height: 60%;
        
 }
 
 .modal-xl{
+    padding-top: 10%;
     width: 60%;
     height: 60%;
        
@@ -163,5 +170,27 @@ div#bodymodal{
 
 .modal-footer{
     background-color: #F8F8F9;
+    border-end-end-radius: 20px;
+    border-end-start-radius: 20px;
+    
 }
 
+.modal-content{
+    border-radius: 20px;
+    
+}
+
+
+div#filter{
+    background: #FFFFFF;
+    border: 1px solid #E6E6EA;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin-left: 0;
+
+}
+
+
+.modal-title{
+    font-weight: bold;
+}

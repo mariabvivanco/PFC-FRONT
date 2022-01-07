@@ -1,17 +1,19 @@
 import React from 'react';
+import { BrowserRouter as  Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '../../../styles/loginFormix.css'
 
 
+
 const loginSchema = Yup.object().shape(
     {
         email: Yup.string()
-                .email('Invalid email format')
-                .required('Email is required'),
+                .email('Formato de email no válido')
+                .required('Email es requerido'),
         password: Yup.string()
-                .required('Password is required')
+                .required('Contraseña es requerida')
     }
 );
 
@@ -26,7 +28,7 @@ const Loginformik = () => {
     const history = useHistory();
 
     return (
-        <div>
+        <div className='form'>
                 <Formik
                 // *** Initial values that the form will take
                 initialValues = { initialCredentials }
@@ -49,7 +51,7 @@ const Loginformik = () => {
                     isSubmitting,
                     handleChange,
                     handleBlur }) => (
-                        <Form className='form'>
+                        <Form >
                             
                             <div class='row' >
                                 <label id="email" for="exampleInputEmail1" >Email</label>
@@ -82,7 +84,7 @@ const Loginformik = () => {
                             <div class='row' id="otherdata">
                                 <div class="col col-sm-1">
                                     <div class="form-check">
-                                    <Field type="checkbox" class="form-check-input" id="exampleCheck1" ></Field>
+                                    <Field type="checkbox" class="form-check-input" id="exampleCheck1" style={{color:"black"}} ></Field>
                                     </div>
                                     </div>
                                     <div class="col col-sm-5">
@@ -94,9 +96,8 @@ const Loginformik = () => {
                             </div>
                             </div>
                             <div class="row">
-                                <button type="submit" id="login" style={{ borderRadius : '8px' }}>Iniciar Sesión</button>
-                                {isSubmitting ? (<p
-                                >Login your credentials...</p>): null}
+                                <button id="login" type="submit" style={{ borderRadius : '8px' }  }>Iniciar Sesión</button>
+                                {isSubmitting ? (history.push("/userstudent")):null }
                             </div>
                             
                             

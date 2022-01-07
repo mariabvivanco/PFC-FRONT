@@ -1,4 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import React, { Component, useEffect } from 'react';
+import { Redirect, useHistory, Link } from 'react-router-dom';
 import $ from 'jquery'
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
@@ -10,6 +12,10 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 
 
 const Userstudent = () => {
+    
+    const history = useHistory();
+      
+       
        useEffect(() =>{
         var table = $('#tabla').DataTable({  paging: false,  info:false,
             dom: '<"search"><t>',
@@ -21,7 +27,20 @@ const Userstudent = () => {
         });
         $('#search').on( 'keyup', function () {
             table.search( this.value ).draw();
+            
              } );
+
+             
+       
+             
+         $('#tabla tbody').on( 'click', 'tr', function () {
+                                           
+            history.push("/studentfile");
+                        
+        } );
+             
+                
+            
        }, [])
     
         return (
@@ -31,7 +50,7 @@ const Userstudent = () => {
                 <body className="user" >
                     <div class="row" id="firstrow">
                         <div class="col col-sm-10" id="title">
-                            <h3>OpenBootcamp<a id="student">|Alumnos</a> </h3>
+                        <h3  href="/studentfile" >OpenBootcamp<a id="student">|Alumnos</a> </h3>
                         </div>
                         <div class="col col-sm-2" id="user">
                             <select name="username" id="username" value="UserName"  >
@@ -40,9 +59,9 @@ const Userstudent = () => {
                         </div>
                     </div>
                     <div class="row" id="restrow">
-                        <div class="col col-sm-10" id="data">
+                        <div class="col col-sm-9" id="data">
                             <div class="row" id="search_and_add">
-                                <div class="col col-sm-10" id="search">
+                                <div class="col col-sm-10" id="searchh">
                                     <a>Alumnos</a>   
                                     <input type="search" name="search" id="search" placeholder="&#xf002; Buscar por nombre email o palabra clave"></input>
                                 </div>
@@ -64,9 +83,10 @@ const Userstudent = () => {
                                             <th scope="col">Etiquetas </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    
+                                    <tbody >
                                         <tr>
-                                            <td >Leonardo Valdes Amaya</td>
+                                            <td  >Leonardo Valdes Amaya</td>
                                             <td>Madrid</td>
                                             <td>España</td>
                                             <td>641400005</td>
@@ -75,7 +95,9 @@ const Userstudent = () => {
                                                 <span id="tags" >Python</span>
                                                 <span id="tags">Java</span>
                                                 <span id="tags">React</span>
-                                            </td>
+                                        </td>
+                                            
+                                        
                                         </tr>
                                         <tr>
                                             <td >Greidy Valdes Vivanco</td>
@@ -102,11 +124,11 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Beatriz valdez Perez</td>
+                                            <td >Beatriz Valdés Perez</td>
                                             <td>Santa Clara</td>
                                             <td>Cuba</td>
                                             <td>5342346768</td>
-                                            <td>beatriz.valdez@gmail.com</td>
+                                            <td>beatriz.valdes@gmail.com</td>
                                             <td >
                                                 <span id="tags" >Spring</span>
                                                 <span id="tags">Java</span>
@@ -114,7 +136,7 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Leonardo Bode Caceres</td>
+                                            <td >Leonardo Bode Cáceres</td>
                                             <td>Barcelona</td>
                                             <td>España</td>
                                             <td>6414000034</td>
@@ -126,7 +148,7 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Roberto Hernandez vaaldes</td>
+                                            <td >Roberto Hernández González</td>
                                             <td>Valencia</td>
                                             <td>España</td>
                                             <td>641400089</td>
@@ -138,7 +160,7 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Arlenis Ching Perez</td>
+                                            <td >Arlenis Ching Pérez</td>
                                             <td>Valencia</td>
                                             <td>España</td>
                                             <td>641400000</td>
@@ -150,7 +172,7 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Ramiro Rodriguez Pajares</td>
+                                            <td >Ramiro Rodríguez Pajares</td>
                                             <td>Habana</td>
                                             <td>Cuba</td>
                                             <td>5345672345</td>
@@ -174,7 +196,7 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Leandro Bode Caceres</td>
+                                            <td >Leandro Bode Cáceres</td>
                                             <td>Barcelona</td>
                                             <td>España</td>
                                             <td>6414540034</td>
@@ -198,7 +220,7 @@ const Userstudent = () => {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td >Aimme Arencibia Perez</td>
+                                            <td >Aimme Arencibia Pérez</td>
                                             <td>Valencia</td>
                                             <td>España</td>
                                             <td>641400024</td>
@@ -233,11 +255,17 @@ const Userstudent = () => {
                                                 <span id="tags">AWS</span>
                                             </td>
                                             </tr>
+                                            
                                     </tbody>
+                                      
                                 </table>
                                 </div>    
                             </div>
 
+                        </div>
+                        <div class="col col-sm-1" id="filter" style={{backgroundColor:"transparent"}}>
+                            
+                            
                         </div>
                         <div class="col col-sm-2" id="filter">
                             <FilterUser></FilterUser>

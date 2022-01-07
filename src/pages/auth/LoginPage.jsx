@@ -20,9 +20,11 @@ const Loginpage = () => {
                                         <Loginformik></Loginformik>
                                     </div>
 
+                                
+                                </div>
                                 <div class="row" >
-                                    <div id="copyright">
-                                        <p>
+                                    <div >
+                                        <p id="copyright">
                                             Copyright © 2021 Open Bootcamp SL, Imagina Group <br />
                                             Todos los derechos reservados. <br />
                                             <span><a  id="privacity" href="https://campus.open-vitae.com/"  >Política de Privacidad</a></span>
@@ -30,7 +32,6 @@ const Loginpage = () => {
                                     </div>
                     
                                 </div> 
-                                </div>
                             </div>
                             <div class="col-lg-8 col-md-6 col-sm-0 col-xl-8" id="image">
                                

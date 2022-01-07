@@ -5,9 +5,12 @@ import "../../../styles/formAddStudent.css"
 const FormAddStudent = () => {
     const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
-       
+    const pdfInit=true;
+    const photoInit=true;  
    
     const [tags, setTags] = useState([]);
+    const [pdf, setPdf] = useState(pdfInit);
+    const [photo, setPhoto] = useState(photoInit);
    
     const inputRef = useRef(null);
     const listRef = useRef(null);
@@ -53,7 +56,7 @@ const FormAddStudent = () => {
             <div class="row">
                 <div class="col-6" id="datastudent">
                     <label class="label" >Nombre y Apellidos</label>
-                    <input name="studentname" id="entry" type="text" placeholder="Nombre Alumno"  />
+                    <input name="studentname" id="entry" type="text" placeholder="Ej: Juan Pérez Lorca"  />
                     
                     <div class="row">
                         <div class="col-6">
@@ -63,15 +66,16 @@ const FormAddStudent = () => {
                                 </label>
                             </div>
                             <select class="entry" id="countryname" >
-                                <option value="" disabled selected hidden>Elija País</option>
+                                <option value="" disabled selected hidden>Elige un país</option>
                                 <option>España</option>
                                 <option>Cuba</option>
                                 <option>Estados Unidos</option>
                             </select>
                             <label  class="label">No Teléfono</label>
-                            <input class="entry" type="phone"/>
+                            <input class="entry" type="phone" placeholder='Ej: +34 612 34 56 78'/>
                             <label  class="label">Presencialidad</label>
                             <select class="entry">
+                                <option id="example" value="" disabled selected hidden >Elige una opción</option>
                                 <option>Presencial</option>
                                 <option>En Remoto</option>
                                 <option>Mixto</option>
@@ -85,16 +89,17 @@ const FormAddStudent = () => {
                                     </label>
                                 </div>
                                 <select class="entry" id="countryname" >
-                                    <option value="" disabled selected hidden>Elija Ciudad</option>
+                                    <option id="example" value="" disabled selected hidden >Elige una ciudad</option>
                                     <option>Madrid</option>
                                     <option>Valencia</option>
                                     <option>La Habana</option>
                                     <option>Nueva Yotk</option>
                                 </select>
                                 <label  class="label">Email</label>
-                                <input class="entry" type="email"/>
+                                <input class="entry" type="email" placeholder='Ej: user@mail.com'/>
                                 <label  class="label">Traslado</label>
-                                <select class="entry">
+                                <select id="select" class="entry" defaultValue="">
+                                    <option disabled={true} value="">placeholder</option>
                                     <option>Si</option>
                                     <option>No</option>                        
                                 </select>
@@ -114,9 +119,35 @@ const FormAddStudent = () => {
                 </div>
                 <div class="col-6" id="file-tag">
                     <label>Foto de Perfil</label>
+                    {pdf ? 
+                         (<div class="row">
+                            <div class="col-4">
+                                <button name="update" id="update" onClick={()=>setPhoto(!photo)}>&#xF0ee;Subir imagen</button>
+                            </div>
+                            <div class="col-8">
+                                <label><a id="light">Archivos soportados</a><a id="bold">.png .jpg .jpeg</a></label>
+                                <label><a id="light">Tamaño archivo máximo:</a><a id="bold">2 MB</a></label>
+                            </div>
+                        </div>)
+                        
+                     : 
                     <input name="photo" id="photo" class="entry" type="text" placeholder="&#xf03e;  NombreArchivo.png"  />
+}
                     <label>Documento CV</label>
-                    <input name="pdf" id="pdf" class="entry" type="text" placeholder="&#xf1c1;  NombreArchivo.pdf"  />
+                    {pdf ? 
+                         (<div class="row">
+                            <div class="col-6">
+                                <button name="update" id="update" onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
+                            </div>
+                            <div class="col-6">
+                                <label><a id="light">Archivos soportados</a><a id="bold">.pdf</a></label>
+                                <label><a id="light">Tamaño archivo máximo:</a><a id="bold">20 MB</a></label>
+                            </div>
+                        </div>)
+                        
+                     :  (<input name="pdf" id="pdf" class="entry" type="text" placeholder="&#xf1c1;  NombreArchivo.pdf"  />)
+                     
+}
                     <label>Etiquetas</label>
                     
                     <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" onChange={()=> {addTag(inputRef.current.value)}}/>
