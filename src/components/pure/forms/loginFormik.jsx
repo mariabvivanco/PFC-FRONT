@@ -1,8 +1,10 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import '../../../styles/loginFormix.css'
+
 
 
 const loginSchema = Yup.object().shape(
@@ -94,9 +96,9 @@ const Loginformik = () => {
                             </div>
                             </div>
                             <div class="row">
-                                <button type="submit" id="login" style={{ borderRadius : '8px' }}>Iniciar Sesión</button>
+                                <button type="submit" id="login" style={{ borderRadius : '8px' }  }>Iniciar Sesión</button>
                                 {isSubmitting ? (<p
-                                >Login your credentials...</p>): null}
+                                ><Redirect from='/login' to='/userstudent' /></p>):null }
                             </div>
                             
                             

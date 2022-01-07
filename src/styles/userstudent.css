@@ -129,13 +129,18 @@ button#discardd{
 
 }
 
+div#studentadd{
+    top: 20%;
+    border-radius: 10px;
+}
+
 div#bodymodal{
     position:absolute;
     background-color: white;
     border: 1px solid #E6E6EA;
     box-sizing: border-box;
     box-shadow: 0px 4px 16px rgba(117, 114, 150, 0.15);
-    border-radius: 20px;
+    border-radius: 10px;
     
     font-family: Raleway;
     text-align: left;
@@ -163,5 +168,11 @@ div#bodymodal{
 
 .modal-footer{
     background-color: #F8F8F9;
+    border-end-end-radius: 20px;
+    border-end-start-radius: 20px;
+}
+
+.modal-content{
+    border-radius: 20px;
 }
 

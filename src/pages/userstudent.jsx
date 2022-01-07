@@ -1,4 +1,6 @@
+/* eslint-disable no-restricted-globals */
 import React, { Component, useEffect } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import $ from 'jquery'
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
@@ -21,7 +23,20 @@ const Userstudent = () => {
         });
         $('#search').on( 'keyup', function () {
             table.search( this.value ).draw();
+            
              } );
+
+             
+       
+             
+         $('#tabla tbody').on( 'click', 'tr', function () {
+                                           
+            location.href='/studentfile'
+                        
+        } );
+             
+                
+            
        }, [])
     
         return (
@@ -31,7 +46,7 @@ const Userstudent = () => {
                 <body className="user" >
                     <div class="row" id="firstrow">
                         <div class="col col-sm-10" id="title">
-                            <h3>OpenBootcamp<a id="student">|Alumnos</a> </h3>
+                        <h3  href="/studentfile" >OpenBootcamp<a id="student">|Alumnos</a> </h3>
                         </div>
                         <div class="col col-sm-2" id="user">
                             <select name="username" id="username" value="UserName"  >
@@ -42,7 +57,7 @@ const Userstudent = () => {
                     <div class="row" id="restrow">
                         <div class="col col-sm-10" id="data">
                             <div class="row" id="search_and_add">
-                                <div class="col col-sm-10" id="search">
+                                <div class="col col-sm-10" id="searchh">
                                     <a>Alumnos</a>   
                                     <input type="search" name="search" id="search" placeholder="&#xf002; Buscar por nombre email o palabra clave"></input>
                                 </div>
@@ -64,9 +79,10 @@ const Userstudent = () => {
                                             <th scope="col">Etiquetas </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    
+                                    <tbody >
                                         <tr>
-                                            <td >Leonardo Valdes Amaya</td>
+                                            <td  >Leonardo Valdes Amaya</td>
                                             <td>Madrid</td>
                                             <td>España</td>
                                             <td>641400005</td>
@@ -75,7 +91,9 @@ const Userstudent = () => {
                                                 <span id="tags" >Python</span>
                                                 <span id="tags">Java</span>
                                                 <span id="tags">React</span>
-                                            </td>
+                                        </td>
+                                            
+                                        
                                         </tr>
                                         <tr>
                                             <td >Greidy Valdes Vivanco</td>
@@ -233,7 +251,9 @@ const Userstudent = () => {
                                                 <span id="tags">AWS</span>
                                             </td>
                                             </tr>
+                                            
                                     </tbody>
+                                      
                                 </table>
                                 </div>    
                             </div>
