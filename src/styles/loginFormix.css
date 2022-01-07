@@ -1,15 +1,17 @@
 .form{
     Font-family: Raleway;
     overflow-x: hidden;
-    height: 100vh
+    height: 100vh;
+    width: 100%;
+    margin-left: 0;
+    text-align: left;
+    padding-left: 0;
 }
 
 label#email{
     margin-top: 10px; 
     font-weight: bold;
-    margin-left: 0;
-    align-items:flex-start;
-    text-align: left;
+    
 }
 
 #emailinput{
@@ -23,6 +25,12 @@ div#password{
     margin-top: 10px; 
     font-weight: bold;
     text-align: left;
+}
+
+button#login{
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 #passwordinput{
@@ -64,3 +72,22 @@ button#login{
     border-radius:10 ;
     
 }
+
+
+.row{
+    --bs-gutter-x:0;
+    margin-left: 0;
+}
+
+.col{
+    margin-left: 0;
+}
+
+body{
+    background-color: white;
+}
+
+
+    .form-check-input-checked{
+        color:black;
+    }

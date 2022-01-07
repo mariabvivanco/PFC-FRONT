@@ -1,6 +1,4 @@
-div#everybody{
-    max-height:  100%;
-}
+
 
 div#image{
     background:url(../resources/Image.png); 
@@ -12,22 +10,24 @@ div#image{
 
 div#login{
     Font-family: Raleway;
-     overflow-x: hidden;
-     height: 100vh;
-     padding-left:2%; 
+    overflow-x: hidden;
+    height: 100vh;
+    padding-left:2%; 
     padding-right: 2%;
+    max-height:  100%;
+    background-color:white;
 }
 
 div#infor{
     display: flex; 
-    justify-content: left; 
-    align-items: left; 
+    justify-content: center; 
+    align-items: center; 
     flex-direction: column;
     
 }
 
 h2#title{
-    margin-top: 10%;
+    margin-top: 20%;
     padding-left:0%; 
     padding-right: 0%;
     text-align: left;
@@ -37,12 +37,10 @@ div#form{
     
 }
 
-div#copyright{
+p#copyright{
     text-align: left;
-    
     color: #A5A8B3;
-    
-
+    font-weight: lighter;
 }
 
 span#student{
@@ -52,4 +50,5 @@ span#student{
 a#privacity{
     letter-spacing: -2%href;
     color: #A5A8B3;
+    margin-block-end: 20%;
 }

@@ -25,7 +25,7 @@ input#pdf{
     font-family: FontAwesome;
     background: #F8F8F9;
     border-radius: 16px;
-    margin: 12px 0px;
+    margin: 0px;
     border-color: transparent;
     width: 100%;
 }
@@ -34,7 +34,7 @@ input#photo{
     font-family: FontAwesome;
     background: #F8F8F9;
     border-radius: 16px;
-    margin: 12px 0px;
+    margin: 0px;
     border-color: transparent;
     width: 100%;
 }
@@ -42,7 +42,7 @@ input#photo{
 input#entry{
     background: #F8F8F9;
     border-radius: 16px;
-    margin: 12px 0px;
+    margin: 0px;
     border-color: transparent;
     width: 100%;
 }
@@ -68,5 +68,18 @@ button#update{
   align-items: left;
 }
 
+.row{
+  --bs-gutter-x:0;
+  --bs-gutter-y:0;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.col{
+  --bs-gutter-x:0;
+  --bs-gutter-y:0;
+  margin-left: 0;
+  padding-left: 0;
+}
 
 
