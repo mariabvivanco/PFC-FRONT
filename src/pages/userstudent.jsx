@@ -4,6 +4,8 @@ import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import "../styles/userstudent.css"
 import FilterUser from '../components/pure/forms/filterUser';
+import { Form } from 'formik';
+import FormAddStudent from '../components/pure/forms/formAddStudent';
 
 
 
@@ -42,15 +44,10 @@ const Userstudent = () => {
                             <div class="row" id="search_and_add">
                                 <div class="col col-sm-10" id="search">
                                     <a>Alumnos</a>   
-                                    
-                                      
                                     <input type="search" name="search" id="search" placeholder="&#xf002; Buscar por nombre email o palabra clave"></input>
-                                    
-
                                 </div>
                                 <div class="col col-sm-2" >
-                                        <button id="add">+ Añadir Alumnos</button>
-                                    
+                                    <button id="add" type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentadd">Añadir Alumnos</button>
                                 </div>
 
                             </div>
@@ -250,6 +247,25 @@ const Userstudent = () => {
                     </div>
                    
                 </body>
+                
+                <div id="studentadd" className="modal" tabIndex="-1">
+                    <div className="modal-dialog modal-xl" >
+                        <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Nuevo Alumno</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                            <div className="modal-body">
+                                <FormAddStudent></FormAddStudent>
+                            </div>
+                            <div className="modal-footer">
+                                
+                                <button id="save" type="button" className="btn btn-primary">Guardar</button>
+                                <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

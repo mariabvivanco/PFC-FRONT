@@ -24,13 +24,9 @@ button#back{
     border-color: transparent;
 }
 
-div#restrow{
-   
-    margin-top: 1%;
-    
-
+div#restrow{   
+    margin-top: 1%;   
 }
-
 
 
 select#username{

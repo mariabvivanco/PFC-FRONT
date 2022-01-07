@@ -1,0 +1,66 @@
+/*div#form-add{
+    position:absolute;
+    margin-left: 20%;
+    margin-top: 10%;
+    background-color: white;
+    border: 1px solid #E6E6EA;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 16px rgba(117, 114, 150, 0.15);
+    border-radius: 20px;
+    width: 60%;
+    height: 60%;
+    font-family: Raleway;
+    text-align: left;
+    color:yellow;
+    
+}*/
+
+/*div#body{
+    padding: 0;
+    width: 100%;
+    font-size: 200%;
+    margin-left: 2%;
+    margin-top: 2%;
+    align-items: left;
+    padding: 0;
+    color:blue;
+    font-family:Raleway;
+    font-weight: bold;
+
+}*/
+
+button#tag{
+    background: #E6E6EA;
+    border-radius: 20px;
+    border-color: transparent;
+}
+
+
+input#pdf{
+    font-family: FontAwesome;
+    background: #F8F8F9;
+    border-radius: 16px;
+    margin: 12px 0px;
+    border-color: transparent;
+    width: 100%;
+}
+
+input#photo{
+    font-family: FontAwesome;
+    background: #F8F8F9;
+    border-radius: 16px;
+    margin: 12px 0px;
+    border-color: transparent;
+    width: 100%;
+}
+
+input#entry{
+    background: #F8F8F9;
+    border-radius: 16px;
+    margin: 12px 0px;
+    border-color: transparent;
+    width: 100%;
+}
+
+
+

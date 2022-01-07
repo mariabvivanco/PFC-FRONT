@@ -1,15 +1,55 @@
-import FormStudent from "../pure/forms/formStudent";
+import {React, useState, useRef} from 'react';
 
-<div id="form-add">
+import "../../../styles/formAddStudent.css"
+
+const FormAddStudent = () => {
+    const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
+    const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
+       
+   
+    const [tags, setTags] = useState([]);
+   
+    const inputRef = useRef(null);
+    const listRef = useRef(null);
+
+    function deleteTag(tag){
+        console.log('Detele this Tag:', tag);
+        const index = tags.indexOf(tag);
+        const tempTags = [...tags];
+        tempTags.splice(index,1);
+        setTags(tempTags);
+    }
+
+    function addTag(tag){
+        var duplic = false;
+        var exist= false;
+
+
+        for (var i=0; i<tagsoption.length&&!exist;i++){
+            if (tagsoption[i]==tag)
+                exist=true;
+
+        }
+
+        for (var i=0; i<tags.length&&!duplic;i++){
+            if (tags[i]==tag)
+                duplic=true;
+
+        }
+
+        if (exist&&!duplic){
+            console.log('ADD this Task:', tag);
+            const tempTags = [...tags];
+            tempTags.push(tag);
+            setTags(tempTags);
+            inputRef.current.value="";
+        }
+        
+    }
+    return (
+        <>
+        <div id="form-add">
         <div id="body" >
-            <div class="row" >
-                <div class="col-11" id="title">
-                    <label>Nuevo Alumno</label>
-                </div>
-                <div class="col-1">
-                    <label id="x">X</label>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-6" id="datastudent">
                     <label class="label" >Nombre y Apellidos</label>
@@ -107,28 +147,12 @@ import FormStudent from "../pure/forms/formStudent";
             
             </div>
             
-            <div class="row" id="buttons">
-                <div class="col-6">
-                    
-                </div>
-                <div class="col-6">
-                    <div class = "row">
-                        <div class="col-8">
-                        </div>
-                        <div class="col-2">
-                            <button type="button" id="save" class="btn btn-primary">Guardar</button>
-                        </div>
-                        <div class="col-2">
-                            <button type="button" id="discart" class="btn btn-primary">Cancelar</button>                                
-                        </div>                        
-                    </div>                 
-                    
-                </div>
-               
                 
-                
-
-            </div>
-    
         </div>
       </div>
+       
+        </>
+    );
+}
+
+export default FormAddStudent;

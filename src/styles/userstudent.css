@@ -88,6 +88,9 @@ button#add{
     font-weight: bold;
     border-radius: 8px;
     align-items: right;
+    color:black;
+    Font-family: Raleway; 
+
 
 }
 div#table{
@@ -109,5 +112,56 @@ div#filter{
     box-sizing: border-box;
     border-radius: 20px;
 
+}
+
+
+button#save{
+    background-color:#32D4A4; 
+    color:white;
+    font-weight: bold;
+
+}
+
+button#discardd{
+    background-color:#A5A8B3;
+    color:white;
+    font-weight: bold;
+
+}
+
+div#bodymodal{
+    position:absolute;
+    background-color: white;
+    border: 1px solid #E6E6EA;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 16px rgba(117, 114, 150, 0.15);
+    border-radius: 20px;
+    
+    font-family: Raleway;
+    text-align: left;
+    
+    
+}
+
+.modal-sm{
+    width: 60%;
+    height: 60%;
+       
+}
+
+.modal-lg{
+    width: 60%;
+    height: 60%;
+       
+}
+
+.modal-xl{
+    width: 60%;
+    height: 60%;
+       
+}
+
+.modal-footer{
+    background-color: #F8F8F9;
 }
 
