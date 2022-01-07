@@ -66,6 +66,8 @@ button#update{
   font-size: medium;
   height: 105%;
   align-items: left;
+  margin: 0px;
+  width: 100%;
 }
 
 .row{

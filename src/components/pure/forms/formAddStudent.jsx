@@ -99,7 +99,7 @@ const FormAddStudent = () => {
                                 <input class="entry" type="email" placeholder='Ej: user@mail.com'/>
                                 <label  class="label">Traslado</label>
                                 <select id="select" class="entry" defaultValue="">
-                                    <option disabled={true} value="">placeholder</option>
+                                    <option id="example" value="" disabled selected hidden >Elige una opción</option>
                                     <option>Si</option>
                                     <option>No</option>                        
                                 </select>
@@ -119,9 +119,9 @@ const FormAddStudent = () => {
                 </div>
                 <div class="col-6" id="file-tag">
                     <label>Foto de Perfil</label>
-                    {pdf ? 
+                    {photo ? 
                          (<div class="row">
-                            <div class="col-4">
+                            <div class="col-auto" style={{height:50}}>
                                 <button name="update" id="update" onClick={()=>setPhoto(!photo)}>&#xF0ee;Subir imagen</button>
                             </div>
                             <div class="col-8">
@@ -136,7 +136,7 @@ const FormAddStudent = () => {
                     <label>Documento CV</label>
                     {pdf ? 
                          (<div class="row">
-                            <div class="col-6">
+                            <div class="col-auto" style={{height:50}}>
                                 <button name="update" id="update" onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
                             </div>
                             <div class="col-6">
