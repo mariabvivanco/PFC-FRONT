@@ -14,6 +14,79 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 const Userstudent = () => {
     
     const history = useHistory();
+    const students = [
+        {
+            "id": 1,
+            "name": "María Beatriz Vivanco Marrero",
+            "country": "España",
+            "city": "Madrid",
+            "phoneNumber": "+3464100000",
+            "email": "mariab.vivanco@gmail.com",
+            "presence": "Mixed",
+            "transfer": false,
+            "skills": [
+                {
+                    "skill": "React"
+                },
+                {
+                    "skill": "Spring"
+                },
+                {
+                    "skill": "Angular"
+                },
+                {
+                    "skill": "Java"
+                }
+            ],
+            "photo": null,
+            "document": null
+        },
+        {
+            "id": 2,
+            "name": "Leonardo Valdés Amaya",
+            "country": "España",
+            "city": "Valencia",
+            "phoneNumber": "+3464100001",
+            "email": "leonardo@gmail.com",
+            "presence": "Mixto",
+            "transfer": false,
+            "skills": [
+                {
+                    "skill": "React"
+                },
+                {
+                    "skill": "Angular"
+                }
+            ],
+            "photo": null,
+            "document": null
+        },
+        {
+            "id": 3,
+            "name": "Greidy Valdés Vivanco",
+            "country": "Cuba",
+            "city": "Habana",
+            "phoneNumber": "+5345648524",
+            "email": "leonardo@gmail.com",
+            "presence": "Remote",
+            "transfer": true,
+            "skills": [
+                {
+                    "skill": "Java"
+                },
+                {
+                    "skill": "Angular"
+                },
+                {
+                    "skill": "Sprint"
+                },
+                {
+                    "skill": "React"
+                }
+            ],
+            "photo": null,
+            "document": null
+        }]
       
        
        useEffect(() =>{
@@ -96,177 +169,25 @@ const Userstudent = () => {
                                     </thead>
                                     
                                     <tbody >
-                                        <tr>
-                                            <td  >Leonardo Valdes Amaya</td>
-                                            <td>Madrid</td>
-                                            <td>España</td>
-                                            <td>641400005</td>
-                                            <td>leonardo.valdes@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Python</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">React</span>
-                                        </td>
-                                            
-                                        
-                                        </tr>
-                                        <tr>
-                                            <td >Greidy Valdes Vivanco</td>
-                                            <td>Madrid</td>
-                                            <td>España</td>
-                                            <td>641400009</td>
-                                            <td>greidy.valdes@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Python</span>
-                                                <span id="tags">Ruby</span>
-                                                <span id="tags">React</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Ariel Bazan Rey</td>
-                                            <td>Madrid</td>
-                                            <td>España</td>
-                                            <td>641400000</td>
-                                            <td>ariel.bazan@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >React</span>
-                                                <span id="tags">Angular</span>
-                                                <span id="tags">Python</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Beatriz Valdés Perez</td>
-                                            <td>Santa Clara</td>
-                                            <td>Cuba</td>
-                                            <td>5342346768</td>
-                                            <td>beatriz.valdes@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">React</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Leonardo Bode Cáceres</td>
-                                            <td>Barcelona</td>
-                                            <td>España</td>
-                                            <td>6414000034</td>
-                                            <td>leonardo.bode@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">PHP</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Roberto Hernández González</td>
-                                            <td>Valencia</td>
-                                            <td>España</td>
-                                            <td>641400089</td>
-                                            <td>roberto.hernandez@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >PHP</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">Scala</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Arlenis Ching Pérez</td>
-                                            <td>Valencia</td>
-                                            <td>España</td>
-                                            <td>641400000</td>
-                                            <td>arlenis.ching@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Python</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">PHP</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Ramiro Rodríguez Pajares</td>
-                                            <td>Habana</td>
-                                            <td>Cuba</td>
-                                            <td>5345672345</td>
-                                            <td>ramiro.rodriguez@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Maylid Díaz Medina</td>
-                                            <td>Santiago de Chile</td>
-                                            <td>Chile</td>
-                                            <td>641400000</td>
-                                            <td>maylid.diaz@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">React</span>
-                                                <span id="tags">AWS</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Leandro Bode Cáceres</td>
-                                            <td>Barcelona</td>
-                                            <td>España</td>
-                                            <td>6414540034</td>
-                                            <td>leandro.bode@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">PHP</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Roberto Vivanco Gómez</td>
-                                            <td>Valencia</td>
-                                            <td>España</td>
-                                            <td>641424089</td>
-                                            <td>roberto.vivanco@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >PHP</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">Scala</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Aimme Arencibia Pérez</td>
-                                            <td>Valencia</td>
-                                            <td>España</td>
-                                            <td>641400024</td>
-                                            <td>aimee.arencibiao@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Python</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">PHP</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Reinier Diaz Chavez</td>
-                                            <td>Habana</td>
-                                            <td>Cuba</td>
-                                            <td>5345672375</td>
-                                            <td>reinier.diaz@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td >Eddy Brito Díaz</td>
-                                            <td>Santiago de Chile</td>
-                                            <td>Chile</td>
-                                            <td>641400089</td>
-                                            <td>eddy.diaz@gmail.com</td>
-                                            <td >
-                                                <span id="tags" >Spring</span>
-                                                <span id="tags">Java</span>
-                                                <span id="tags">React</span>
-                                                <span id="tags">AWS</span>
-                                            </td>
-                                            </tr>
-                                            
+                                        { students.map((student, index) => {
+                                            return (
+                                                <tr>
+                                                    <td>{student.name}</td>
+                                                    <td>{student.city}</td>
+                                                    <td>{student.country}</td>
+                                                    <td>{student.phoneNumber}</td>
+                                                     <td>{student.email}</td>
+                                                    <td>
+                                                    { student.skills.map((skill, index) => {
+                                                        return (
+                                                            <span id="tags">{skill.skill}</span>
+                                                        )})}
+                                                    </td>
+                                                </tr>
+                                                )}
+                                        )}
+                       
+                                       
                                     </tbody>
                                       
                                 </table>
