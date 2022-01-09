@@ -47,27 +47,20 @@ input#entry{
     width: 100%;
 }
 
-a#light{
-  text-align: left;
-  margin-left: 0;
-  padding-left: 0;
-  color:gray;
-  font-size: small;
-  font-weight: lighter;
-}
+
 
 a#bold{
   color:black;
   font-size: small;
   font-weight: bold;
+  
 }
 
 button#update{
   font-size: medium;
-  height: 105%;
+  height: 40px;
   align-items: left;
-  margin: 0px;
-  width: 100%;
+  margin-top:5px
 }
 
 .row{
@@ -84,4 +77,21 @@ button#update{
   padding-left: 0;
 }
 
+.col-6{
+  --bs-gutter-x:0;
+  --bs-gutter-y:0;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+a#light{
+  text-align: left;
+  margin-left: 0;
+  padding-left: 0;
+  color:gray;
+  font-size: small;
+  font-weight: lighter;
+  margin-top: 0;
+  padding-top: 0;
+}
 

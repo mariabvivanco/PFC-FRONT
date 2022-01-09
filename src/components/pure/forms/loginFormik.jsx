@@ -82,9 +82,9 @@ const Loginformik = () => {
                             }
                             </div>
                             <div class='row' id="otherdata">
-                                <div class="col col-sm-1">
-                                    <div class="form-check">
-                                    <Field type="checkbox" class="form-check-input" id="exampleCheck1" style={{color:"black"}} ></Field>
+                                <div class="col col-sm-1" id="check">
+                                    <div class="form-check" id="check">
+                                    < input id="check" type="checkbox"/>
                                     </div>
                                     </div>
                                     <div class="col col-sm-5">
