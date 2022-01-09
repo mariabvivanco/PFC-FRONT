@@ -121,7 +121,7 @@ const FormAddStudent = () => {
                     <label>Foto de Perfil</label>
                     {photo ? 
                          (<div class="row">
-                            <div class="col-auto" style={{height:50}}>
+                            <div class="col-auto">
                                 <button name="update" id="update" onClick={()=>setPhoto(!photo)}>&#xF0ee;Subir imagen</button>
                             </div>
                             <div class="col-8">
@@ -136,7 +136,7 @@ const FormAddStudent = () => {
                     <label>Documento CV</label>
                     {pdf ? 
                          (<div class="row">
-                            <div class="col-auto" style={{height:50}}>
+                            <div class="col-auto" >
                                 <button name="update" id="update" onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
                             </div>
                             <div class="col-6">
@@ -145,7 +145,7 @@ const FormAddStudent = () => {
                             </div>
                         </div>)
                         
-                     :  (<input name="pdf" id="pdf" class="entry" type="text" placeholder="&#xf1c1;  NombreArchivo.pdf"  />)
+                     :  <input name="pdf" id="pdf" class="entry" type="text" placeholder="&#xf1c1;  NombreArchivo.pdf"  />
                      
 }
                     <label>Etiquetas</label>

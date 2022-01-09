@@ -44,14 +44,23 @@ div#otherdata{
     margin-top: 10px; 
 }
 
-#exampleCheck1{
+input#check{
     border-color: #A5A8B3;
     background-color: #FFFFFF;
     border-radius: 0px;
-    
+    padding-left: 0;
+    margin-left: 0;
 
 }
 
+div#check{
+    border-color: #A5A8B3;
+    background-color: #FFFFFF;
+    border-radius: 0px;
+    padding-left: 0;
+    margin-left: 0;
+
+}
 label#remember{
     text-align: left;
     margin-left: 0;

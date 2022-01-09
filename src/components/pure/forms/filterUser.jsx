@@ -19,6 +19,10 @@ const FilterUser = () => {
     const [country, setCountry] = useState(countryInit);
     const inputRef = useRef(null);
     const listRef = useRef(null);
+    const presRef = useRef(null);
+    const remoteRef = useRef(null);
+    const traslateRef = useRef(null);
+    const notransfRef = useRef(null);
 
     const trash = <i class="fa-thin fa-trash-can"></i>
 
@@ -76,9 +80,7 @@ const FilterUser = () => {
                 
                 <div class="row">
                     <p id="tags">Etiquetas</p>
-                    {/*<select id="select">
-                        <option value="" disabled selected hidden>Escriba para buscar</option>
-                     </select>*/}
+                    
                      <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" onChange={()=> {addTag(inputRef.current.value)}}/>
                         <datalist ref={listRef} id="tagslist" >
                             {listoption}
@@ -112,11 +114,16 @@ const FilterUser = () => {
                      
                     <p >Presencial/ a distancia</p>
                     <label>
-                        <input id="check" type="checkbox" />
+                        <input id="check" type="checkbox" ref={presRef} 
+                          onClick={()=>(((remoteRef.current.checked)) ?
+                             remoteRef.current.checked=false:
+                             null)}/>
                             Presencial
                     </label>
                     <label>
-                        <input id="check" type="checkbox" />
+                        <input id="check" type="checkbox" ref={remoteRef} onClick={()=>(((presRef.current.checked)) ?
+                             presRef.current.checked=false:
+                             null)} />
                             A Distancia
                     </label>
                     
@@ -124,11 +131,15 @@ const FilterUser = () => {
                      
                     <p >Posibilidad de Traslado</p>
                     <label>
-                        <input id="check" type="checkbox" />
+                        <input id="check" type="checkbox" ref={traslateRef} onClick={()=>(((notransfRef.current.checked)) ?
+                             notransfRef.current.checked=false:
+                             null)} />
                             Si
                     </label>
                     <label>
-                        <input id="check" type="checkbox" />
+                        <input id="check" type="checkbox" ref={notransfRef} onClick={()=>(((traslateRef.current.checked)) ?
+                             traslateRef.current.checked=false:
+                             null)} />
                             No
                     </label>
                     
