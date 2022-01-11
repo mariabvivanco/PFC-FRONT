@@ -1,8 +1,9 @@
-import React from 'react';
+import {React, useContext, useState} from 'react';
 import { BrowserRouter as  Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { appContext } from '../../../App';
 import '../../../styles/loginFormix.css'
 
 
@@ -18,20 +19,29 @@ const loginSchema = Yup.object().shape(
 );
 
 
-const Loginformik = () => {
+const Loginformik = ({tryLogin}) => {
+
+    const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const { isLoading, isLogged, error } = useContext(appContext);
 
     const initialCredentials = {
         email: '',
         password: ''
     }
-
+	
     const history = useHistory();
+
+    const goRegister = (e) => {
+		e.preventDefault();
+		history.push('/register');
+	};
 
     return (
         <div className='form'>
                 <Formik
                 // *** Initial values that the form will take
-                initialValues = { initialCredentials }
+               initialValues = { initialCredentials }
                 // *** Yup Validation Schema ***
                 validationSchema = {loginSchema}
                 // ** onSubmit Event
@@ -51,13 +61,18 @@ const Loginformik = () => {
                     isSubmitting,
                     handleChange,
                     handleBlur }) => (
-                        <Form >
+                        <Form  >
                             
                             <div class='row' >
                                 <label id="email" for="exampleInputEmail1" >Email</label>
                             </div>
                             <div class='row'>
-                                <Field id="emailinput" type="email" name="email" placeholder="Introduce tu correo"  />
+                                <Field id="emailinput"
+                                 type="email"
+                                  name="email"
+                                  placeholder="Introduce tu correo"
+                                  value={email} 
+                                  onChange={(e) => setEmail(e.currentTarget.value)} />
                                 {/* Email Errors */}
                                 {errors.email && touched.email && (
                                     <ErrorMessage name="email" component='div'></ErrorMessage>
@@ -72,6 +87,8 @@ const Loginformik = () => {
                                 name="password"
                                 placeholder="Introduce tu contraseña"
                                 type='password'
+                                value={password}
+								onChange={(e) => setPassword(e.currentTarget.value)}
                             />
                             {/* Password Errors */}
                             {
@@ -96,8 +113,8 @@ const Loginformik = () => {
                             </div>
                             </div>
                             <div class="row">
-                                <button id="login" type="submit" style={{ borderRadius : '8px' }  }>Iniciar Sesión</button>
-                                {isSubmitting ? (history.push("/userstudent")):null }
+                                <button id="login" type="submit"  onClick={(e) => {tryLogin(e, email, password)}} >Iniciar Sesión</button>
+                                {isLogged ? (history.push("/userstudent")):null }
                             </div>
                             
                             

@@ -32,8 +32,10 @@ function App() {
 					dispatch({type: TOKEN, payload: {token: token}})
 					dispatch({type: SUCCESS});
 					history.push('/');
+          console.log("ok");
 				} else {
 					dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión. Inténtalo de nuevo o más tarde.'}});
+          console.log("ok");
 				}
 			}).catch(error => dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión: ' + error}}));
 		}
