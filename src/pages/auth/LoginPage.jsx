@@ -5,7 +5,7 @@ import Loginformik from '../../components/pure/forms/loginFormik';
 
 import '../../styles/Loginpage.css'
 
-const Loginpage = () => {
+const Loginpage = ({tryLogin}) => {
     return (
         <div id="login" >
                         <div class="row" id="everybody">
@@ -17,7 +17,7 @@ const Loginpage = () => {
                                                                                           
                                     </div>
                                     <div class= "row" id="form">
-                                        <Loginformik></Loginformik>
+                                        <Loginformik>{tryLogin}</Loginformik>
                                     </div>
 
                                 
