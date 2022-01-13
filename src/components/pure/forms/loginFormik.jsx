@@ -39,7 +39,7 @@ const Loginformik = ({tryLogin}) => {
 
     return (
         <div className='form'>
-                <Formik
+                <Formik 
                 // *** Initial values that the form will take
                initialValues = { initialCredentials }
                 // *** Yup Validation Schema ***
@@ -50,7 +50,7 @@ const Loginformik = ({tryLogin}) => {
                     alert(JSON.stringify(values, null, 2));
                     // We save the data in the localstorage
                     await localStorage.setItem('credentials', values);
-                    history.push('/profile');
+                    //history.push('/profile');
                 }}
             >
                 {/* We obtain props from Formik */}
@@ -114,7 +114,9 @@ const Loginformik = ({tryLogin}) => {
                             </div>
                             <div class="row">
                                 <button id="login" type="submit"  onClick={(e) => {tryLogin(e, email, password)}} >Iniciar Sesión</button>
-                                {isLogged ? (history.push("/userstudent")):null }
+                                {/*{isLogged ? (history.push("/userstudent")):null }
+                                <button id="deslogin" type="submit"  onClick={(e) => {tryLogin(e, '*', '*')}} >Cerrar Sesión</button>*/}
+                                
                             </div>
                             
                             
