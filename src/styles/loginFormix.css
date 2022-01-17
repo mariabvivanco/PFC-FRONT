@@ -40,6 +40,15 @@ button#login{
     border-radius: 8px;
 }
 
+input#forgot{
+    margin-top: 10px; 
+    border-color:transparent; 
+    background: #F8F8F9;
+    border-radius: 8px;
+}
+
+
+
 div#otherdata{
     margin-top: 10px; 
 }
@@ -82,6 +91,16 @@ button#login{
     
 }
 
+button#forgot{
+    margin-top: 20px;
+    color:white; 
+    border-color:transparent;
+    width:100% ;
+    background-color:#32D4A4;
+    border-radius:10 ;
+    
+}
+
 
 .row{
     --bs-gutter-x:0;
@@ -100,3 +119,7 @@ body{
     .form-check-input-checked{
         color:black;
     }
+
+.forgot{
+    margin-top: 10px;
+}

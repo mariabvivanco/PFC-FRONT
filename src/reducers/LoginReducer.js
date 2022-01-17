@@ -46,6 +46,7 @@ export const LoginReducer = (state, action) => {
 				isLoading: false,
 				isLogged: false,
 				
+				
 			}
 		case RESET_ERRORS: 
 			return {

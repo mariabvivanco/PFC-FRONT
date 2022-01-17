@@ -36,6 +36,7 @@ function App() {
 					dispatch({type: SUCCESS});
 					
           			console.log("ok");
+					
 				} else {
 					dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión. Inténtalo de nuevo o más tarde.'}});
 					localStorage.setItem("login_data", '');
@@ -44,7 +45,7 @@ function App() {
 			}).catch(error => { dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión: ' + error}});
 								localStorage.setItem("login_data", '');});
 		}
-		history.push('/');
+		
 	}
   
   

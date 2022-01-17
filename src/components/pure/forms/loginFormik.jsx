@@ -1,10 +1,12 @@
-import {React, useContext, useState} from 'react';
+import {React, useContext, useState, useRef} from 'react';
 import { BrowserRouter as  Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { appContext } from '../../../App';
 import '../../../styles/loginFormix.css'
+import FormForgot from './formForgot';
+import {forgot as forgotAxios} from "../../../services/loginService"
 
 
 
@@ -24,6 +26,12 @@ const Loginformik = ({tryLogin}) => {
     const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const { isLoading, isLogged, error } = useContext(appContext);
+    const[forgotPassword, setForgot] = useState(false);
+    const[emailValid, setEmailv] = useState(true);
+    const[emailEmpty, setEmailEmpty] = useState(true);
+    const inputEmail = useRef();
+    const inputPassword = useRef();
+    const [alert, setAlert] = useState(false);
 
     const initialCredentials = {
         email: '',
@@ -36,6 +44,23 @@ const Loginformik = ({tryLogin}) => {
 		e.preventDefault();
 		history.push('/register');
 	};
+
+
+    const forgotFuntion = () => {
+        forgotAxios(email).then(response => {
+            if(response.status === 200) {
+                             console.log("ok");
+                             setForgot(true);
+                             setEmailv(true);
+                            } else {
+                                console.log("error");
+                                setEmailv(false);
+                            }
+                        })
+        .catch(error => {console.log("otro error");
+        setEmailv(false); })
+        
+    }
 
     return (
         <div className='form'>
@@ -68,25 +93,28 @@ const Loginformik = ({tryLogin}) => {
                             </div>
                             <div class='row'>
                                 <Field id="emailinput"
-                                 type="email"
+                                  type="email"
+                                  ref={inputEmail}
                                   name="email"
                                   placeholder="Introduce tu correo"
+                                  
                                   value={email} 
-                                  onChange={(e) => setEmail(e.currentTarget.value)} />
-                                {/* Email Errors */}
+                                  onChange={(e) => setEmail(e.currentTarget.value)}
+                                  />
                                 {errors.email && touched.email && (
                                     <ErrorMessage name="email" component='div'></ErrorMessage>
                                 )}
                             
                             </div>
                             <div class='row' id="password">
-                                <label htmlFor="password">Contraseña</label>
+                                <label >Contraseña</label>
                             </div>
                             <div class='row' >
                             <Field id="passwordinput"             
                                 name="password"
                                 placeholder="Introduce tu contraseña"
                                 type='password'
+                                ref={inputPassword}
                                 value={password}
 								onChange={(e) => setPassword(e.currentTarget.value)}
                             />
@@ -108,16 +136,50 @@ const Loginformik = ({tryLogin}) => {
                                     <label id="remember" class="form-check-label" for="exampleCheck1">Recuérdame</label>
                                 </div>
                             
-                            <div class="col col-sm-6" id="forgotten" >
+                            <div class="col col-sm-6" id="forgotten" onClick={()=> {
+                                if (!email=="") {
+                                    forgotFuntion()
+                                    setEmailEmpty(true)
+                                } else {
+                                    setEmailEmpty(false)
+                                    
+                                }
+                            }}>                                            
                                 He olvidado la contraseña
-                            </div>
+                            </div>  
+                                                      
                             </div>
                             <div class="row">
-                                <button id="login" type="submit"  onClick={(e) => {tryLogin(e, email, password)}} >Iniciar Sesión</button>
-                                {/*{isLogged ? (history.push("/userstudent")):null }
-                                <button id="deslogin" type="submit"  onClick={(e) => {tryLogin(e, '*', '*')}} >Cerrar Sesión</button>*/}
+                                <button id="login" type="submit"  onClick={(e) => {
+                                    if (email===""){
+                                        
+                                       setAlert(true);
+                                    }
+                                    else{
+                                        
+                                        tryLogin(e, email, password);
+                                        isLogged ?  
+                                        history.push("/userstudent") 
+                                        : setAlert(true);}}} >Iniciar Sesión</button>
+                                
                                 
                             </div>
+                            <div className='forgot'>
+                                {forgotPassword && <div class="row">
+                                    <FormForgot email={email}></FormForgot>
+                                </div>}
+                            <div>
+                                {!emailValid&&<label>Introduzca un correo valido</label>}
+                                {!emailEmpty&&<label>No ha introducido el correo</label>}
+                            </div> 
+                            {alert&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Error en tus credenciales!</strong> Repita el logueo.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" 
+                                onClick={()=>setAlert(false)}></button>
+                            </div>}
+
+                            </div>
+                           
                             
                             
                         </Form>
