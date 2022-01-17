@@ -1,9 +1,12 @@
-import React from 'react';
+import {React, useContext, useState, useRef} from 'react';
 import { BrowserRouter as  Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { appContext } from '../../../App';
 import '../../../styles/loginFormix.css'
+import FormForgot from './formForgot';
+import {forgot as forgotAxios} from "../../../services/loginService"
 
 
 
@@ -18,20 +21,52 @@ const loginSchema = Yup.object().shape(
 );
 
 
-const Loginformik = () => {
+const Loginformik = ({tryLogin}) => {
+
+    const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const { isLoading, isLogged, error } = useContext(appContext);
+    const[forgotPassword, setForgot] = useState(false);
+    const[emailValid, setEmailv] = useState(true);
+    const[emailEmpty, setEmailEmpty] = useState(true);
+    const inputEmail = useRef();
+    const inputPassword = useRef();
+    const [alert, setAlert] = useState(false);
 
     const initialCredentials = {
         email: '',
         password: ''
     }
-
+	
     const history = useHistory();
+
+    const goRegister = (e) => {
+		e.preventDefault();
+		history.push('/register');
+	};
+
+
+    const forgotFuntion = () => {
+        forgotAxios(email).then(response => {
+            if(response.status === 200) {
+                             console.log("ok");
+                             setForgot(true);
+                             setEmailv(true);
+                            } else {
+                                console.log("error");
+                                setEmailv(false);
+                            }
+                        })
+        .catch(error => {console.log("otro error");
+        setEmailv(false); })
+        
+    }
 
     return (
         <div className='form'>
-                <Formik
+                <Formik 
                 // *** Initial values that the form will take
-                initialValues = { initialCredentials }
+               initialValues = { initialCredentials }
                 // *** Yup Validation Schema ***
                 validationSchema = {loginSchema}
                 // ** onSubmit Event
@@ -40,7 +75,7 @@ const Loginformik = () => {
                     alert(JSON.stringify(values, null, 2));
                     // We save the data in the localstorage
                     await localStorage.setItem('credentials', values);
-                    history.push('/profile');
+                    //history.push('/profile');
                 }}
             >
                 {/* We obtain props from Formik */}
@@ -51,27 +86,37 @@ const Loginformik = () => {
                     isSubmitting,
                     handleChange,
                     handleBlur }) => (
-                        <Form >
+                        <Form  >
                             
                             <div class='row' >
                                 <label id="email" for="exampleInputEmail1" >Email</label>
                             </div>
                             <div class='row'>
-                                <Field id="emailinput" type="email" name="email" placeholder="Introduce tu correo"  />
-                                {/* Email Errors */}
+                                <Field id="emailinput"
+                                  type="email"
+                                  ref={inputEmail}
+                                  name="email"
+                                  placeholder="Introduce tu correo"
+                                  
+                                  value={email} 
+                                  onChange={(e) => setEmail(e.currentTarget.value)}
+                                  />
                                 {errors.email && touched.email && (
                                     <ErrorMessage name="email" component='div'></ErrorMessage>
                                 )}
                             
                             </div>
                             <div class='row' id="password">
-                                <label htmlFor="password">Contraseña</label>
+                                <label >Contraseña</label>
                             </div>
                             <div class='row' >
                             <Field id="passwordinput"             
                                 name="password"
                                 placeholder="Introduce tu contraseña"
                                 type='password'
+                                ref={inputPassword}
+                                value={password}
+								onChange={(e) => setPassword(e.currentTarget.value)}
                             />
                             {/* Password Errors */}
                             {
@@ -91,14 +136,50 @@ const Loginformik = () => {
                                     <label id="remember" class="form-check-label" for="exampleCheck1">Recuérdame</label>
                                 </div>
                             
-                            <div class="col col-sm-6" id="forgotten" >
+                            <div class="col col-sm-6" id="forgotten" onClick={()=> {
+                                if (!email=="") {
+                                    forgotFuntion()
+                                    setEmailEmpty(true)
+                                } else {
+                                    setEmailEmpty(false)
+                                    
+                                }
+                            }}>                                            
                                 He olvidado la contraseña
-                            </div>
+                            </div>  
+                                                      
                             </div>
                             <div class="row">
-                                <button id="login" type="submit" style={{ borderRadius : '8px' }  }>Iniciar Sesión</button>
-                                {isSubmitting ? (history.push("/userstudent")):null }
+                                <button id="login" type="submit"  onClick={(e) => {
+                                    if (email===""){
+                                        
+                                       setAlert(true);
+                                    }
+                                    else{
+                                        
+                                        tryLogin(e, email, password);
+                                        isLogged ?  
+                                        history.push("/userstudent") 
+                                        : setAlert(true);}}} >Iniciar Sesión</button>
+                                
+                                
                             </div>
+                            <div className='forgot'>
+                                {forgotPassword && <div class="row">
+                                    <FormForgot email={email}></FormForgot>
+                                </div>}
+                            <div>
+                                {!emailValid&&<label>Introduzca un correo valido</label>}
+                                {!emailEmpty&&<label>No ha introducido el correo</label>}
+                            </div> 
+                            {alert&&<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <strong>Error en tus credenciales!</strong> Repita el logueo.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" 
+                                onClick={()=>setAlert(false)}></button>
+                            </div>}
+
+                            </div>
+                           
                             
                             
                         </Form>

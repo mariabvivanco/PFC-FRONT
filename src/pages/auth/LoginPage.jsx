@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react';
+import {React, useState, useContext} from 'react';
 import Loginformik from '../../components/pure/forms/loginFormik';
+import { appContext } from '../../App';
+
+
 
 
 import '../../styles/Loginpage.css'
@@ -17,7 +20,7 @@ const Loginpage = ({tryLogin}) => {
                                                                                           
                                     </div>
                                     <div class= "row" id="form">
-                                        <Loginformik>{tryLogin}</Loginformik>
+                                        <Loginformik tryLogin={tryLogin}></Loginformik>
                                     </div>
 
                                 

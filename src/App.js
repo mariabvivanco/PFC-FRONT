@@ -12,16 +12,19 @@ export const appContext = React.createContext([]);
 
 function App() {
   /*Nuevo*/
-  const [ searchTerm, setSearchTerm ] = useState('');
+  	const [ searchTerm, setSearchTerm ] = useState('');
 	const [ state, dispatch ] = useReducer(LoginReducer, INITIAL_STATE);
 	const { isLogged } = state;
-  const history = useHistory();
+  	const history = useHistory();
+  
 
 	const tryLogin = (e, email, password) => {
 		e.preventDefault();
 		dispatch({type: RESET_ERRORS});
 		if(email === '' || password === '') {
 			dispatch({type: ERROR, payload: {error: 'Los campos correo electrónico y/o contraseña no pueden estar vacíos'}});
+			localStorage.setItem("login_data", '');
+			console.log("deslogueado");
 		} else {
 			dispatch({type: LOGIN});
 			login(email, password)
@@ -31,12 +34,18 @@ function App() {
 					localStorage.setItem("login_data", JSON.stringify({email, token: token}));
 					dispatch({type: TOKEN, payload: {token: token}})
 					dispatch({type: SUCCESS});
-					history.push('/');
+					
+          			console.log("ok");
+					
 				} else {
 					dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión. Inténtalo de nuevo o más tarde.'}});
+					localStorage.setItem("login_data", '');
+					console.log("deslogueado");
 				}
-			}).catch(error => dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión: ' + error}}));
+			}).catch(error => { dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión: ' + error}});
+								localStorage.setItem("login_data", '');});
 		}
+		
 	}
   
   
@@ -47,12 +56,10 @@ function App() {
     {/* Route Switch */}
     <Switch>
       {/* Redirections to protect our routes */}
-      <Route exact path='/'> {!isLogged ?
-         <Redirect from='/' to='/login' />:
-         <Redirect from='/' to='/userstudent' />}</Route>
-      <Route exact path='/login' > <Loginpage tryLogin={tryLogin}/> </Route>
-      <Route exact path='/userstudent' ><Userstudent/> </Route>
-      <Route exact path='/studentfile' ><Student/></Route>
+        <Route exact path='/'> {isLogged ? <Redirect from='/' to='/userstudent' /> :<Redirect from='/' to='/login' />}</Route>
+        <Route exact path='/login' > <Loginpage tryLogin={tryLogin}/> </Route>
+        <Route exact path='/userstudent' ><Userstudent/> </Route>
+        <Route exact path='/studentfile' ><Student/></Route>
       <Route component={Notfoundpage}/>
     </Switch>
   </Router>

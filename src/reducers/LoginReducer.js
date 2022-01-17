@@ -8,7 +8,7 @@ export const TOKEN = 'TOKEN';
 const loginData = localStorage.getItem("login_data") ? JSON.parse(localStorage.getItem("login_data")) : "";
 
 export const INITIAL_STATE = {
-	mail: loginData !== "" ? loginData.mail : "",
+	mail:loginData !== "" ? loginData.mail : "",
 	password: '',
 	error: '',
 	isLoading: false,
@@ -44,7 +44,9 @@ export const LoginReducer = (state, action) => {
 				...state,
 				error: action.payload.error,
 				isLoading: false,
-				isLogged: false
+				isLogged: false,
+				
+				
 			}
 		case RESET_ERRORS: 
 			return {
