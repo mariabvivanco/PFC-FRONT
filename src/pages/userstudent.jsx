@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useContext } from 'react';
 import { Redirect, useHistory, Link } from 'react-router-dom';
 import $ from 'jquery'
 import "datatables.net-dt/js/dataTables.dataTables"
@@ -8,12 +8,16 @@ import "../styles/userstudent.css"
 import FilterUser from '../components/pure/forms/filterUser';
 import { Form } from 'formik';
 import FormAddStudent from '../components/pure/forms/formAddStudent';
+import {appContext} from "../App"
 
 
 
 const Userstudent = () => {
     
     const history = useHistory();
+    const { token } = useContext(appContext);
+
+    
     const students = [
         {
             "id": 1,

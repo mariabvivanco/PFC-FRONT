@@ -6,7 +6,8 @@ import * as Yup from 'yup';
 import { appContext } from '../../../App';
 import '../../../styles/loginFormix.css'
 import FormForgot from './formForgot';
-import {forgot as forgotAxios} from "../../../services/loginService"
+import {forgot as forgotAxios} from "../../../services/loginService";
+import * as CryptoJS from "crypto-js"
 
 
 
@@ -23,8 +24,8 @@ const loginSchema = Yup.object().shape(
 
 const Loginformik = ({tryLogin}) => {
 
-    const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
+    
+    const [ encryptPassword, setEncryptPassword ] = useState('');
 	const { isLoading, isLogged, error } = useContext(appContext);
     const[forgotPassword, setForgot] = useState(false);
     const[emailValid, setEmailv] = useState(true);
@@ -41,10 +42,31 @@ const Loginformik = ({tryLogin}) => {
 
     const initialCredentials = {
         email: credentialUser ? credentialUser.email : "",
-        password: credentialUser ? credentialUser.password : ""
+        password:credentialUser ? credentialUser.password: ""
     }
+
+    const [ email, setEmail ] = useState(initialCredentials.email);
+	
+
+    
 	
     const history = useHistory();
+
+    const CryptoJS = require("crypto-js");
+
+    const encrypt = (text) => {
+        const passphrase = "123";
+        return CryptoJS.AES.encrypt(text, passphrase).toString();
+    };
+
+    const decrypt = (ciphertext) => {
+        const passphrase = "123";
+        const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+        const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText;
+    };
+
+    const [ password, setPassword ] = useState(credentialUser ? decrypt(initialCredentials.password) : '');
 
     const goRegister = (e) => {
 		e.preventDefault();
@@ -104,7 +126,7 @@ const Loginformik = ({tryLogin}) => {
                                   name="email"
                                   placeholder="Introduce tu correo"
                                   
-                                  value={email} 
+                                  value={email}
                                   onChange={(e) => setEmail(e.currentTarget.value)}
                                   />
                                 {errors.email && touched.email && (
@@ -136,9 +158,14 @@ const Loginformik = ({tryLogin}) => {
                                 <div class="col col-sm-1" id="check">
                                     <div class="form-check" id="check">
                                     < input id="check" type="checkbox" ref={remember}
-                                     onChange={()=>remember.current.checked 
-                                        ? localStorage.setItem('credentialsuser',JSON.stringify({email, password}))
-                                        :localStorage.setItem('credentialsuser', "")}/>
+                                    checked = {credentialUser ? true : false}
+                                     onChange={()=>
+                                        
+                                        {setEncryptPassword(encrypt(password));
+                                        remember.current.checked 
+                                        
+                                        ? localStorage.setItem('credentialsuser',JSON.stringify({email, password:encryptPassword}))
+                                        :localStorage.setItem('credentialsuser', "")}}/>
                                     </div>
                                     </div>
                                     <div class="col col-sm-5">
