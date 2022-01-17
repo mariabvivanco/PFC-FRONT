@@ -31,11 +31,17 @@ const Loginformik = ({tryLogin}) => {
     const[emailEmpty, setEmailEmpty] = useState(true);
     const inputEmail = useRef();
     const inputPassword = useRef();
+    const remember = useRef();
     const [alert, setAlert] = useState(false);
+    
+    const credentialUser = localStorage.getItem("credentialsuser") ? JSON.parse(localStorage.getItem("credentialsuser")) : "";
+    
+
+     
 
     const initialCredentials = {
-        email: '',
-        password: ''
+        email: credentialUser ? credentialUser.email : "",
+        password: credentialUser ? credentialUser.password : ""
     }
 	
     const history = useHistory();
@@ -74,7 +80,7 @@ const Loginformik = ({tryLogin}) => {
                     await new Promise((r) => setTimeout(r, 1000));
                     alert(JSON.stringify(values, null, 2));
                     // We save the data in the localstorage
-                    await localStorage.setItem('credentials', values);
+                    //await localStorage.setItem('credentials', values);
                     //history.push('/profile');
                 }}
             >
@@ -129,11 +135,16 @@ const Loginformik = ({tryLogin}) => {
                             <div class='row' id="otherdata">
                                 <div class="col col-sm-1" id="check">
                                     <div class="form-check" id="check">
-                                    < input id="check" type="checkbox"/>
+                                    < input id="check" type="checkbox" ref={remember}
+                                     onChange={()=>remember.current.checked 
+                                        ? localStorage.setItem('credentialsuser',JSON.stringify({email, password}))
+                                        :localStorage.setItem('credentialsuser', "")}/>
                                     </div>
                                     </div>
                                     <div class="col col-sm-5">
-                                    <label id="remember" class="form-check-label" for="exampleCheck1">Recuérdame</label>
+                                    <label id="remember" class="form-check-label" for="exampleCheck1" 
+                                       
+                                    >Recuérdame</label>
                                 </div>
                             
                             <div class="col col-sm-6" id="forgotten" onClick={()=> {
@@ -179,6 +190,7 @@ const Loginformik = ({tryLogin}) => {
                             </div>}
 
                             </div>
+                            
                            
                             
                             
