@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { Component, useEffect, useContext } from 'react';
+import React, { Component, useEffect, useContext, useState } from 'react';
 import { Redirect, useHistory, Link } from 'react-router-dom';
 import $ from 'jquery'
 import "datatables.net-dt/js/dataTables.dataTables"
@@ -9,6 +9,8 @@ import FilterUser from '../components/pure/forms/filterUser';
 import { Form } from 'formik';
 import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
+import {Students} from "../models/students"
+import DataTable from 'react-data-table-component';
 
 
 
@@ -16,105 +18,149 @@ const Userstudent = () => {
     
     const history = useHistory();
     const { token } = useContext(appContext);
+    const [students, setStudents] =  useState([])
+    const customStyles = {
+        rows: {
+            style: {
+                
+            },
+        },
+        headCells: {
+            style: {
+                paddingLeft: '8px', // override the cell padding for head cells
+                paddingRight: '8px',
+                fontWeight: 'bold',
+                FontFamily: 'Raleway'
+            },
+        },
+        cells: {
+            style: {
+                paddingLeft: '8px', // override the cell padding for data cells
+                paddingRight: '8px',
+            },
+        },
+        
+    };
 
+    const  handleRowClick = () => row => { 
+        console.log(row); 
+     }
+
+    const columns = [
+        {
+            name: 'Nombre',
+            selector: row => row.name,
+            sortable:true,
+            
+            
+        },
+        {
+            name: 'Ciudad',
+            selector: row => row.city,
+            sortable:true
+        },
+        {
+            name: 'País',
+            selector: row => row.country,
+            sortable:true
+        },
+        {
+            name: 'Teléfono',
+            selector: row => row.phoneNumber,
+            sortable:false
+        },
+        {
+            name: 'Correo Electrónico',
+            selector: row => row.email,
+            sortable:true
+        },
+        {
+            name: 'Etiquetas',
+            selector: row => row.skills,
+            sortable:false,
+            id: 'skillsgreen',
+           
+            
+            
+                
+        },
+        
+    ];
     
-    const students = [
-        {
-            "id": 1,
-            "name": "María Beatriz Vivanco Marrero",
-            "country": "España",
-            "city": "Madrid",
-            "phoneNumber": "+3464100000",
-            "email": "mariab.vivanco@gmail.com",
-            "presence": "Mixed",
-            "transfer": false,
-            "skills": [
-                {
-                    "skill": "React"
-                },
-                {
-                    "skill": "Spring"
-                },
-                {
-                    "skill": "Angular"
-                },
-                {
-                    "skill": "Java"
-                }
-            ],
-            "photo": null,
-            "document": null
-        },
-        {
-            "id": 2,
-            "name": "Leonardo Valdés Amaya",
-            "country": "España",
-            "city": "Valencia",
-            "phoneNumber": "+3464100001",
-            "email": "leonardo@gmail.com",
-            "presence": "Mixto",
-            "transfer": false,
-            "skills": [
-                {
-                    "skill": "React"
-                },
-                {
-                    "skill": "Angular"
-                }
-            ],
-            "photo": null,
-            "document": null
-        },
-        {
-            "id": 3,
-            "name": "Greidy Valdés Vivanco",
-            "country": "Cuba",
-            "city": "Habana",
-            "phoneNumber": "+5345648524",
-            "email": "leonardo@gmail.com",
-            "presence": "Remote",
-            "transfer": true,
-            "skills": [
-                {
-                    "skill": "Java"
-                },
-                {
-                    "skill": "Angular"
-                },
-                {
-                    "skill": "Sprint"
-                },
-                {
-                    "skill": "React"
-                }
-            ],
-            "photo": null,
-            "document": null
-        }]
+    const data = 
+        students.map((student, index) => {
+            return (
+                {id : {index},
+                name: student.name,
+                city: student.city,
+                country: student.country,
+                phoneNumber: student.phoneNumber,
+                email: student.email,
+                skills: convertSkills(student.skills), 
+            })}        
+                )
+                        
+    function convertSkills(skills) {
+        
+        switch (skills.length) {
+            case 0: return ""
+            case 1: return [(skills[0].skill)]
+            case 2: return [skills[0].skill, skills[1].skill]
+            default: return [skills[0].skill, skills[1].skill, ("+"+String(skills.length-2))]
+
+        }
+
+
+    }
+
+   
+
+      
       
        
        useEffect(() =>{
-        var table = $('#tabla').DataTable({  paging: false,  info:false,
-            dom: '<"search"><t>',
-                language: {
-                search: "Alumnos", //To remove Search Label _INPUT_
-                searchPlaceholder: "Buscar por nombre email o palabra clave."
+        (async () => {
+            const tokenHeader = {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            };
+            let response = await fetch(
+                `http://localhost:8091/api/student/all`
+                ,tokenHeader
+            );
+            const responseData = await response;
+            if (responseData.status !== 200) {
+                localStorage.removeItem('login_data');
+                window.location.reload();
+            } else {
+                setStudents( await responseData.json())
                 
-        }
-        });
-        $('#search').on( 'keyup', function () {
-            table.search( this.value ).draw();
-            
-             } );
+            }
+        })();
 
-             
+       /* (async () => {
+            const tokenHeader = {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            };
+            let response = await fetch(
+                `http://localhost:8091/api/student/all`
+                ,tokenHeader
+            );
+            const responseData = await response;
+            if (responseData.status !== 200) {
+                localStorage.removeItem('login_data');
+                window.location.reload();
+            } else {
+                setStudents( await responseData.json())
+                
+            }
+        })();*/
+
+
        
-             
-         $('#tabla tbody').on( 'click', 'tr', function () {
-                                           
-            history.push("/studentfile");
-                        
-        } );
 
         
  
@@ -123,9 +169,6 @@ const Userstudent = () => {
                 $(this).find('.modal-content').empty();
             })
          
-            
-
-        
              
                 
             
@@ -158,44 +201,16 @@ const Userstudent = () => {
                                 </div>
 
                             </div>
-                            <div class="row">
-                                <div class id="table">
-                                <table id="tabla" class="table table-responsive">
-                                    <thead>
-                                         <tr>
-                                            <th scope="col">Nombre  </th>
-                                            <th scope="col">Ciudad </th>
-                                            <th scope="col">País </th>
-                                            <th scope="col">Teléfono </th>
-                                            <th scope="col">Correo Electrónico </th>
-                                            <th scope="col">Etiquetas </th>
-                                        </tr>
-                                    </thead>
+                            
+                            <div class="row" id="tabla">
+                                <DataTable
+                                    columns={columns}
+                                    data={data}
+                                    customStyles={customStyles}
+                                    onRowDoubleClicked={()=>{history.push("/studentfile")} }
+                                   
                                     
-                                    <tbody >
-                                        { students.map((student, index) => {
-                                            return (
-                                                <tr>
-                                                    <td>{student.name}</td>
-                                                    <td>{student.city}</td>
-                                                    <td>{student.country}</td>
-                                                    <td>{student.phoneNumber}</td>
-                                                     <td>{student.email}</td>
-                                                    <td>
-                                                    { student.skills.map((skill, index) => {
-                                                        return (
-                                                            <span id="tags">{skill.skill}</span>
-                                                        )})}
-                                                    </td>
-                                                </tr>
-                                                )}
-                                        )}
-                       
-                                       
-                                    </tbody>
-                                      
-                                </table>
-                                </div>    
+                                />
                             </div>
 
                         </div>

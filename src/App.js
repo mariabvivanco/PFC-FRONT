@@ -11,7 +11,7 @@ import { login, register } from './services/loginService';
 export const appContext = React.createContext([]);
 
 function App() {
-  /*Nuevo*/
+ 
   	const [ searchTerm, setSearchTerm ] = useState('');
 	const [ state, dispatch ] = useReducer(LoginReducer, INITIAL_STATE);
 	const { isLogged } = state;
@@ -57,9 +57,9 @@ function App() {
     <Switch>
       {/* Redirections to protect our routes */}
         <Route exact path='/'> {isLogged ? <Redirect from='/' to='/userstudent' /> :<Redirect from='/' to='/login' />}</Route>
-        <Route exact path='/login' > <Loginpage tryLogin={tryLogin}/> </Route>
-        <Route exact path='/userstudent' ><Userstudent/> </Route>
-        <Route exact path='/studentfile' ><Student/></Route>
+        <Route exact path='/login' > {isLogged ? <Redirect from='/login' to='/userstudent' /> :<Loginpage tryLogin={tryLogin}/>} </Route>
+        <Route exact path='/userstudent' >{!isLogged ? <Redirect from='/userstudent' to='/login' /> :<Userstudent /> }</Route>
+        <Route exact path='/studentfile' >{!isLogged ? <Redirect from='/studentfile' to='/login' />:<Student/>}</Route>
       <Route component={Notfoundpage}/>
     </Switch>
   </Router>

@@ -93,10 +93,15 @@ button#add{
 
 
 }
-div#table{
-    padding-top: 2%;
+div#tabla{
+    margin-top: 2%;
+    background-color: #FFFFFF;                
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    Font-family: Raleway; 
 
 }
+
 table{
     background-color: #FFFFFF;                
     border-top-left-radius: 15px;
@@ -193,4 +198,8 @@ div#filter{
 
 .modal-title{
     font-weight: bold;
+}
+
+#skillsgreen{
+    background-color: #32D4A4;
 }
