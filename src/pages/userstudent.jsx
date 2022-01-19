@@ -148,7 +148,9 @@ const Userstudent = () => {
 					localStorage.setItem("login_data", '');
 					
 				}
-			}).catch(console.log('error'));
+			}).catch(()=>{console.log('error');
+                localStorage.setItem("login_data", '');}
+            );
             
     }
 
@@ -169,7 +171,8 @@ const Userstudent = () => {
 					localStorage.setItem("login_data", '');
 					
 				}
-			}).catch(console.log('error'));
+			}).catch(()=>{console.log('error');
+            localStorage.setItem("login_data", '');});
 
 
             

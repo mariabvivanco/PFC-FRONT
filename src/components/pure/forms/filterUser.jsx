@@ -1,27 +1,22 @@
 /* eslint-disable no-restricted-globals */
 
-
-import { Alert } from 'bootstrap';
 import React, { useState, useRef } from 'react';
 import "../../../styles/filterUser.css"
 import PropTypes from 'prop-types';
 
 const FilterUser = ({modifyFilter}) => {
     
-    const countryInit="País"
+   
     const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     
     
    
     const [tags, setTags] = useState([]);
-    const [name, setName] = useState(null);
-    const [city, setCity] = useState(null);
-    const [presence, setPresence] = useState(null);
-    const [transfer, setTransfer] = useState(null);
-    const [country, setCountry] = useState(null);
+    
     const inputRef = useRef(null);
     const cityRef = useRef();
+    const countryRef = useRef();
     const listRef = useRef();
     const presRef = useRef(null);
     const remoteRef = useRef(null);
@@ -50,8 +45,8 @@ const FilterUser = ({modifyFilter}) => {
 
         }
 
-        for (var i=0; i<tags.length&&!duplic;i++){
-            if (tags[i]==tag)
+        for (i=0; i<tags.length&&!duplic;i++){
+            if (tags[i]===tag)
                 duplic=true;
 
         }
@@ -92,6 +87,18 @@ const FilterUser = ({modifyFilter}) => {
         if (traslateRef.current.checked) 
             traslateRef.current.checked=false;
        }
+    function deleteFilter() {
+
+        modifyFilter(null,null,null,null,null);
+        notransfRef.current.checked=false;
+        traslateRef.current.checked=false;
+        presRef.current.checked=false;
+        remoteRef.current.checked=false;
+        cityRef.current.value='';
+        countryRef.current.value=''
+    }
+
+    
 
     return (
         <div>
@@ -103,7 +110,7 @@ const FilterUser = ({modifyFilter}) => {
                         <p id="title" >Filtros de Busqueda</p>
                     </div>
                     <div class="col col-sm-2">
-                        <i id="trash" className='bi-trash task-action' onClick={() => {}}></i> 
+                        <i id="trash" className='bi-trash task-action' onClick={() => {deleteFilter()}}></i> 
                     </div>
 
                 </div>
@@ -128,10 +135,11 @@ const FilterUser = ({modifyFilter}) => {
                         }
                     )}
                                      
-                    <p id="country" >País</p>
-                    <select id="selectcountry" onChange={
-                        event => {setCountry(event.target.value);
+                    <p id="country"  >País</p>
+                    <select id="selectcountry" ref={countryRef} onChange={
+                        event => {
                         modifyFilter('*',event.target.value,'*','*','*')}}>
+                        <option id="example" value="" disabled selected hidden >Elige un país</option>
                         <option>
                             España
                         </option>
@@ -142,8 +150,9 @@ const FilterUser = ({modifyFilter}) => {
                     
                     <p id="city" >Ciudad</p>
                     <select   id="selectcity" ref={cityRef} onChange={
-                        event => {setCity(event.target.value);
+                        event => {
                         modifyFilter(event.target.value,'*','*','*','*')}}>
+                        <option id="example" value='' >Elige una ciudad</option>
                         <option>
                             Valencia
                         </option>
