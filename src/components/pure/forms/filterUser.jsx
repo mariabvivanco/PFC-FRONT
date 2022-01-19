@@ -34,8 +34,8 @@ const FilterUser = ({modifyFilter}) => {
         const index = tags.indexOf(tag);
         const tempTags = [...tags];
         tempTags.splice(index,1);
-        modifyFilter(city,country,presence,tags,transfer)
         setTags(tempTags);
+        modifyFilter('*','*','*',tempTags,'*')
     }
 
     function addTag(tag){
@@ -60,7 +60,7 @@ const FilterUser = ({modifyFilter}) => {
             const tempTags = [...tags];
             tempTags.push(tag);
             setTags(tempTags);
-            modifyFilter(city,country,presence,tags,transfer)
+            modifyFilter('*','*','*',tempTags,'*')
             inputRef.current.value="";
         }
         
@@ -106,7 +106,7 @@ const FilterUser = ({modifyFilter}) => {
                     <p id="country" >País</p>
                     <select id="selectcountry" onChange={
                         event => {setCountry(event.target.value);
-                        modifyFilter(city,country,presence,tags,transfer)}}>
+                        modifyFilter('*',event.target.value,'*','*','*')}}>
                         <option>
                             España
                         </option>
@@ -118,7 +118,7 @@ const FilterUser = ({modifyFilter}) => {
                     <p id="city" >Ciudad</p>
                     <select   id="selectcity" ref={cityRef} onChange={
                         event => {setCity(event.target.value);
-                        modifyFilter(city,country,presence,tags,transfer)}}>
+                        modifyFilter(event.target.value,'*','*','*','*')}}>
                         <option>
                             Valencia
                         </option>

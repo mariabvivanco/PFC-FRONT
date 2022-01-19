@@ -126,12 +126,30 @@ const Userstudent = () => {
         
         
         const tempFilter = filter;
-        tempFilter.city = city;
-        tempFilter.country=country;
-        tempFilter.presence=presence;
-        tempFilter.skills=tags;
-        tempFilter.transfer=transfer
+        if (!(city=='*'))
+            tempFilter.city = city;
+        if (!(country=='*'))
+            tempFilter.country=country;
+        if (!(presence=='*'))
+            tempFilter.presence=presence;
+        if (!(tags=='*'))
+            tempFilter.skills=tags;
+        if (!(transfer=='*'))
+            tempFilter.transfer=transfer
         setFilter(tempFilter)
+        listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
+			.then((response) => {
+                
+				if(response.status === 200) {
+					setStudents(response.data)
+					
+				} else {
+					
+					localStorage.setItem("login_data", '');
+					
+				}
+			}).catch(console.log('error'));
+            
     }
 
         
@@ -153,34 +171,6 @@ const Userstudent = () => {
 				}
 			}).catch(console.log('error'));
 
-
-            const modifyFilter2 = async (city,country,presence,tags,transfer)=> {
-                const tempFilter = filter;
-                tempFilter.city = city;
-                tempFilter.country=country;
-                tempFilter.presence=presence;
-                tempFilter.skills=tags;
-                tempFilter.transfer=transfer
-                setFilter(tempFilter)
-                try{
-                    listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
-			            .then((response) => {
-                
-				            if(response.status === 200) {
-					            setStudents(response.data)
-					
-				            } else {
-					
-					            localStorage.setItem("login_data", '');
-					
-				            }
-			            }).catch(console.log('error'));
-
-                }
-                catch(error){
-                    console.log(error)
-                }
-            }
 
             
         
