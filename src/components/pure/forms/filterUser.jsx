@@ -71,15 +71,27 @@ const FilterUser = ({modifyFilter}) => {
         modifyFilter('*','*',(presRef.current.checked?"Face_to_face":null),'*','*');
         if (remoteRef.current.checked) 
             remoteRef.current.checked=false;
-        }
+    }
 
     function modifRem() {
         modifyFilter('*','*',(remoteRef.current.checked?"Remote":null),'*','*');
         if (presRef.current.checked) 
             presRef.current.checked=false;
-        }
+    }
 
-    
+    function modifTransfYes() {
+
+        modifyFilter('*','*','*','*',(traslateRef.current.checked?true:null));
+        if (notransfRef.current.checked) 
+            notransfRef.current.checked=false;
+       }
+
+    function modifTransfNo() {
+
+        modifyFilter('*','*','*','*',(notransfRef.current.checked?false:null));
+        if (traslateRef.current.checked) 
+            traslateRef.current.checked=false;
+       }
 
     return (
         <div>
@@ -159,15 +171,11 @@ const FilterUser = ({modifyFilter}) => {
                      
                     <p >Posibilidad de Traslado</p>
                     <label>
-                        <input id="check" type="checkbox" ref={traslateRef} onClick={()=>(((notransfRef.current.checked)) ?
-                             notransfRef.current.checked=false:
-                             null)} />
+                        <input id="check" type="checkbox" ref={traslateRef} onClick={()=>modifTransfYes()} />
                             Si
                     </label>
                     <label>
-                        <input id="check" type="checkbox" ref={notransfRef} onClick={()=>(((traslateRef.current.checked)) ?
-                             traslateRef.current.checked=false:
-                             null)} />
+                        <input id="check" type="checkbox" ref={notransfRef} onClick={()=>modifTransfNo()} />
                             No
                     </label>
                     
