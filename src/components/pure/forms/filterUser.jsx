@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 
 
 import { Alert } from 'bootstrap';
@@ -66,6 +67,18 @@ const FilterUser = ({modifyFilter}) => {
         
     }
 
+    function modifPres() {
+        modifyFilter('*','*',(presRef.current.checked?"Face_to_face":null),'*','*');
+        if (remoteRef.current.checked) 
+            remoteRef.current.checked=false;
+        }
+
+    function modifRem() {
+        modifyFilter('*','*',(remoteRef.current.checked?"Remote":null),'*','*');
+        if (presRef.current.checked) 
+            presRef.current.checked=false;
+        }
+
     
 
     return (
@@ -129,16 +142,16 @@ const FilterUser = ({modifyFilter}) => {
                      
                     <p >Presencial/ a distancia</p>
                     <label>
-                        <input id="check" type="checkbox" ref={presRef} 
-                          onClick={()=>(((remoteRef.current.checked)) ?
-                             remoteRef.current.checked=false:
-                             null)}/>
+                        <input id="check" type="checkbox" ref={presRef} value="true"
+                        
+                          onClick={()=>modifPres()} />
+
                             Presencial
                     </label>
                     <label>
-                        <input id="check" type="checkbox" ref={remoteRef} onClick={()=>(((presRef.current.checked)) ?
-                             presRef.current.checked=false:
-                             null)} />
+                        <input id="check" type="checkbox" ref={remoteRef}
+                            onClick={()=>modifRem()}
+                          />
                             A Distancia
                     </label>
                     
