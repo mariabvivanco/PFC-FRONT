@@ -48,8 +48,16 @@ export const findStudentsForKey = (keyWord,token) => {
 	},params: {
 		keyWord
 	}})
+		
+	
+}
 
-	axios.get('https://httpbin.org/get', { params: { answer: 42 } });
+
+export const getSkills = (token) => {
+	return axios.get('http://localhost:8091/api/skill/all', 
+	{headers: {
+		Authorization: 'Bearer ' + token
+	},})
 		
 	
 }

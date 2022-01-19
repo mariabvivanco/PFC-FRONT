@@ -11,7 +11,7 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
-import { listStudents, findStudentsForKey } from '../services/loginService';
+import { listStudents, findStudentsForKey, getSkills } from '../services/loginService';
 import Axios from "axios";
 
 
@@ -31,6 +31,7 @@ const Userstudent = () => {
     const { token } = useContext(appContext);
     const [students, setStudents] =  useState([])
     const [filter, setFilter] = useState(filterInit)
+    const [tagsOption, setTagsOption] = useState([]);
      
     const customStyles = {
         rows: {
@@ -195,6 +196,23 @@ const Userstudent = () => {
 			}).catch(()=>{console.log('error');
             localStorage.setItem("login_data", '');});
 
+            
+            getSkills(token)
+			.then((response) => {
+                
+				if(response.status === 200) {
+					setTagsOption(response.data)
+					
+				} else {
+					
+					localStorage.setItem("login_data", '');
+					
+				}
+			}).catch(()=>{console.log('error');
+                localStorage.setItem("login_data", '');}
+            );
+        
+
 
             
         
@@ -255,7 +273,7 @@ const Userstudent = () => {
                             
                         </div>
                         <div class="col col-sm-2" id="filter">
-                            <FilterUser modifyFilter={modifyFilter}></FilterUser>
+                            <FilterUser modifyFilter={modifyFilter} tagsOption={tagsOption}></FilterUser>
                             
                         </div>
                         

@@ -4,11 +4,11 @@ import React, { useState, useRef } from 'react';
 import "../../../styles/filterUser.css"
 import PropTypes from 'prop-types';
 
-const FilterUser = ({modifyFilter}) => {
+const FilterUser = ({modifyFilter,tagsOption}) => {
     
    
-    const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
-    const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
+    //const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
+    const listoption = new Array(tagsOption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     
     
    
@@ -39,8 +39,8 @@ const FilterUser = ({modifyFilter}) => {
         var exist= false;
 
 
-        for (var i=0; i<tagsoption.length&&!exist;i++){
-            if (tagsoption[i]===tag)
+        for (var i=0; i<tagsOption.length&&!exist;i++){
+            if (tagsOption[i]===tag)
                 exist=true;
 
         }
