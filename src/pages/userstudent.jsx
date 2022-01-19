@@ -11,7 +11,7 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
-import { listStudents } from '../services/loginService';
+import { listStudents, findStudentsForKey } from '../services/loginService';
 import Axios from "axios";
 
 
@@ -154,6 +154,27 @@ const Userstudent = () => {
             
     }
 
+    function searchForKey(keyWord){
+        
+        
+        
+        findStudentsForKey(keyWord,token)
+			.then((response) => {
+                
+				if(response.status === 200) {
+					setStudents(response.data)
+					
+				} else {
+					
+					localStorage.setItem("login_data", '');
+					
+				}
+			}).catch(()=>{console.log('error');
+                localStorage.setItem("login_data", '');}
+            );
+            
+    }
+
         
        
        useEffect( () =>{
@@ -208,7 +229,8 @@ const Userstudent = () => {
                             <div class="row" id="search_and_add">
                                 <div class="col col-sm-10" id="searchh">
                                     <a>Alumnos</a>   
-                                    <input type="search" name="search" id="search" placeholder="&#xf002; Buscar por nombre email o palabra clave"></input>
+                                    <input type="search" name="search" id="search" placeholder="&#xf002; Buscar por nombre o email"
+                                     onChange={()=>{searchForKey(event.target.value)}}></input>
                                 </div>
                                 <div class="col col-sm-2" >
                                     <button id="add" type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentadd">Añadir Alumnos</button>

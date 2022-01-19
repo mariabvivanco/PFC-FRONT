@@ -41,6 +41,19 @@ export const listStudents = (city,country,presence,skills,transfer,token) => {
 	
 }
 
+export const findStudentsForKey = (keyWord,token) => {
+	return axios.get('http://localhost:8091/api/student/keyWord', 
+	{headers: {
+		Authorization: 'Bearer ' + token
+	},params: {
+		keyWord
+	}})
+
+	axios.get('https://httpbin.org/get', { params: { answer: 42 } });
+		
+	
+}
+
 export const register = (name, email, password) => {
 	return axios.post('http://localhost:8091/api/auth/register', {
 		name,
