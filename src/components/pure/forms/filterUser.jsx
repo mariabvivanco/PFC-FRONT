@@ -3,10 +3,10 @@
 import { Alert } from 'bootstrap';
 import React, { useState, useRef } from 'react';
 import "../../../styles/filterUser.css"
+import PropTypes from 'prop-types';
 
-const FilterUser = () => {
-    const nameInit = "Nombre del Alumno";
-    const cityInit= "Ciudad";
+const FilterUser = ({modifyFilter}) => {
+    
     const countryInit="País"
     const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
@@ -14,11 +14,14 @@ const FilterUser = () => {
     
    
     const [tags, setTags] = useState([]);
-    const [name, setName] = useState(nameInit);
-    const [city, setCity] = useState(cityInit);
-    const [country, setCountry] = useState(countryInit);
+    const [name, setName] = useState(null);
+    const [city, setCity] = useState(null);
+    const [presence, setPresence] = useState(null);
+    const [transfer, setTransfer] = useState(null);
+    const [country, setCountry] = useState(null);
     const inputRef = useRef(null);
-    const listRef = useRef(null);
+    const cityRef = useRef();
+    const listRef = useRef();
     const presRef = useRef(null);
     const remoteRef = useRef(null);
     const traslateRef = useRef(null);
@@ -31,6 +34,7 @@ const FilterUser = () => {
         const index = tags.indexOf(tag);
         const tempTags = [...tags];
         tempTags.splice(index,1);
+        modifyFilter(city,country,presence,tags,transfer)
         setTags(tempTags);
     }
 
@@ -40,7 +44,7 @@ const FilterUser = () => {
 
 
         for (var i=0; i<tagsoption.length&&!exist;i++){
-            if (tagsoption[i]==tag)
+            if (tagsoption[i]===tag)
                 exist=true;
 
         }
@@ -56,6 +60,7 @@ const FilterUser = () => {
             const tempTags = [...tags];
             tempTags.push(tag);
             setTags(tempTags);
+            modifyFilter(city,country,presence,tags,transfer)
             inputRef.current.value="";
         }
         
@@ -73,7 +78,7 @@ const FilterUser = () => {
                         <p id="title" >Filtros de Busqueda</p>
                     </div>
                     <div class="col col-sm-2">
-                        <i id="trash" className='bi-trash task-action' onClick={() => (Alert("Eliminar Filtros"))}></i> 
+                        <i id="trash" className='bi-trash task-action' onClick={() => {}}></i> 
                     </div>
 
                 </div>
@@ -99,16 +104,26 @@ const FilterUser = () => {
                     )}
                                      
                     <p id="country" >País</p>
-                    <select id="selectcountry" >
+                    <select id="selectcountry" onChange={
+                        event => {setCountry(event.target.value);
+                        modifyFilter(city,country,presence,tags,transfer)}}>
                         <option>
                             España
+                        </option>
+                        <option>
+                            Cuba
                         </option>
                     </select>
                     
                     <p id="city" >Ciudad</p>
-                    <select id="selectcity" >
+                    <select   id="selectcity" ref={cityRef} onChange={
+                        event => {setCity(event.target.value);
+                        modifyFilter(city,country,presence,tags,transfer)}}>
                         <option>
                             Valencia
+                        </option>
+                        <option>
+                            Madrid
                         </option>
                     </select>
                      
@@ -149,6 +164,11 @@ const FilterUser = () => {
         </div>
         
     );
+}
+
+FilterUser.protoTypes = {
+    modifyFilter: PropTypes.func.isRequired,
+    
 }
 
 export default FilterUser;

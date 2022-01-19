@@ -11,14 +11,27 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
+import { listStudents } from '../services/loginService';
+import Axios from "axios";
 
 
 
 const Userstudent = () => {
+
+    const filterInit = {
+        country: null,
+        city:null,
+        presence:null,
+        transfer:null,
+        skills:null,
+
+    }
     
     const history = useHistory();
     const { token } = useContext(appContext);
     const [students, setStudents] =  useState([])
+    const [filter, setFilter] = useState(filterInit)
+     
     const customStyles = {
         rows: {
             style: {
@@ -42,10 +55,7 @@ const Userstudent = () => {
         
     };
 
-    const  handleRowClick = () => row => { 
-        console.log(row); 
-     }
-
+    
     const columns = [
         {
             name: 'Nombre',
@@ -79,8 +89,7 @@ const Userstudent = () => {
             selector: row => row.skills,
             sortable:false,
             id: 'skillsgreen',
-           
-            
+                      
             
                 
         },
@@ -113,66 +122,78 @@ const Userstudent = () => {
 
     }
 
-   
-
-      
-      
-       
-       useEffect(() =>{
-        (async () => {
-            const tokenHeader = {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            };
-            let response = await fetch(
-                `http://localhost:8091/api/student/all`
-                ,tokenHeader
-            );
-            const responseData = await response;
-            if (responseData.status !== 200) {
-                localStorage.removeItem('login_data');
-                window.location.reload();
-            } else {
-                setStudents( await responseData.json())
-                
-            }
-        })();
-
-       /* (async () => {
-            const tokenHeader = {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            };
-            let response = await fetch(
-                `http://localhost:8091/api/student/all`
-                ,tokenHeader
-            );
-            const responseData = await response;
-            if (responseData.status !== 200) {
-                localStorage.removeItem('login_data');
-                window.location.reload();
-            } else {
-                setStudents( await responseData.json())
-                
-            }
-        })();*/
-
-
-       
+    function modifyFilter(city,country,presence,tags,transfer){
+        
+        
+        const tempFilter = filter;
+        tempFilter.city = city;
+        tempFilter.country=country;
+        tempFilter.presence=presence;
+        tempFilter.skills=tags;
+        tempFilter.transfer=transfer
+        setFilter(tempFilter)
+    }
 
         
- 
+       
+       useEffect( () =>{
+
+        
+            
+            listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
+			.then((response) => {
+                
+				if(response.status === 200) {
+					setStudents(response.data)
+					
+				} else {
+					
+					localStorage.setItem("login_data", '');
+					
+				}
+			}).catch(console.log('error'));
+
+
+            const modifyFilter2 = async (city,country,presence,tags,transfer)=> {
+                const tempFilter = filter;
+                tempFilter.city = city;
+                tempFilter.country=country;
+                tempFilter.presence=presence;
+                tempFilter.skills=tags;
+                tempFilter.transfer=transfer
+                setFilter(tempFilter)
+                try{
+                    listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
+			            .then((response) => {
+                
+				            if(response.status === 200) {
+					            setStudents(response.data)
+					
+				            } else {
+					
+					            localStorage.setItem("login_data", '');
+					
+				            }
+			            }).catch(console.log('error'));
+
+                }
+                catch(error){
+                    console.log(error)
+                }
+            }
+
+            
+        
+		
+            
+
             $('#studentadd').on('hidden.bs.modal', function (e) {
                 $(this).removeData('bs.modal');
                 $(this).find('.modal-content').empty();
             })
-         
-             
-                
-            
        }, [])
+    
+
     
         return (
             
@@ -219,7 +240,7 @@ const Userstudent = () => {
                             
                         </div>
                         <div class="col col-sm-2" id="filter">
-                            <FilterUser></FilterUser>
+                            <FilterUser modifyFilter={modifyFilter}></FilterUser>
                             
                         </div>
                         

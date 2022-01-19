@@ -26,8 +26,17 @@ export const changePassword = (email,password) => {
 	});
 }
 
-export const listStudents = () => {
-	return axios.post('http://localhost:8091/api/student/all') 
+export const listStudents = (city,country,presence,skills,transfer,token) => {
+	return axios.post('http://localhost:8091/api/student/allFilter', {
+		city,
+		country,
+		presence,
+		skills,
+		transfer,
+	},
+	{headers: {
+		Authorization: 'Bearer ' + token
+	}})
 		
 	
 }
@@ -39,3 +48,4 @@ export const register = (name, email, password) => {
 		password
 	});
 }
+
