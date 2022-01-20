@@ -62,6 +62,45 @@ export const getSkills = (token) => {
 	
 }
 
+export const getCities = (token) => {
+	return axios.get('http://localhost:8091/api/student/city', 
+	{headers: {
+		Authorization: 'Bearer ' + token
+	},})
+		
+	
+}
+
+export const getCountries = (token) => {
+	return axios.get('http://localhost:8091/api/student/country', 
+	{headers: {
+		Authorization: 'Bearer ' + token
+	},})
+		
+	
+}
+
+export const addStudent = (student,token) => {
+	return axios.post('http://localhost:8091/api/student/create', 
+	{
+		name:student.name,
+		country: student.country,
+		city: student.city,
+		phoneNumber: student.phoneNumber,
+		email:student.email,
+		presence: student.presence,
+		transfer:student.transfer,
+		skills: student.skills,
+		photo:student.photo,
+		document: student.document
+	},
+	{headers: {
+		Authorization: 'Bearer ' + token
+	},})
+		
+	
+}
+
 export const register = (name, email, password) => {
 	return axios.post('http://localhost:8091/api/auth/register', {
 		name,

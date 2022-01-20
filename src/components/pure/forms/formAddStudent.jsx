@@ -1,19 +1,43 @@
 import {React, useState, useRef} from 'react';
+import {Students} from '../../../models/students'
+import PropTypes from 'prop-types'
+import UserStudent from '../../../pages/userstudent'
 
 import "../../../styles/formAddStudent.css"
 
-const FormAddStudent = () => {
+
+const FormAddStudent = ({studentNew}) => {
     const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     const pdfInit=true;
     const photoInit=true;  
+
+    const studentInit = {
+        name: null,
+        country: null,
+        city:null,
+        phoneNumber:null,
+        email:null,
+        presence:'Remote',
+        transfer:false,
+        skills:null,
+        photo:null,
+        document:null
+
+    }
    
     const [tags, setTags] = useState([]);
     const [pdf, setPdf] = useState(pdfInit);
     const [photo, setPhoto] = useState(photoInit);
+    const [student, setStudent] = useState(studentInit);
+    
+    
    
-    const inputRef = useRef(null);
-    const listRef = useRef(null);
+    const nameRef = useRef();
+    const listRef = useRef();
+    const inputRef = useRef();
+
+    
 
     function deleteTag(tag){
         console.log('Detele this Tag:', tag);
@@ -56,7 +80,13 @@ const FormAddStudent = () => {
             <div class="row">
                 <div class="col-6" id="datastudent">
                     <label class="label" >Nombre y Apellidos</label>
-                    <input name="studentname" id="entry" type="text" placeholder="Ej: Juan Pérez Lorca"  />
+                    <input name="studentname" id="entry" type="text" ref={nameRef}  placeholder="Ej: Juan Pérez Lorca"
+                    onChange={(event)=>{
+                        const studentTemp = student;
+                        studentTemp.name = event.target.value
+                        setStudent(studentTemp)
+                        studentNew(studentTemp)}}
+                       />
                     
                     <div class="row">
                         <div class="col-6">
@@ -96,7 +126,15 @@ const FormAddStudent = () => {
                                     <option>Nueva Yotk</option>
                                 </select>
                                 <label  class="label">Email</label>
-                                <input class="entry" type="email" placeholder='Ej: user@mail.com'/>
+                                <input class="entry" type="email" placeholder='Ej: user@mail.com'
+                                 onChange={event=>{
+                                    
+                                    
+                                    const studentTemp = student;
+                                    studentTemp.email = event.target.value
+                                    setStudent(studentTemp)
+                                    studentNew(studentTemp)
+                                }}/>
                                 <label  class="label">Traslado</label>
                                 <select id="select" class="entry" defaultValue="">
                                     <option id="example" value="" disabled selected hidden >Elige una opción</option>
@@ -185,5 +223,7 @@ const FormAddStudent = () => {
         </>
     );
 }
+
+
 
 export default FormAddStudent;

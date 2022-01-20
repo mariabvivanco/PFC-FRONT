@@ -11,7 +11,7 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
-import { listStudents, findStudentsForKey, getSkills } from '../services/loginService';
+import { listStudents, findStudentsForKey, getSkills, addStudent } from '../services/loginService';
 import Axios from "axios";
 
 
@@ -26,12 +26,37 @@ const Userstudent = () => {
         skills:null,
 
     }
+
+    const studentInit = {
+        name: null,
+        country: null,
+        city:null,
+        phoneNumber:null,
+        email:null,
+        presence:'Remote',
+        transfer:false,
+        skills:null,
+        photo:null,
+        document:null
+
+    }
     
     const history = useHistory();
     const { token } = useContext(appContext);
+    const [studentModal, setStudentModal] =  useState(studentInit)
+    const [studentPrueba, setStudentPrueba] =  useState(studentInit)
     const [students, setStudents] =  useState([])
     const [filter, setFilter] = useState(filterInit)
     const [tagsOption, setTagsOption] = useState([]);
+
+
+    function studentNew  (student) {
+        setStudentPrueba(student)
+
+    }
+
+    
+    
      
     const customStyles = {
         rows: {
@@ -154,6 +179,34 @@ const Userstudent = () => {
             );
             
     }
+
+    function studentNew  (student) {
+        setStudentPrueba(student)
+
+    }
+
+    function addStudentNew(){
+        
+        
+        addStudent(studentPrueba,token)
+			.then((response) => {
+                
+				if(response.status === 200) {
+					console.log(response.status)
+					
+				} else {
+					
+					localStorage.setItem("login_data", '');
+                    console.log(response.status)
+					
+				}
+			}).catch(()=>{console.log('error de no respuesta');
+                localStorage.setItem("login_data", '');}
+            );
+            
+    }
+
+
 
     function searchForKey(keyWord){
         
@@ -289,16 +342,21 @@ const Userstudent = () => {
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             <div className="modal-body">
-                                <FormAddStudent></FormAddStudent>
+                                <FormAddStudent studentNew={studentNew}></FormAddStudent>
+                                
+                                
                             </div>
                             <div className="modal-footer">
                                 
-                                <button id="save" type="button" className="btn btn-primary">Guardar</button>
+                                <button id="save" type="button" className="btn btn-primary"
+                                     onClick={()=>{addStudentNew()}} >Guardar</button>
                                 <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <input name="studentname" id="entry" type="text"  value={studentPrueba.name+ studentPrueba.email}
+                                    />
 
                 
             </div>

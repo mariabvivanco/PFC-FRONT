@@ -1,19 +1,25 @@
 /* eslint-disable no-restricted-globals */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import "../../../styles/filterUser.css"
 import PropTypes from 'prop-types';
+import {getCities,getCountries} from "../../../services/loginService"
+import {appContext} from "../../../App"
 
 const FilterUser = ({modifyFilter,tagsOption}) => {
     
    
     //const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsOption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
-    
-    
+    const [cities, setCities] = useState([]);
+    const listoptioncities = new Array(cities.map((option,key) =>  <option key={key} value={option}>{option}</option>))
+    const [countries, setCountries] = useState([]);
+    const listoptioncountries = new Array(countries.map((option,key) =>  <option key={key} value={option}>{option}</option>))
    
     const [tags, setTags] = useState([]);
     
+    
+    const { token } = useContext(appContext);
     const inputRef = useRef(null);
     const cityRef = useRef();
     const countryRef = useRef();
@@ -98,6 +104,41 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
         countryRef.current.value=''
     }
 
+    useEffect( () =>{
+      
+
+        
+        getCities(token)
+        .then((response) => {
+            
+            if(response.status === 200) {
+                setCities(response.data)
+                
+            } else {
+                
+                localStorage.setItem("login_data", '');
+                
+            }
+        }).catch(()=>{console.log('error');
+            localStorage.setItem("login_data", '');}
+        );
+    
+        getCountries(token)
+        .then((response) => {
+            
+            if(response.status === 200) {
+                setCountries(response.data)
+                
+            } else {
+                
+                localStorage.setItem("login_data", '');
+                
+            }
+        }).catch(()=>{console.log('error');
+            localStorage.setItem("login_data", '');}
+        );
+   }, [])
+
     
 
     return (
@@ -140,12 +181,7 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
                         event => {
                         modifyFilter('*',event.target.value,'*','*','*')}}>
                         <option id="example" value="" disabled selected hidden >Elige un país</option>
-                        <option>
-                            España
-                        </option>
-                        <option>
-                            Cuba
-                        </option>
+                        {listoptioncountries}
                     </select>
                     
                     <p id="city" >Ciudad</p>
@@ -153,12 +189,7 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
                         event => {
                         modifyFilter(event.target.value,'*','*','*','*')}}>
                         <option id="example" value='' >Elige una ciudad</option>
-                        <option>
-                            Valencia
-                        </option>
-                        <option>
-                            Madrid
-                        </option>
+                        {listoptioncities}
                     </select>
                      
                     <p >Presencial/ a distancia</p>
