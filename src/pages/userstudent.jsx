@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import React, { Component, useEffect, useContext, useState } from 'react';
+import React, { Component, useEffect, useContext, useState, useRef } from 'react';
 import { Redirect, useHistory, Link } from 'react-router-dom';
 import $ from 'jquery'
 import "datatables.net-dt/js/dataTables.dataTables"
@@ -17,6 +17,7 @@ import Axios from "axios";
 
 
 const Userstudent = () => {
+   
 
     const filterInit = {
         country: null,
@@ -147,6 +148,11 @@ const Userstudent = () => {
 
 
     }
+
+    function empty() {$('#studentadd').on('hidden.bs.modal', function (e) {
+        $(this).removeData('bs.modal');
+        $(this).find('.modal-content').empty();
+    })}
 
     function modifyFilter(city,country,presence,tags,transfer){
         
@@ -305,7 +311,8 @@ const Userstudent = () => {
                                      onChange={()=>{searchForKey(event.target.value)}}></input>
                                 </div>
                                 <div class="col col-sm-2" >
-                                    <button id="add" type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentadd">Añadir Alumnos</button>
+                                    <button id="add" type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentadd"
+                                    >Añadir Alumnos</button>
                                 </div>
 
                             </div>
@@ -350,8 +357,9 @@ const Userstudent = () => {
                             <div className="modal-footer">
                                 
                                 <button id="save" type="button" className="btn btn-primary"
-                                     onClick={()=>{addStudentNew()}} >Guardar</button>
-                                <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                     onClick={()=>{addStudentNew(); window.location.reload ()} } >Guardar</button>
+                                <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal"
+                                >Cancelar</button>
                             </div>
                         </div>
                     </div>

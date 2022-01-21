@@ -39,7 +39,7 @@ input#photo{
     width: 100%;
 }
 
-input#entry{
+input{
     background: #F8F8F9;
     border-radius: 16px;
     margin: 0px;

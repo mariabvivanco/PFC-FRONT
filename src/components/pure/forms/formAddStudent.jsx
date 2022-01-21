@@ -1,13 +1,14 @@
-import {React, useState, useRef} from 'react';
+import {React, useState, useRef, useEffect} from 'react';
 import {Students} from '../../../models/students'
 import PropTypes from 'prop-types'
 import UserStudent from '../../../pages/userstudent'
 
 import "../../../styles/formAddStudent.css"
+import { addStudent } from '../../../services/loginService';
 
 
 const FormAddStudent = ({studentNew,tagsOption}) => {
-    //const tagsoption = ["HTMLyCSS","Spring","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
+    
     
     const listoption = new Array(tagsOption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     const pdfInit=true;
@@ -35,6 +36,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
    
     const [tags, setTags] = useState([]);
     const [pdf, setPdf] = useState(pdfInit);
+    const [selectPdf, setSelectPdf] = useState(false);
     const [photo, setPhoto] = useState(photoInit);
     const [student, setStudent] = useState(studentInit);
     
@@ -43,7 +45,6 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
     const nameRef = useRef();
     const listRef = useRef();
     const inputRef = useRef();
-
     
 
     function deleteTag(tag){
@@ -52,6 +53,11 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
         const tempTags = [...tags];
         tempTags.splice(index,1);
         setTags(tempTags);
+        const tagsTemp = tags;
+        const studentTemp = student;
+        studentTemp.skills = tagsTemp;
+        setStudent(studentTemp)
+        studentNew(studentTemp)
     }
 
     function addTag(tag){
@@ -77,7 +83,10 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
             tempTags.push(tag);
             setTags(tempTags);
             inputRef.current.value="";
+            return true;
         }
+
+        return false;
         
     }
     return (
@@ -123,8 +132,8 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                                     studentNew(studentTemp)}}/>
 
 
-                            <label  class="label" ref={presRef}>Presencialidad</label>
-                            <select class="entry" 
+                            <label  class="label" >Presencialidad</label>
+                            <select class="entry" ref={presRef}
                                 onChange={()=>{
                                     const studentTemp = student;
                                     function asignePresence () {
@@ -169,7 +178,19 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                                     studentNew(studentTemp)
                                 }}/>
                                 <label  class="label">Traslado</label>
-                                <select id="select" class="entry" defaultValue="">
+                                <select id="select" class="entry" defaultValue=""  ref={traslateRef}
+                                    onChange={()=>{
+                                        const studentTemp = student;
+                                        function asigneTransfer () {
+                                            if (traslateRef.current.value===('Si'))
+                                                studentTemp.transfer=true
+                                            else
+                                                studentTemp.presence=false
+                                            
+                                        }
+                                        asigneTransfer()
+                                        setStudent(studentTemp)
+                                        studentNew(studentTemp)}}>
                                     <option id="example" value="" disabled selected hidden >Elige una opción</option>
                                     <option>Si</option>
                                     <option>No</option>                        
@@ -216,16 +237,22 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                             </div>
                         </div>)
                         
-                     :  <input name="pdf" id="pdf" class="entry" type="text" placeholder="&#xf1c1;  NombreArchivo.pdf"  />
+                     :!selectPdf&&<input name="pdf" id="pdf" class="entry" type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
+                        onChange={()=>{selectPdf=true;}} />
                      
 }
                     <label>Etiquetas</label>
                     
                     <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" 
                         onChange={()=> {
-                            addTag(inputRef.current.value)
+                            const tagsTemp = tags;
                             const studentTemp = student;
-                            studentTemp.skills = tags;
+                            studentTemp.skills = tagsTemp;
+                            function addOk() {
+                                if (addTag(inputRef.current.value))
+                                    studentTemp.push(inputRef.current.value)
+                            }
+                            addOk();
                             setStudent(studentTemp)
                             studentNew(studentTemp)}}/>
                         <datalist ref={listRef} id="tagslist" >
