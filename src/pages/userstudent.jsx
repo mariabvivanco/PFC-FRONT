@@ -193,6 +193,7 @@ const Userstudent = () => {
                 
 				if(response.status === 200) {
 					console.log(response.status)
+                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
 					
 				} else {
 					
@@ -342,7 +343,7 @@ const Userstudent = () => {
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             <div className="modal-body">
-                                <FormAddStudent studentNew={studentNew}></FormAddStudent>
+                                <FormAddStudent studentNew={studentNew} tagsOption={tagsOption}></FormAddStudent>
                                 
                                 
                             </div>
@@ -355,9 +356,7 @@ const Userstudent = () => {
                         </div>
                     </div>
                 </div>
-                <input name="studentname" id="entry" type="text"  value={studentPrueba.name+ studentPrueba.email}
-                                    />
-
+              
                 
             </div>
         );

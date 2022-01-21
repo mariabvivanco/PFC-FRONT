@@ -6,11 +6,18 @@ import UserStudent from '../../../pages/userstudent'
 import "../../../styles/formAddStudent.css"
 
 
-const FormAddStudent = ({studentNew}) => {
-    const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
-    const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
+const FormAddStudent = ({studentNew,tagsOption}) => {
+    //const tagsoption = ["HTMLyCSS","Spring","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
+    
+    const listoption = new Array(tagsOption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     const pdfInit=true;
     const photoInit=true;  
+    const cityRef = useRef();
+    const countryRef = useRef();
+    const presRef = useRef(null);
+    const remoteRef = useRef(null);
+    const traslateRef = useRef(null);
+    const notransfRef = useRef(null);
 
     const studentInit = {
         name: null,
@@ -52,8 +59,8 @@ const FormAddStudent = ({studentNew}) => {
         var exist= false;
 
 
-        for (var i=0; i<tagsoption.length&&!exist;i++){
-            if (tagsoption[i]==tag)
+        for (var i=0; i<tagsOption.length&&!exist;i++){
+            if (tagsOption[i]==tag)
                 exist=true;
 
         }
@@ -95,16 +102,43 @@ const FormAddStudent = ({studentNew}) => {
                                     País
                                 </label>
                             </div>
-                            <select class="entry" id="countryname" >
+                            <select class="entry" id="countryname"  ref={countryRef}
+                                 onChange={()=>{
+                                    const studentTemp = student;
+                                    studentTemp.country = countryRef.current.value
+                                    setStudent(studentTemp)
+                                    studentNew(studentTemp)}}>
                                 <option value="" disabled selected hidden>Elige un país</option>
                                 <option>España</option>
                                 <option>Cuba</option>
                                 <option>Estados Unidos</option>
                             </select>
+
                             <label  class="label">No Teléfono</label>
-                            <input class="entry" type="phone" placeholder='Ej: +34 612 34 56 78'/>
-                            <label  class="label">Presencialidad</label>
-                            <select class="entry">
+                            <input class="entry" type="phone" placeholder='Ej: +34 612 34 56 78'
+                                onChange={(event)=>{
+                                    const studentTemp = student;
+                                    studentTemp.phoneNumber = event.target.value
+                                    setStudent(studentTemp)
+                                    studentNew(studentTemp)}}/>
+
+
+                            <label  class="label" ref={presRef}>Presencialidad</label>
+                            <select class="entry" 
+                                onChange={()=>{
+                                    const studentTemp = student;
+                                    function asignePresence () {
+                                        if (presRef.current.value===('Presencial'))
+                                            {studentTemp.presence='Face_to_face'}
+                                        if (presRef.current.value===('En Remoto'))
+                                            studentTemp.presence="Remote"
+                                        if (presRef.current.value===('Mixto'))
+                                            studentTemp.presence="Mixed"
+
+                                    }
+                                    asignePresence()
+                                    setStudent(studentTemp)
+                                    studentNew(studentTemp)}}>
                                 <option id="example" value="" disabled selected hidden >Elige una opción</option>
                                 <option>Presencial</option>
                                 <option>En Remoto</option>
@@ -118,18 +152,17 @@ const FormAddStudent = ({studentNew}) => {
                                         Ciudad
                                     </label>
                                 </div>
-                                <select class="entry" id="countryname" >
-                                    <option id="example" value="" disabled selected hidden >Elige una ciudad</option>
-                                    <option>Madrid</option>
-                                    <option>Valencia</option>
-                                    <option>La Habana</option>
-                                    <option>Nueva Yotk</option>
-                                </select>
+                                <input name="studentcity" id="studentcity" type="text" ref={cityRef}  placeholder="Elige una ciudad"
+                                    onChange={(event)=>{
+                                        const studentTemp = student;
+                                        studentTemp.city = event.target.value
+                                        setStudent(studentTemp)
+                                        studentNew(studentTemp)}}
+                       />
                                 <label  class="label">Email</label>
                                 <input class="entry" type="email" placeholder='Ej: user@mail.com'
                                  onChange={event=>{
-                                    
-                                    
+                                                                       
                                     const studentTemp = student;
                                     studentTemp.email = event.target.value
                                     setStudent(studentTemp)
@@ -188,7 +221,13 @@ const FormAddStudent = ({studentNew}) => {
 }
                     <label>Etiquetas</label>
                     
-                    <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" onChange={()=> {addTag(inputRef.current.value)}}/>
+                    <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" 
+                        onChange={()=> {
+                            addTag(inputRef.current.value)
+                            const studentTemp = student;
+                            studentTemp.skills = tags;
+                            setStudent(studentTemp)
+                            studentNew(studentTemp)}}/>
                         <datalist ref={listRef} id="tagslist" >
                             {listoption}
                         </datalist>
