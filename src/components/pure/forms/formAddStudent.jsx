@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import UserStudent from '../../../pages/userstudent'
 
 import "../../../styles/formAddStudent.css"
-import { addStudent } from '../../../services/loginService';
+import { addStudent, changePassword } from '../../../services/loginService';
 
 
 const FormAddStudent = ({studentNew,tagsOption}) => {
@@ -19,6 +19,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
     const remoteRef = useRef(null);
     const traslateRef = useRef(null);
     const notransfRef = useRef(null);
+    const pdfRef = useRef(null);
 
     const studentInit = {
         name: null,
@@ -36,15 +37,40 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
    
     const [tags, setTags] = useState([]);
     const [pdf, setPdf] = useState(pdfInit);
-    const [selectPdf, setSelectPdf] = useState(false);
+    const [pdfSelect, setPdfSelect] = useState(false);
     const [photo, setPhoto] = useState(photoInit);
     const [student, setStudent] = useState(studentInit);
+    const [valorPdf, setValorPdf] = useState("");
     
     
    
     const nameRef = useRef();
     const listRef = useRef();
     const inputRef = useRef();
+
+    function changePdf(file){
+        const size = Math.round(document.getElementById('pdf').files[0].size/1024);
+        var pdrs = document.getElementById('pdf').files[0].name+ "   " +size+"k";
+        setPdfSelect(true)
+        if (size>25480)
+            {console.log('por tamaño')
+            setValorPdf("El fichero tiene un tamaño mayor que el permitido")}
+        else 
+            if (document.getElementById('pdf').value.substr(document.getElementById('pdf').value.length-3)!=='pdf')
+            { console.log("por tipo")
+                setValorPdf("El fichero tiene que ser .pdf")
+                
+            }
+            else{console.log("no se pq")
+                setValorPdf(pdrs)}
+                const studentTemp = student;
+                studentTemp.document = file;
+                setStudent(studentTemp)
+                studentNew(studentTemp)
+        }
+
+
+    
     
 
     function deleteTag(tag){
@@ -97,6 +123,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                 <div class="col-6" id="datastudent">
                     <label class="label" >Nombre y Apellidos</label>
                     <input name="studentname" id="entry" type="text" ref={nameRef}  placeholder="Ej: Juan Pérez Lorca"
+                    maxlength="30" minlength="4" pattern="^[a-zA-Z0-9_.-]*$"  required
                     onChange={(event)=>{
                         const studentTemp = student;
                         studentTemp.name = event.target.value
@@ -185,7 +212,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                                             if (traslateRef.current.value===('Si'))
                                                 studentTemp.transfer=true
                                             else
-                                                studentTemp.presence=false
+                                                studentTemp.transfer=false
                                             
                                         }
                                         asigneTransfer()
@@ -229,7 +256,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                     {pdf ? 
                          (<div class="row">
                             <div class="col-auto" >
-                                <button name="update" id="update" onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
+                                <button name="update" id="update"  onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
                             </div>
                             <div class="col-6">
                                 <label><a id="light">Archivos soportados</a><a id="bold">.pdf</a></label>
@@ -237,8 +264,17 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                             </div>
                         </div>)
                         
-                     :!selectPdf&&<input name="pdf" id="pdf" class="entry" type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
-                        onChange={()=>{selectPdf=true;}} />
+                     :(
+                     <div>
+                         
+                            {!pdfSelect ? <input name="pdf" id="pdf" class="entry" ref={pdfRef} type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
+                                onChange={(e)=>{
+                                    let file = e.target.files[0];
+                                    changePdf(file);}} />
+                            :<div id="info" onClick={()=>{setPdfSelect(false)}}>&#xf1c1;{valorPdf}</div>}
+                        </div>
+                        )
+                        
                      
 }
                     <label>Etiquetas</label>

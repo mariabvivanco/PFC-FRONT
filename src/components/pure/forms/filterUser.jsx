@@ -193,31 +193,46 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
                     </select>
                      
                     <p >Presencial/ a distancia</p>
-                    <label>
-                        <input id="check" type="checkbox" ref={presRef} value="true"
-                        
-                          onClick={()=>modifPres()} />
-
-                            Presencial
-                    </label>
-                    <label>
-                        <input id="check" type="checkbox" ref={remoteRef}
-                            onClick={()=>modifRem()}
-                          />
-                            A Distancia
-                    </label>
-                    
+                    <div class="row">
+                        <div class="col-1">                    
+                            <input id="check" type="checkbox" ref={presRef} value="true"                    
+                                onClick={()=>modifPres()} />
+                        </div>
+                        <div class="col-11">
+                            <label>Presencial</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">                    
+                            <input id="check" type="checkbox" ref={remoteRef} value="true"                    
+                                onClick={()=>modifRem()} />
+                        </div>
+                        <div class="col-11">
+                            <label>A Distancia</label>
+                        </div>
+                    </div>
+                                  
                     
                      
                     <p >Posibilidad de Traslado</p>
-                    <label>
-                        <input id="check" type="checkbox" ref={traslateRef} onClick={()=>modifTransfYes()} />
-                            Si
-                    </label>
-                    <label>
-                        <input id="check" type="checkbox" ref={notransfRef} onClick={()=>modifTransfNo()} />
-                            No
-                    </label>
+                    <div class="row">
+                        <div class="col-1">                    
+                            <input id="check" type="checkbox" ref={traslateRef} onClick={()=>modifTransfYes()} />
+                        </div>
+                        <div class="col-11">
+                            <label>Si</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">                    
+                            <input id="check" type="checkbox" ref={notransfRef} onClick={()=>modifTransfNo()} />    
+                        </div>
+                        <div class="col-11">
+                            <label>No</label>
+                        </div>
+                    </div>
+
+
                     
     </div>
             

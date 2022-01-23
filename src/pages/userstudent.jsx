@@ -11,7 +11,7 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
-import { listStudents, findStudentsForKey, getSkills, addStudent } from '../services/loginService';
+import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile } from '../services/loginService';
 import Axios from "axios";
 
 
@@ -49,6 +49,7 @@ const Userstudent = () => {
     const [students, setStudents] =  useState([])
     const [filter, setFilter] = useState(filterInit)
     const [tagsOption, setTagsOption] = useState([]);
+    
 
 
     function studentNew  (student) {
@@ -192,24 +193,55 @@ const Userstudent = () => {
     }
 
     function addStudentNew(){
+
+        let document = new FormData(); // Crear objeto de formulario
+        
+        document.append('document', studentPrueba.document);
+        
+
+
         
         
-        addStudent(studentPrueba,token)
+        addStudent(token,studentPrueba)
 			.then((response) => {
                 
 				if(response.status === 200) {
 					console.log(response.status)
                     modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                    const id=response.data.id
+                    const url = 'http://localhost:8091/api/student/create/document/'+id
+                    addStudentFile(token,document,url)
+                        .then((response) => {
+                            
+                            if(response.status === 200) {
+                                console.log(response.status)
+                                modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                                
+                            } else {
+                                
+                                localStorage.setItem("login_data", '');
+                                console.log(response.status)
+                                console.log(response.status)
+                                
+                            }
+                        }).catch((response)=>{console.log(response.status)
+                            console.log('error de no respuesta');
+                            localStorage.setItem("login_data", '');}
+                        );
 					
 				} else {
 					
 					localStorage.setItem("login_data", '');
                     console.log(response.status)
+                    console.log(response.status)
 					
 				}
-			}).catch(()=>{console.log('error de no respuesta');
+			}).catch((response)=>{console.log(response.status)
+                console.log('error de no respuesta');
                 localStorage.setItem("login_data", '');}
             );
+
+            
             
     }
 
@@ -357,7 +389,7 @@ const Userstudent = () => {
                             <div className="modal-footer">
                                 
                                 <button id="save" type="button" className="btn btn-primary"
-                                     onClick={()=>{addStudentNew(); window.location.reload ()} } >Guardar</button>
+                                     onClick={()=>{addStudentNew(); } } >Guardar</button>
                                 <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal"
                                 >Cancelar</button>
                             </div>

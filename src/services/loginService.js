@@ -80,26 +80,50 @@ export const getCountries = (token) => {
 	
 }
 
-export const addStudent = (student,token) => {
-	return axios.post('http://localhost:8091/api/student/create', 
+export const addStudentFile = (token,document,url) => {
+	return axios.post(url, 	
+	document,
+	{headers: {
+		'Content-Type': 'multipart/form-data',
+		Authorization: 'Bearer ' + token
+		
+	}})
+}
+
+export const addStudentPhoto = (token,photo) => {
+	return axios.post('http://localhost:8091/api/student/create/photo', 	
+	photo,
+	{headers: {
+		'Content-Type': 'multipart/form-data',
+		Authorization: 'Bearer ' + token
+		
+	}})
+}
+
+export const addStudent = (token,student) => {
+	return axios.post('http://localhost:8091/api/student/create', 	
 	{
-		name:student.name,
-		country: student.country,
-		city: student.city,
-		phoneNumber: student.phoneNumber,
-		email:student.email,
-		presence: student.presence,
-		transfer:student.transfer,
-		skills: student.skills,
-		photo:student.photo,
-		document: student.document
+		"id": null,
+        "name": student.name,
+        "country": student.country,
+        "city": student.city,
+        "phoneNumber": student.phoneNumber,
+        "email": student.email,
+        "presence": student.presence,
+        "transfer": student.transfer,
+        "skills": student.skills,
+        "photo": null,
+        "document": null
 	},
 	{headers: {
+		
 		Authorization: 'Bearer ' + token
-	},})
+		
+	}})
+}
 		
 	
-}
+
 
 export const register = (name, email, password) => {
 	return axios.post('http://localhost:8091/api/auth/register', {

@@ -30,6 +30,15 @@ input#pdf{
     width: 100%;
 }
 
+div#info{
+  font-family: FontAwesome;
+  background: #F8F8F9;
+  border-radius: 16px;
+  margin: 0px;
+  border-color: transparent;
+  width: 100%;
+}
+
 input#photo{
     font-family: FontAwesome;
     background: #F8F8F9;
@@ -37,6 +46,15 @@ input#photo{
     margin: 0px;
     border-color: transparent;
     width: 100%;
+}
+
+input#photo{
+  font-family: FontAwesome;
+  background: #F8F8F9;
+  border-radius: 16px;
+  margin: 0px;
+  border-color: transparent;
+  width: 100%;
 }
 
 input{
