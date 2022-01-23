@@ -90,8 +90,8 @@ export const addStudentFile = (token,document,url) => {
 	}})
 }
 
-export const addStudentPhoto = (token,photo) => {
-	return axios.post('http://localhost:8091/api/student/create/photo', 	
+export const addStudentPhoto = (token,photo,url) => {
+	return axios.post(url, 	
 	photo,
 	{headers: {
 		'Content-Type': 'multipart/form-data',

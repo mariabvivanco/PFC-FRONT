@@ -20,6 +20,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
     const traslateRef = useRef(null);
     const notransfRef = useRef(null);
     const pdfRef = useRef(null);
+    const photoRef = useRef(null);
 
     const studentInit = {
         name: null,
@@ -38,9 +39,11 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
     const [tags, setTags] = useState([]);
     const [pdf, setPdf] = useState(pdfInit);
     const [pdfSelect, setPdfSelect] = useState(false);
+    const [photoSelect, setPhotoSelect] = useState(false);
     const [photo, setPhoto] = useState(photoInit);
     const [student, setStudent] = useState(studentInit);
     const [valorPdf, setValorPdf] = useState("");
+    const [valorPhoto, setValorPhoto] = useState("");
     
     
    
@@ -68,6 +71,30 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                 setStudent(studentTemp)
                 studentNew(studentTemp)
         }
+
+        function changePhoto(photo){
+            const size = Math.round(document.getElementById('photo').files[0].size/1024);
+            var pdrs = document.getElementById('photo').files[0].name+ "   " +size+"k";
+            setPhotoSelect(true)
+            if (size>2548)
+                {console.log('por tamaño')
+                setValorPhoto("la imagen tiene un tamaño mayor que el permitido")}
+            else 
+                if ((document.getElementById('photo').value.substr(document.getElementById('photo').value.length-3)!=='png')&&
+                    (document.getElementById('photo').value.substr(document.getElementById('photo').value.length-3)!=='jpg')&&
+                    (document.getElementById('photo').value.substr(document.getElementById('photo').value.length-4)!=='jpeg'))
+                        { console.log("por tipo")
+                            setValorPhoto("la imagen tiene que ser .jpg o .png o .jpeg")
+                            
+                        }
+                else{console.log("no se pq")
+                    setValorPhoto(pdrs)}
+                    const studentTemp = student;
+                    studentTemp.photo = photo;
+                    setStudent(studentTemp)
+                    studentNew(studentTemp)
+            }
+    
 
 
     
@@ -250,7 +277,17 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                         </div>)
                         
                      : 
-                    <input name="photo" id="photo" class="entry" type="text" placeholder="&#xf03e;  NombreArchivo.png"  />
+                     (
+                        <div>
+                            
+                               {!photoSelect ? <input name="photo" id="photo" class="entry" ref={photoRef} type="file" placeholder="&#xf03e;  NombreArchivo.png" 
+                                   onChange={(e)=>{
+                                       let photo = e.target.files[0];
+                                       changePhoto(photo);}} />
+                               :<div id="info" onClick={()=>{setPhotoSelect(false)}}>&#xf03e;{valorPhoto}</div>}
+                           </div>
+                           )
+                    
 }
                     <label>Documento CV</label>
                     {pdf ? 

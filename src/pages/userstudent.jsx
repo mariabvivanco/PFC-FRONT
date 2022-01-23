@@ -11,7 +11,7 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
-import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile } from '../services/loginService';
+import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
 import Axios from "axios";
 
 
@@ -194,11 +194,11 @@ const Userstudent = () => {
 
     function addStudentNew(){
 
-        let document = new FormData(); // Crear objeto de formulario
-        
+        /*let document = new FormData(); // Crear objeto de formulario
         document.append('document', studentPrueba.document);
         
-
+        let photo = new FormData(); // Crear objeto de formulario
+        document.append('photo', studentPrueba.photo);*/
 
         
         
@@ -209,25 +209,55 @@ const Userstudent = () => {
 					console.log(response.status)
                     modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
                     const id=response.data.id
-                    const url = 'http://localhost:8091/api/student/create/document/'+id
-                    addStudentFile(token,document,url)
-                        .then((response) => {
-                            
-                            if(response.status === 200) {
-                                console.log(response.status)
-                                modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                    
+                    if (studentPrueba.document!==null){
+                        const url = 'http://localhost:8091/api/student/create/document/'+id
+                        let document = new FormData(); // Crear objeto de formulario
+                        document.append('document', studentPrueba.document);
+                        addStudentFile(token,document,url)
+                            .then((response) => {
                                 
-                            } else {
+                                if(response.status === 200) {
+                                    console.log(response.status)
+                                    console.log('documento ok')
+                                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                                    
+                                } else {
+                                    
+                                    localStorage.setItem("login_data", '');
+                                    console.log(response.status)
+                                    
+                                    
+                                }
+                            }).catch((response)=>{console.log(response.status)
+                                console.log('error de no respuesta cargando documento');
+                                localStorage.setItem("login_data", '');}
+                            );
+                    }
+                    if (studentPrueba.photo!==null){
+                        let photo = new FormData(); // Crear objeto de formulario
+                        photo.append('photo', studentPrueba.photo);
+                        const url = 'http://localhost:8091/api/student/create/photo/'+id
+                        addStudentPhoto(token,photo,url)
+                            .then((response) => {
                                 
-                                localStorage.setItem("login_data", '');
-                                console.log(response.status)
-                                console.log(response.status)
-                                
-                            }
-                        }).catch((response)=>{console.log(response.status)
-                            console.log('error de no respuesta');
-                            localStorage.setItem("login_data", '');}
-                        );
+                                if(response.status === 200) {
+                                    console.log(response.status)
+                                    console.log('foto ok')
+                                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                                    
+                                } else {
+                                    
+                                    localStorage.setItem("login_data", '');
+                                    console.log(response.status)
+                                    console.log(response.status)
+                                    
+                                }
+                            }).catch((response)=>{console.log(response.status)
+                                console.log('error de no respuesta cargando foto');
+                                localStorage.setItem("login_data", '');}
+                            );
+                    }
 					
 				} else {
 					
