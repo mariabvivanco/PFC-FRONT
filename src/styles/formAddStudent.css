@@ -113,3 +113,26 @@ a#light{
   padding-top: 0;
 }
 
+/*input[type="file"] {
+  display: none;
+}*/
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: transparent;
+  background:  #A5A8B3;
+  color: white;
+  border-radius: 8px;
+  font-family: FontAwesome;
+  font-size: medium;
+  height: 40px;
+  align-items: left;
+  margin-top:5px;
+  font-weight: lighter;
+  text-align: center;
+  
+}
+

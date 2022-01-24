@@ -265,7 +265,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                 </div>
                 <div class="col-6" id="file-tag">
                     <label>Foto de Perfil</label>
-                    {photo ? 
+                    {/*{photo ? 
                          (<div class="row">
                             <div class="col-auto">
                                 <button name="update" id="update" onClick={()=>setPhoto(!photo)}>&#xF0ee;Subir imagen</button>
@@ -277,20 +277,32 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                         </div>)
                         
                      : 
-                     (
+                     (*/
                         <div>
                             
-                               {!photoSelect ? <input name="photo" id="photo" class="entry" ref={photoRef} type="file" placeholder="&#xf03e;  NombreArchivo.png" 
-                                   onChange={(e)=>{
-                                       let photo = e.target.files[0];
-                                       changePhoto(photo);}} />
+                               {!photoSelect ? 
+                               <div class='row'>
+                                    <div class="col-auto" >
+                                        <label class="custom-file-upload">
+                                            <input name="photo" id="photo" class="entry" ref={photoRef} type="file" placeholder="&#xf03e;  NombreArchivo.png" 
+                                                onChange={(e)=>{
+                                                    let photo = e.target.files[0];
+                                                    changePhoto(photo);}} />
+                                            &#xF0ee;Subir Imagen
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+                                <label><a id="light">Archivos soportados</a><a id="bold">.png .jpg .jpeg</a></label>
+                                <label><a id="light">Tamaño archivo máximo:</a><a id="bold">2 MB</a></label>
+                            </div>
+                                </div>
                                :<div id="info" onClick={()=>{setPhotoSelect(false)}}>&#xf03e;{valorPhoto}</div>}
                            </div>
-                           )
+                           
                     
 }
                     <label>Documento CV</label>
-                    {pdf ? 
+                    {/*{pdf ? 
                          (<div class="row">
                             <div class="col-auto" >
                                 <button name="update" id="update"  onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
@@ -301,22 +313,36 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                             </div>
                         </div>)
                         
-                     :(
+                    :(*/}
                      <div>
                          
-                            {!pdfSelect ? <input name="pdf" id="pdf" class="entry" ref={pdfRef} type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
-                                onChange={(e)=>{
-                                    let file = e.target.files[0];
-                                    changePdf(file);}} />
+                            {!pdfSelect ? 
+                            <div class='row'>
+                                <div class="col-auto" >
+                                    <label class="custom-file-upload">
+                                        <input name="pdf" id="pdf" class="entry" ref={pdfRef} type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
+                                        onChange={(e)=>{
+                                            let file = e.target.files[0];
+                                            changePdf(file);}} />
+                                            &#xF0ee;Subir documento Pdf
+
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label><a id="light">Archivos soportados</a><a id="bold">.pdf</a></label>
+                                    <label><a id="light">Tamaño archivo máximo:</a><a id="bold">20 MB</a></label>
+                            </div>
+                            </div>
                             :<div id="info" onClick={()=>{setPdfSelect(false)}}>&#xf1c1;{valorPdf}</div>}
                         </div>
-                        )
+                        
                         
                      
-}
+
                     <label>Etiquetas</label>
                     
                     <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" 
+                        autocomplete="off"
                         onChange={()=> {
                             const tagsTemp = tags;
                             const studentTemp = student;

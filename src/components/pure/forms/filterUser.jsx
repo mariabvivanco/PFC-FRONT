@@ -9,7 +9,6 @@ import {appContext} from "../../../App"
 const FilterUser = ({modifyFilter,tagsOption}) => {
     
    
-    //const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsOption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     const [cities, setCities] = useState([]);
     const listoptioncities = new Array(cities.map((option,key) =>  <option key={key} value={option}>{option}</option>))
@@ -29,7 +28,7 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
     const traslateRef = useRef(null);
     const notransfRef = useRef(null);
 
-    const trash = <i class="fa-thin fa-trash-can"></i>
+    //const trash = <i class="fa-thin fa-trash-can"></i>
 
     function deleteTag(tag){
         console.log('Detele this Tag:', tag);
@@ -159,10 +158,11 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
                 <div class="row">
                     <p id="tags">Etiquetas</p>
                     
-                     <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" onChange={()=> {addTag(inputRef.current.value)}}/>
-                        <datalist ref={listRef} id="tagslist" >
+                     <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar"
+                        autocomplete="off" onChange={()=> {addTag(inputRef.current.value)}}/>
+                        {/*<datalist ref={listRef} id="tagslist" >
                             {listoption}
-                        </datalist>
+                        </datalist>*/}
                     
                     { tags.map((tag, index) => {
                         return (

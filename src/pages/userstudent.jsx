@@ -6,13 +6,11 @@ import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import "../styles/userstudent.css"
 import FilterUser from '../components/pure/forms/filterUser';
-import { Form } from 'formik';
 import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
-import {Students} from "../models/students"
 import DataTable from 'react-data-table-component';
 import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
-import Axios from "axios";
+
 
 
 
@@ -56,8 +54,6 @@ const Userstudent = () => {
         setStudentPrueba(student)
 
     }
-
-    
     
      
     const customStyles = {
@@ -150,10 +146,6 @@ const Userstudent = () => {
 
     }
 
-    function empty() {$('#studentadd').on('hidden.bs.modal', function (e) {
-        $(this).removeData('bs.modal');
-        $(this).find('.modal-content').empty();
-    })}
 
     function modifyFilter(city,country,presence,tags,transfer){
         
@@ -192,25 +184,38 @@ const Userstudent = () => {
 
     }
 
-    function addStudentNew(){
+    async function addStudentNew(){
+        var id;
 
-        /*let document = new FormData(); // Crear objeto de formulario
-        document.append('document', studentPrueba.document);
-        
-        let photo = new FormData(); // Crear objeto de formulario
-        document.append('photo', studentPrueba.photo);*/
+        try{ const response = await addStudent(token,studentPrueba);
+            modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer);
+            let json = response.data
+            id=json.id;
+            console.log(json.id);}
+        catch(error) {console.log(error+ 'en estudiante');}
+
+        if (studentPrueba.document!==null){
+            const url = 'http://localhost:8091/api/student/create/document/'+id
+            let document = new FormData(); // Crear objeto de formulario
+             document.append('document', studentPrueba.document);
+             await addStudentFile(token,document,url)}
+        if (studentPrueba.photo!==null){
+            console.log("voy a mandar a crear la foto y no hay estudiante")
+            let photo = new FormData(); // Crear objeto de formulario
+            photo.append('photo', studentPrueba.photo);
+            const url = 'http://localhost:8091/api/student/create/photo/'+id
+            await addStudentPhoto(token,photo,url)}
 
         
-        
-        addStudent(token,studentPrueba)
+        {/*addStudent(token,studentPrueba)
 			.then((response) => {
                 
 				if(response.status === 200) {
-					console.log(response.status)
-                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                    console.log("cree el estudiante")
+					modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
                     const id=response.data.id
                     
-                    if (studentPrueba.document!==null){
+                   } if (studentPrueba.document!==null){
                         const url = 'http://localhost:8091/api/student/create/document/'+id
                         let document = new FormData(); // Crear objeto de formulario
                         document.append('document', studentPrueba.document);
@@ -218,93 +223,60 @@ const Userstudent = () => {
                             .then((response) => {
                                 
                                 if(response.status === 200) {
-                                    console.log(response.status)
-                                    console.log('documento ok')
                                     modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                                    console.log("cree el documento")
                                     if (studentPrueba.photo!==null){
+                                        console.log("voy a mandar la foto con un documento creado")
                                         let photo = new FormData(); // Crear objeto de formulario
                                         photo.append('photo', studentPrueba.photo);
                                         const url = 'http://localhost:8091/api/student/create/photo/'+id
                                         addStudentPhoto(token,photo,url)
                                             .then((response) => {
-                                                
                                                 if(response.status === 200) {
-                                                    console.log(response.status)
-                                                    console.log('foto ok')
                                                     modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
-                                                    
+                                                    console.log("pude crear la foto con un documento creado")
                                                 } else {
-                                                    
                                                     localStorage.setItem("login_data", '');
-                                                    console.log(response.status)
-                                                    console.log(response.status)
-                                                    
-                                                }
-                                            }).catch((response)=>{console.log(response.status)
-                                                console.log('error de no respuesta cargando foto');
-                                                localStorage.setItem("login_data", '');}
+                                                    console.log("No pude crear la foto con un documento creado pero me dio respuetsa")
+                                               }
+                                            }).catch(()=>{localStorage.setItem("login_data", '');
+                                            console.log("algo raro paso y nopude crear la foto con el documento creado")}
                                             );
                                     }
                                     
-                                } else {
-                                    
-                                    localStorage.setItem("login_data", '');
-                                    console.log(response.status)
-                                    
-                                    
-                                }
-                            }).catch((response)=>{console.log(response.status)
-                                console.log('error de no respuesta cargando documento');
-                                localStorage.setItem("login_data", '');}
+                                } else localStorage.setItem("login_data", '');
+                                
+                            }).catch(()=>{localStorage.setItem("login_data", '');}
                             );
                     }else
                     if (studentPrueba.photo!==null){
+                        console.log("voy a mandar a crear la foto y no hay estudiante")
                         let photo = new FormData(); // Crear objeto de formulario
                         photo.append('photo', studentPrueba.photo);
                         const url = 'http://localhost:8091/api/student/create/photo/'+id
                         addStudentPhoto(token,photo,url)
                             .then((response) => {
-                                
                                 if(response.status === 200) {
-                                    console.log(response.status)
-                                    console.log('foto ok')
+                                    console.log("cree la foto sin estudiante")
                                     modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
-                                    
-                                } else {
-                                    
-                                    localStorage.setItem("login_data", '');
-                                    console.log(response.status)
-                                    console.log(response.status)
-                                    
-                                }
-                            }).catch((response)=>{console.log(response.status)
-                                console.log('error de no respuesta cargando foto');
-                                localStorage.setItem("login_data", '');}
+                                } else {localStorage.setItem("login_data", '');
+                                console.log("nopude crear la foto con el documento creado pero me dio respuesta")}
+                                
+                            }).catch(()=>{localStorage.setItem("login_data", '');
+                            console.log("algo raro paso y nopude crear la foto sindocumento creado")}
                             );
                     }
-                    
 					
-				} else {
-					
-					localStorage.setItem("login_data", '');
-                    console.log(response.status)
-                    console.log(response.status)
-					
-				}
-			}).catch((response)=>{console.log(response.status)
-                console.log('error de no respuesta');
-                localStorage.setItem("login_data", '');}
-            );
-
-            
+				} else localStorage.setItem("login_data", '');
+                 
+			}).catch(()=>localStorage.setItem("login_data", '')
+        );*/}
             
     }
 
 
 
     function searchForKey(keyWord){
-        
-        
         
         findStudentsForKey(keyWord,token)
 			.then((response) => {
@@ -358,11 +330,6 @@ const Userstudent = () => {
 			}).catch(()=>{console.log('error');
                 localStorage.setItem("login_data", '');}
             );
-        
-
-
-            
-        
 		
             
 
@@ -444,7 +411,8 @@ const Userstudent = () => {
                             <div className="modal-footer">
                                 
                                 <button id="save" type="button" className="btn btn-primary"
-                                     onClick={()=>{addStudentNew(); } } >Guardar</button>
+                                     onClick={()=>{addStudentNew(); 
+                                      } } >Guardar</button>
                                 <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal"
                                 >Cancelar</button>
                             </div>
