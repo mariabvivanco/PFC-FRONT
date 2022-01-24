@@ -90,6 +90,7 @@ export const addStudentFile = (token,document,url) => {
 	}})
 }
 
+
 export const addStudentPhoto = (token,photo,url) => {
 	return axios.post(url, 	
 	photo,

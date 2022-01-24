@@ -221,6 +221,30 @@ const Userstudent = () => {
                                     console.log(response.status)
                                     console.log('documento ok')
                                     modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                                    if (studentPrueba.photo!==null){
+                                        let photo = new FormData(); // Crear objeto de formulario
+                                        photo.append('photo', studentPrueba.photo);
+                                        const url = 'http://localhost:8091/api/student/create/photo/'+id
+                                        addStudentPhoto(token,photo,url)
+                                            .then((response) => {
+                                                
+                                                if(response.status === 200) {
+                                                    console.log(response.status)
+                                                    console.log('foto ok')
+                                                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
+                                                    
+                                                } else {
+                                                    
+                                                    localStorage.setItem("login_data", '');
+                                                    console.log(response.status)
+                                                    console.log(response.status)
+                                                    
+                                                }
+                                            }).catch((response)=>{console.log(response.status)
+                                                console.log('error de no respuesta cargando foto');
+                                                localStorage.setItem("login_data", '');}
+                                            );
+                                    }
                                     
                                 } else {
                                     
@@ -233,7 +257,7 @@ const Userstudent = () => {
                                 console.log('error de no respuesta cargando documento');
                                 localStorage.setItem("login_data", '');}
                             );
-                    }
+                    }else
                     if (studentPrueba.photo!==null){
                         let photo = new FormData(); // Crear objeto de formulario
                         photo.append('photo', studentPrueba.photo);
@@ -258,6 +282,7 @@ const Userstudent = () => {
                                 localStorage.setItem("login_data", '');}
                             );
                     }
+                    
 					
 				} else {
 					
