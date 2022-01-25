@@ -131,6 +131,26 @@ export const addStudent = (token,student) => {
 		
 	}})
 }
+
+export const updateStudent = (url,token,student) => {
+	return axios.put(url, 	
+	student,
+	{headers: {
+		
+		Authorization: 'Bearer ' + token
+		
+	}})
+}
+
+export const updateStudentFile = (token,document,url) => {
+	return axios.put(url, 	
+	document,
+	{headers: {
+		'Content-Type': 'multipart/form-data',
+		Authorization: 'Bearer ' + token
+		
+	}})
+}
 		
 	
 

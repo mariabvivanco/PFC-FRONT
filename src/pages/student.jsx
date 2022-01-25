@@ -3,7 +3,7 @@
 import {React, useContext, useEffect, useState} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import FormStudent from '../components/pure/forms/formStudent';
-import {findStudentForId} from '../services/loginService'
+import {findStudentForId,updateStudent,updateStudentFile} from '../services/loginService'
 import {appContext} from '../App'
 
 import '../styles/student.css'
@@ -47,13 +47,51 @@ async function uploadStudent(id){
     console.log(response.data)
 }
 
+    async function modifyStudent(studentChange) {
+    //validar datos
+    const url='http://localhost:8091/api/student/update/'+student.id;
+    const response= await updateStudent(url,token,studentChange);	
+    
+    if (response.status===200){
+        console.log('estudiante actualizado ok')
+        }
+    
+    else 
+        localStorage.setItem("login_data", '');
+
+    console.log(response.status)
+    console.log(response.data)
+
+}
+
+async function modifyPdf(file,id) {
+    
+    const url='http://localhost:8091/api/student/update/document/'+id;
+    let document = new FormData(); // Crear objeto de formulario
+    document.append('document', file);
+                        
+    const response= await updateStudentFile(token,document,url);	
+    
+    if (response.status===200){
+        console.log('documento actualizado ok')
+        setStudent(response.data)
+        }
+    
+    else 
+        localStorage.setItem("login_data", '');
+        
+    console.log(response.status)
+    console.log(response.data)
+
+}
+
 useEffect(() => {
     uploadStudent(idstudent)
     
     return () => {
         
     };
-}, []);
+}, [student]);
         
 
    
@@ -80,7 +118,7 @@ useEffect(() => {
                 {studentOk&&<div class="col-4" id="form" >
                     
                     
-                    <FormStudent student={student}></FormStudent>
+                    <FormStudent student={student} modyfyStudent={modifyStudent} modifyPdf={modifyPdf}></FormStudent>
                 
                 </div>}
         

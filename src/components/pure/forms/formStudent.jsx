@@ -2,12 +2,12 @@
 import { Button } from 'bootstrap';
 import {React, useEffect, useState, useRef, useContext} from 'react';
 import {appContext} from '../../../App'
-import {getSkills} from '../../../services/loginService'
+import {getSkills,updateStudent} from '../../../services/loginService'
 
 
 import '../../../styles/formStudent.css'
 
-const FormStudent = ({student}) => {
+const FormStudent = ({student, modifyStudent, modifyPdf}) => {
 
     
 
@@ -24,8 +24,9 @@ const FormStudent = ({student}) => {
     const tagsInit= []
     student.skills.forEach(skill => {tagsInit.push(skill.skill)});
     const { token } = useContext(appContext);
-
-    
+    const [changeStudent, setStudentChange] = useState(student);
+    const [valorPdf, setValorPdf] = useState('');
+    const [pdfSelect, setPdfSelect] = useState(false);
     const [tags, setTags] = useState(tagsInit);
     const [name, setName] = useState(student.name);
     const [city, setCity] = useState(student.city);
@@ -40,6 +41,7 @@ const FormStudent = ({student}) => {
     const selectTransferRef = useRef();
     const selectCountryRef = useRef();
     const selectPresenceRef = useRef();
+    const pdfRef = useRef(null);
 
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
 
@@ -87,6 +89,30 @@ const FormStudent = ({student}) => {
                 else selectPresenceRef.current.value = 'En Remoto'
             
     }
+
+    function changePdf(file){
+        const size = Math.round(document.getElementById('pdf').files[0].size/1024);
+        var pdrs = document.getElementById('pdf').files[0].name+ "   " +size+"k";
+        setPdfSelect(true)
+        if (size>25480)
+            {console.log('por tamaño')
+            setValorPdf("El fichero tiene un tamaño mayor que el permitido")}
+        else 
+            if (document.getElementById('pdf').value.substr(document.getElementById('pdf').value.length-3)!=='pdf')
+            { console.log("por tipo")
+                setValorPdf("El fichero tiene que ser .pdf")
+                
+            }
+            else{console.log("no se pq")
+                setValorPdf(pdrs)}
+                const studentTemp = student;
+                //studentTemp.document = file;
+                //setStudentChange(studentTemp);
+                modifyPdf(file,student.id);
+                
+        }
+
+    
 
     
 
@@ -238,9 +264,35 @@ const FormStudent = ({student}) => {
 
             </div>
             <div>
-                <div class="col-auto">
-                    <button name="update" id="update">&#xF0ee; Subir de Nuevo</button>
-                    <button name="delete" id="delete">&#xF014; Borrar</button>
+                <div >               
+                            {!pdfSelect ? 
+                            <div class='row'>  
+                                <div class="col-4" >
+                                    <label class="custom-file-upload">
+                                        <input name="pdf" id="pdf" class="entry" ref={pdfRef} type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
+                                        onChange={(e)=>{
+                                            let file = e.target.files[0];
+                                            const studentChange=student;
+                                            studentChange.document=
+                                            changePdf(file);}} />
+                                            &#xF0ee;Subir de Nuevo
+
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label><a id="light">Archivos soportados</a><a id="bold">.pdf</a></label>
+                                    <label><a id="light">Tamaño archivo máximo:</a><a id="bold">20 MB</a></label>
+                                </div>
+                                <div class='col-2'>
+                                    <button name="delete" id="delete">&#xF014; Borrar</button>
+                                </div>
+                            </div>
+                            :<div class='row'>
+                                <div id="info" onClick={()=>{setPdfSelect(false)}}>&#xf1c1;{valorPdf}</div>
+                                </div>}
+                            
+                    
+                    
                 </div>
 
             </div>
