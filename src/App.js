@@ -59,7 +59,7 @@ function App() {
         <Route exact path='/'> {isLogged ? <Redirect from='/' to='/userstudent' /> :<Redirect from='/' to='/login' />}</Route>
         <Route path='/login' > {isLogged ? <Redirect from='/login' to='/userstudent' /> :<Loginpage tryLogin={tryLogin}/>} </Route>
         <Route path='/userstudent' >{!isLogged ? <Redirect from='/userstudent' to='/login' /> :<Userstudent /> }</Route>
-        <Route path='/studentfile' >{!isLogged ? <Redirect from='/studentfile' to='/login' />:<Student/>}</Route>
+        <Route path='/studentfile/:idstudent' >{!isLogged ? <Redirect from='/studentfile' to='/login' />:<Student />}</Route>
 
       <Route component={Notfoundpage}/>
     </Switch>

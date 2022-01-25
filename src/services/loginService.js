@@ -52,6 +52,15 @@ export const findStudentsForKey = (keyWord,token) => {
 	
 }
 
+export const findStudentForId = (url,token) => {
+	return axios.get(url, 
+	{headers: {
+		Authorization: 'Bearer ' + token
+	}})
+		
+	
+}
+
 
 export const getSkills = (token) => {
 	return axios.get('http://localhost:8091/api/skill/all', 

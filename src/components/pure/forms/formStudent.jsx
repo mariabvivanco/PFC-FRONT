@@ -2,25 +2,31 @@
 import { Button } from 'bootstrap';
 import {React, useEffect, useState, useRef} from 'react';
 
+
 import '../../../styles/formStudent.css'
 
-const FormStudent = () => {
+const FormStudent = ({student}) => {
 
+    
 
     const nameInit = "Nombre del Alumno";
     const cityInit= "Ciudad";
     const countryInit="País"
     const tagsoption = ["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
+
     
-    
-   
     const [tags, setTags] = useState([]);
     const [name, setName] = useState(nameInit);
     const [city, setCity] = useState(cityInit);
     const [country, setCountry] = useState(countryInit);
     const inputRef = useRef(null);
     const listRef = useRef(null);
+    const inputNameRef = useRef(null);
+
+    
+
+   
 
     const trash = <i class="fa-thin fa-trash-can"></i>
 
@@ -56,8 +62,20 @@ const FormStudent = () => {
             setTags(tempTags);
             inputRef.current.value="";
         }
-        
     }
+
+    useEffect(() => {
+        
+        inputNameRef.current.value=student.name
+        inputNameRef.current.value=student.name
+        inputNameRef.current.value=student.name
+        
+       
+    }, []);
+
+    
+        
+    
 
     
     return (
@@ -93,7 +111,7 @@ const FormStudent = () => {
             </div>
             <div class="row">
                 <div class="col-12">
-                    <input name="studentname" id="studentname" class="entry" type="text" placeholder="Nombre Alumno" onChange={event => setName(event.target.value)} />
+                    <input ref={inputNameRef} name="studentname" id="studentname" class="entry" type="text" placeholder="Nombre Alumno" onChange={event => setName(event.target.value)} />
                  </div>
             </div>
             <div class="row">

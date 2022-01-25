@@ -10,6 +10,7 @@ import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import DataTable from 'react-data-table-component';
 import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
+import Student from '../pages/student'
 
 
 
@@ -81,12 +82,21 @@ const Userstudent = () => {
 
     
     const columns = [
+
+        {
+            name: 'Id',
+            selector: row => row.id,
+            sortable:true,
+            omit:true
+                       
+        },
+
+
         {
             name: 'Nombre',
             selector: row => row.name,
             sortable:true,
-            
-            
+                       
         },
         {
             name: 'Ciudad',
@@ -123,7 +133,7 @@ const Userstudent = () => {
     const data = 
         students.map((student, index) => {
             return (
-                {id : {index},
+                {id : student.id,
                 name: student.name,
                 city: student.city,
                 country: student.country,
@@ -206,71 +216,6 @@ const Userstudent = () => {
             const url = 'http://localhost:8091/api/student/create/photo/'+id
             await addStudentPhoto(token,photo,url)}
 
-        
-        {/*addStudent(token,studentPrueba)
-			.then((response) => {
-                
-				if(response.status === 200) {
-                    console.log("cree el estudiante")
-					modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
-                    const id=response.data.id
-                    
-                   } if (studentPrueba.document!==null){
-                        const url = 'http://localhost:8091/api/student/create/document/'+id
-                        let document = new FormData(); // Crear objeto de formulario
-                        document.append('document', studentPrueba.document);
-                        addStudentFile(token,document,url)
-                            .then((response) => {
-                                
-                                if(response.status === 200) {
-                                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
-                                    console.log("cree el documento")
-                                    if (studentPrueba.photo!==null){
-                                        console.log("voy a mandar la foto con un documento creado")
-                                        let photo = new FormData(); // Crear objeto de formulario
-                                        photo.append('photo', studentPrueba.photo);
-                                        const url = 'http://localhost:8091/api/student/create/photo/'+id
-                                        addStudentPhoto(token,photo,url)
-                                            .then((response) => {
-                                                if(response.status === 200) {
-                                                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
-                                                    console.log("pude crear la foto con un documento creado")
-                                                } else {
-                                                    localStorage.setItem("login_data", '');
-                                                    console.log("No pude crear la foto con un documento creado pero me dio respuetsa")
-                                               }
-                                            }).catch(()=>{localStorage.setItem("login_data", '');
-                                            console.log("algo raro paso y nopude crear la foto con el documento creado")}
-                                            );
-                                    }
-                                    
-                                } else localStorage.setItem("login_data", '');
-                                
-                            }).catch(()=>{localStorage.setItem("login_data", '');}
-                            );
-                    }else
-                    if (studentPrueba.photo!==null){
-                        console.log("voy a mandar a crear la foto y no hay estudiante")
-                        let photo = new FormData(); // Crear objeto de formulario
-                        photo.append('photo', studentPrueba.photo);
-                        const url = 'http://localhost:8091/api/student/create/photo/'+id
-                        addStudentPhoto(token,photo,url)
-                            .then((response) => {
-                                if(response.status === 200) {
-                                    console.log("cree la foto sin estudiante")
-                                    modifyFilter(filter.city,filter.country,filter.presence,filter.tags,filter.transfer)
-                                } else {localStorage.setItem("login_data", '');
-                                console.log("nopude crear la foto con el documento creado pero me dio respuesta")}
-                                
-                            }).catch(()=>{localStorage.setItem("login_data", '');
-                            console.log("algo raro paso y nopude crear la foto sindocumento creado")}
-                            );
-                    }
-					
-				} else localStorage.setItem("login_data", '');
-                 
-			}).catch(()=>localStorage.setItem("login_data", '')
-        );*/}
             
     }
 
@@ -376,7 +321,8 @@ const Userstudent = () => {
                                     columns={columns}
                                     data={data}
                                     customStyles={customStyles}
-                                    onRowDoubleClicked={()=>{history.push("/studentfile")} }
+                                    onRowDoubleClicked={(row)=>{history.push('/studentfile/'+row.id)}}
+                                   
                                    
                                     
                                 />
