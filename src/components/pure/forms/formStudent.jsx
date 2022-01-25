@@ -14,7 +14,12 @@ const FormStudent = ({student}) => {
     const nameInit = "Nombre del Alumno";
     const cityInit= "Ciudad";
     const countryInit="País"
-    //const tagsoption = []//["HTMLyCSS","SPRING","PHP","JAVA","PYTHON","REACT","ANGULAR" ]
+    const countrylist =  ['Estados Unidos', 'Rusia', 'China', 'Alemania', 'Reino Unido', 'Francia','Canadá', 'Suiza', 
+    'Australia', 'Turquía', 'Italia', 'España', 'Suiza','Bélgica', 'Brasil', 'Chile', 'Venezuela', 'Cuba', 'Argentina',
+    'México', 'Uruguay', 'Paraguay']
+    const countrysort=countrylist.sort()
+    
+    const countryoption = new Array(countrysort.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     
     const tagsInit= []
     student.skills.forEach(skill => {tagsInit.push(skill.skill)});
@@ -125,15 +130,19 @@ const FormStudent = ({student}) => {
              
              <div class="row">
                  <div class="col-3">
-                     <img id="photo" src="https://imagenes.elpais.com/resizer/TSqiwRMUuufmwlYTifJZvt4DCdM=/100x100/s3.amazonaws.com/arc-authors/prisa/f83e1e00-58fc-4f9b-9546-7eb3a5b88b09.jpg"/>
+                     <img id="photo" src={student.photo}/>
+
+                 </div>
+                 <div class="col-1">
+                     
 
                  </div>
         
-                 <div class="col-9">
+                 <div class="col-8" id='title'>
                      <div >
                          <label id="lbStudentName">{name}</label>
                      </div>
-                     <div id="city_country">
+                     <div  id="city_country">
                          <a id="map" >&#xf041;</a>  
                          <a id="lbCityName">  {city}</a>
                          <a id="lbCountryName">|{country}</a>
@@ -188,9 +197,7 @@ const FormStudent = ({student}) => {
                 <div class="col-6">
                     <select class="entry" id="countryname" ref={selectCountryRef} onChange={event => setCountry(event.target.value)}>
                         <option value="" disabled selected hidden>Elija País</option>
-                        <option>España</option>
-                        <option>Cuba</option>
-                        <option>Estados Unidos</option>
+                        {countryoption}
                     </select>
                 </div>
                 <div class="col-6" >

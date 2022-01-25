@@ -11,6 +11,12 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
     
     
     const listoption = new Array(tagsOption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
+    const countrylist =  ['Estados Unidos', 'Rusia', 'China', 'Alemania', 'Reino Unido', 'Francia','Canadá', 'Suiza', 
+    'Australia', 'Turquía', 'Italia', 'España', 'Suiza','Bélgica', 'Brasil', 'Chile', 'Venezuela', 'Cuba', 'Argentina',
+    'México', 'Uruguay', 'Paraguay']
+    const countrysort=countrylist.sort()
+    
+    const countryoption = new Array(countrysort.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     const pdfInit=true;
     const photoInit=true;  
     const cityRef = useRef();
@@ -172,9 +178,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                                     setStudent(studentTemp)
                                     studentNew(studentTemp)}}>
                                 <option value="" disabled selected hidden>Elige un país</option>
-                                <option>España</option>
-                                <option>Cuba</option>
-                                <option>Estados Unidos</option>
+                                {countryoption}
                             </select>
 
                             <label  class="label">No Teléfono</label>
@@ -265,20 +269,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                 </div>
                 <div class="col-6" id="file-tag">
                     <label>Foto de Perfil</label>
-                    {/*{photo ? 
-                         (<div class="row">
-                            <div class="col-auto">
-                                <button name="update" id="update" onClick={()=>setPhoto(!photo)}>&#xF0ee;Subir imagen</button>
-                            </div>
-                            <div class="col-8">
-                                <label><a id="light">Archivos soportados</a><a id="bold">.png .jpg .jpeg</a></label>
-                                <label><a id="light">Tamaño archivo máximo:</a><a id="bold">2 MB</a></label>
-                            </div>
-                        </div>)
-                        
-                     : 
-                     (*/
-                        <div>
+                    {<div>
                             
                                {!photoSelect ? 
                                <div class='row'>
@@ -297,23 +288,9 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                             </div>
                                 </div>
                                :<div id="info" onClick={()=>{setPhotoSelect(false)}}>&#xf03e;{valorPhoto}</div>}
-                           </div>
-                           
-                    
-}
+                    </div>}
                     <label>Documento CV</label>
-                    {/*{pdf ? 
-                         (<div class="row">
-                            <div class="col-auto" >
-                                <button name="update" id="update"  onClick={()=>setPdf(!pdf)}>&#xF0ee;Subir documento Pdf</button>
-                            </div>
-                            <div class="col-6">
-                                <label><a id="light">Archivos soportados</a><a id="bold">.pdf</a></label>
-                                <label><a id="light">Tamaño archivo máximo:</a><a id="bold">20 MB</a></label>
-                            </div>
-                        </div>)
-                        
-                    :(*/}
+                   
                      <div>
                          
                             {!pdfSelect ? 

@@ -86,7 +86,7 @@ useEffect(() => {
         
         
                 <div class="col-8">
-                    <iframe id="visorname" src="http://cprmerida.juntaextremadura.net/manual.pdf" frameborder="0" height="700px" width="100%"></iframe>
+                    <iframe id="visorname" src={student.document} frameborder="0" height="700px" width="100%"></iframe>
 
                 </div>
             </div>
