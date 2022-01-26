@@ -112,9 +112,8 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
         const tempTags = [...tags];
         tempTags.splice(index,1);
         setTags(tempTags);
-        const tagsTemp = tags;
         const studentTemp = student;
-        studentTemp.skills = tagsTemp;
+        studentTemp.skills = tempTags;
         setStudent(studentTemp)
         studentNew(studentTemp)
     }
@@ -324,11 +323,12 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                             const tagsTemp = tags;
                             const studentTemp = student;
                             studentTemp.skills = tagsTemp;
-                            function addOk() {
+                            const valueSkill=inputRef.current.value;
+                            function addOk(skill) {
                                 if (addTag(inputRef.current.value))
-                                    studentTemp.push(inputRef.current.value)
+                                    studentTemp.skills.push(valueSkill)
                             }
-                            addOk();
+                            addOk(valueSkill);
                             setStudent(studentTemp)
                             studentNew(studentTemp)}}/>
                         <datalist ref={listRef} id="tagslist" >

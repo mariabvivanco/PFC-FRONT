@@ -7,12 +7,14 @@ import {findStudentForId,updateStudent,updateStudentFile} from '../services/logi
 import {appContext} from '../App'
 
 import '../styles/student.css'
+import { Students } from '../models/students';
 
 const Student = () => {
     
    const history = useHistory();
    const {idstudent} = useParams();
    const { token } = useContext(appContext);
+   const [studentChange,setStudentChange]=useState(false);
 
    const studentInit = {
     id:null,
@@ -37,7 +39,12 @@ async function uploadStudent(id){
     const url='http://localhost:8091/api/student/one/'+id
     const response = await findStudentForId(url,token);
     if (response.status===200){
-        setStudent(response.data)
+        setStudentChange(true);
+        const studentTemp=response.data;
+        const skills= []
+        response.data.skills.forEach(skill => {skills.push(skill.skill)});
+        studentTemp.skills=skills;
+        setStudent(studentTemp);
         setStudentOk(true)}
     if (response.status===404)
         setStudent(studentInit)
@@ -45,15 +52,21 @@ async function uploadStudent(id){
         localStorage.setItem("login_data", '');
     console.log(response.status)
     console.log(response.data)
+    
 }
 
     async function modifyStudent(studentChange) {
     //validar datos
-    const url='http://localhost:8091/api/student/update/'+student.id;
+
+    
+    const url='http://localhost:8091/api/student/update/'+studentChange.id;
     const response= await updateStudent(url,token,studentChange);	
     
     if (response.status===200){
         console.log('estudiante actualizado ok')
+        setStudentChange(true);
+        setStudent(response.data)
+        
         }
     
     else 
@@ -75,8 +88,7 @@ async function modifyPdf(file,id) {
     if (response.status===200){
         console.log('documento actualizado ok')
         setStudent(response.data)
-        }
-    
+    }
     else 
         localStorage.setItem("login_data", '');
         
@@ -88,10 +100,7 @@ async function modifyPdf(file,id) {
 useEffect(() => {
     uploadStudent(idstudent)
     
-    return () => {
-        
-    };
-}, [student]);
+},[]);
         
 
    
@@ -118,7 +127,7 @@ useEffect(() => {
                 {studentOk&&<div class="col-4" id="form" >
                     
                     
-                    <FormStudent student={student} modyfyStudent={modifyStudent} modifyPdf={modifyPdf}></FormStudent>
+                    <FormStudent student={student} modifyStudent={modifyStudent} modifyPdf={modifyPdf}></FormStudent>
                 
                 </div>}
         

@@ -48,6 +48,7 @@ const Userstudent = () => {
     const [students, setStudents] =  useState([])
     const [filter, setFilter] = useState(filterInit)
     const [tagsOption, setTagsOption] = useState([]);
+    const [upload,setUpload] = useState(false)
     
 
 
@@ -177,6 +178,7 @@ const Userstudent = () => {
                 
 				if(response.status === 200) {
 					setStudents(response.data)
+                    
 					
 				} else {
 					
@@ -228,6 +230,8 @@ const Userstudent = () => {
                 
 				if(response.status === 200) {
 					setStudents(response.data)
+                     
+                 
 					
 				} else {
 					
@@ -238,6 +242,10 @@ const Userstudent = () => {
                 localStorage.setItem("login_data", '');}
             );
             
+    }
+
+    function uploadChange(){
+        setUpload(true);
     }
 
         
@@ -251,6 +259,8 @@ const Userstudent = () => {
                 
 				if(response.status === 200) {
 					setStudents(response.data)
+                     
+                 
 					
 				} else {
 					
@@ -282,7 +292,7 @@ const Userstudent = () => {
                 $(this).removeData('bs.modal');
                 $(this).find('.modal-content').empty();
             })
-       }, [])
+       },[])
     
 
     

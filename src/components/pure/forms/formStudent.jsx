@@ -22,7 +22,9 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
     const countryoption = new Array(countrysort.map((option,key) =>  <option key={key} value={option}>{option}</option>))
     
     const tagsInit= []
-    student.skills.forEach(skill => {tagsInit.push(skill.skill)});
+    //student.skills.forEach(skill => {tagsInit.push(skill.skill)});
+    student.skills.forEach(skill => {tagsInit.push(skill)});
+    
     const { token } = useContext(appContext);
     const [changeStudent, setStudentChange] = useState(student);
     const [valorPdf, setValorPdf] = useState('');
@@ -45,8 +47,7 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
 
     const listoption = new Array(tagsoption.map((option,key) =>  <option key={key} value={option}>{option}</option>))
 
-    const trash = <i class="fa-thin fa-trash-can"></i>
-
+   
     function deleteTag(tag){
         console.log('Detele this Tag:', tag);
         const index = tags.indexOf(tag);
@@ -106,13 +107,52 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             else{console.log("no se pq")
                 setValorPdf(pdrs)}
                 const studentTemp = student;
-                //studentTemp.document = file;
-                //setStudentChange(studentTemp);
                 modifyPdf(file,student.id);
                 
         }
 
-    
+        function validatePhone(phone){ 
+
+            var valoresAceptados = /^[0-9]+$/;
+            if ((!phone.match(valoresAceptados))){ 
+               
+               alert ("Debe escribir un numero de telefono") 
+               //selecciono el texto 
+               inputPhoneNumberRef.current.value=student.phoneNumber
+               inputPhoneNumberRef.current.select()
+               //coloco otra vez el foco 
+               inputPhoneNumberRef.current.focus() 
+            }else 
+               {const studentTemp = student;
+                studentTemp.phoneNumber=phone;
+                modifyStudent(studentTemp)
+        }
+     } 
+
+     
+     
+     function validateCity(city){ 
+
+       const studentTemp = student;
+        studentTemp.city=city;
+        modifyStudent(studentTemp)
+    }
+ 
+
+ function validateName(name){ 
+
+        const studentTemp = student;
+        studentTemp.name=name;
+        modifyStudent(studentTemp)
+}
+
+function validateEmail(email){ 
+
+    const studentTemp = student;
+    studentTemp.email=email;
+    modifyStudent(studentTemp)
+}
+
 
     
 
@@ -145,8 +185,6 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
        
     }, []);
 
-    
-        
     
 
     
@@ -188,7 +226,9 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             <div class="row">
                 <div class="col-auto">
                     <input ref={inputNameRef} name="studentname" id="studentname" class="entry" type="text" placeholder="Nombre Alumno"
-                    autocomplete="off" onChange={event => setName(event.target.value)} />
+                    autocomplete="off" onBlur={  
+                        (event) => validateName(event.target.value)                            
+                            } />
                  </div>
             </div>
             <div class="row">
@@ -201,11 +241,16 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             </div>
             <div class="row">
                 <div class="col-6">
-                    <input ref={inputPhoneNumberRef}  autocomplete="off" class="entry" type="phone"/>
+                    <input ref={inputPhoneNumberRef}  autocomplete="off" class="entry" type="phone"
+                    onBlur={  
+                        (event) => validatePhone(event.target.value)                            
+                            }/>
                 </div>
          
                 <div class="col-6">
-                    <input ref={inputEmailRef} class="entry" type="email" autocomplete="off"/>
+                    <input ref={inputEmailRef} class="entry" type="email" autocomplete="off" 
+                            onBlur={  
+                                (event) => validateEmail(event.target.value)} />
                 </div>
          
             </div>
@@ -221,14 +266,21 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             </div>
             <div class="row">
                 <div class="col-6">
-                    <select class="entry" id="countryname" ref={selectCountryRef} onChange={event => setCountry(event.target.value)}>
+                    <select class="entry" id="countryname" ref={selectCountryRef} 
+                        onChange={event => {
+                            const tempStudent = student
+                            tempStudent.country=event.target.value
+                            modifyStudent(tempStudent)
+                        }}>
                         <option value="" disabled selected hidden>Elija País</option>
                         {countryoption}
                     </select>
                 </div>
                 <div class="col-6" >
                     <input ref={inputCityRef} name="cityname" id="cityname" class="entry" type="text" placeholder="Elija una Ciudad"
-                        autocomplete="off" onChange={event => setCity(event.target.value)} />   
+                        autocomplete="off" onBlur={  
+                            (event) => validateCity(event.target.value)                            
+                                } />   
                     
                 </div>
             </div>
@@ -244,13 +296,23 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             </div>
             <div class="row">
                 <div class="col-6">
-                    <select class="entry" ref={selectTransferRef}>
+                    <select class="entry" ref={selectTransferRef} onChange={event => {
+                            const tempStudent = student
+                            event.target.value==='Si' ? tempStudent.transfer=true: tempStudent.transfer=false
+                            modifyStudent(tempStudent)
+                        }}>
                         <option>Si</option>
                         <option>No</option>
                     </select>
                 </div>
                 <div class="col-6" >
-                    <select class="entry" ref={selectPresenceRef}>
+                    <select class="entry" ref={selectPresenceRef} onChange={event => {
+                            const tempStudent = student
+                            if (event.target.value==='Presencial') tempStudent.presence='Face_to_face'
+                            if (event.target.value==='En remoto') tempStudent.presence='Remote'
+                            if (event.target.value==='Mixto') tempStudent.presence='Mixed'
+                            modifyStudent(tempStudent)
+                        }}>
                         <option>Presencial</option>
                         <option>En Remoto</option>
                         <option>Mixto</option>
@@ -304,7 +366,10 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             </div>
             <div class="col-auto">
                 <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" 
-                autocomplete="off" onChange={()=> {addTag(inputRef.current.value)}}/>
+                autocomplete="off" onChange={()=> {addTag(inputRef.current.value)
+                    const tempStudent = student
+                    tempStudent.skills = tags;
+                    modifyStudent(tempStudent)}}/>
                 <datalist ref={listRef} id="tagslist" >
                     {listoption}
                 </datalist>

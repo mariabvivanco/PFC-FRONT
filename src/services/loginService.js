@@ -134,7 +134,19 @@ export const addStudent = (token,student) => {
 
 export const updateStudent = (url,token,student) => {
 	return axios.put(url, 	
-	student,
+		{
+			"id": student.id,
+			"name": student.name,
+			"country": student.country,
+			"city": student.city,
+			"phoneNumber": student.phoneNumber,
+			"email": student.email,
+			"presence": student.presence,
+			"transfer": student.transfer,
+			"skills": student.skills,
+			"photo": null,
+			"document": null
+		},
 	{headers: {
 		
 		Authorization: 'Bearer ' + token
