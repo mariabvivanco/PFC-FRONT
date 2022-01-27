@@ -9,13 +9,21 @@ import FilterUser from '../components/pure/forms/filterUser';
 import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import DataTable from 'react-data-table-component';
-import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
+import { listStudents, listStudentsPerPage, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
 import Student from '../pages/student'
 
 
 
 
 const Userstudent = () => {
+
+
+    //const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [totalRows, setTotalRows] = useState(0);
+	const [perPage, setPerPage] = useState(10);
+
+	
    
 
     const filterInit = {
@@ -130,6 +138,46 @@ const Userstudent = () => {
         },
         
     ];
+
+    const fetchUsers = async page => {
+		setLoading(true);
+        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+page+'/'+perPage
+
+		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
+        console.log(response.status);
+        console.log(response.data)
+
+        if (response.data.length>0)
+		    setTotalRows(response.data[0].document);
+        else
+            setTotalRows(0);
+
+		setStudents(response.data);
+      
+		setLoading(false);
+	};
+
+	const handlePageChange = page => {
+		fetchUsers(page);
+	};
+
+	const handlePerRowsChange = async (newPerPage, page) => {
+		setLoading(true);
+        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+page+'/'+newPerPage
+
+		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
+        console.log(response.status);
+        console.log(response.data)
+
+        if (response.data.length>0)
+		    setTotalRows(response.data[0].document);
+        else
+            setTotalRows(0);
+
+		setStudents(response.data);
+		setPerPage(newPerPage);
+		setLoading(false);
+	};
     
     const data = 
         students.map((student, index) => {
@@ -252,9 +300,11 @@ const Userstudent = () => {
        
        useEffect( () =>{
 
+        fetchUsers(1);
+
         
             
-            listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
+       /*     listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
 			.then((response) => {
                 
 				if(response.status === 200) {
@@ -291,7 +341,9 @@ const Userstudent = () => {
             $('#studentadd').on('hidden.bs.modal', function (e) {
                 $(this).removeData('bs.modal');
                 $(this).find('.modal-content').empty();
-            })
+            })*/
+
+
        },[])
     
 
@@ -332,8 +384,13 @@ const Userstudent = () => {
                                     data={data}
                                     customStyles={customStyles}
                                     onRowDoubleClicked={(row)=>{history.push('/studentfile/'+row.id)}}
-                                   
-                                   
+                                    progressPending={loading}
+                                    pagination
+                                    paginationServer
+                                    paginationTotalRows={totalRows}
+                                    onChangeRowsPerPage={handlePerRowsChange}
+                                    onChangePage={handlePageChange}
+                                    
                                     
                                 />
                             </div>

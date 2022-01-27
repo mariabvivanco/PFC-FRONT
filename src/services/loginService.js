@@ -41,6 +41,21 @@ export const listStudents = (city,country,presence,skills,transfer,token) => {
 	
 }
 
+export const listStudentsPerPage = (city,country,presence,skills,transfer,token,url) => {
+	return axios.post(url, {
+		city,
+		country,
+		presence,
+		skills,
+		transfer,
+	},
+	{headers: {
+		Authorization: 'Bearer ' + token
+	}})
+		
+	
+}
+
 export const findStudentsForKey = (keyWord,token) => {
 	return axios.get('http://localhost:8091/api/student/keyWord', 
 	{headers: {
