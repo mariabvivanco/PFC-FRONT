@@ -3,7 +3,7 @@
 import {React, useContext, useEffect, useState} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import FormStudent from '../components/pure/forms/formStudent';
-import {findStudentForId,updateStudent,updateStudentFile} from '../services/loginService'
+import {findStudentForId,updateStudent,updateStudentFile, deleteStudentFile} from '../services/loginService'
 import {appContext} from '../App'
 
 import '../styles/student.css'
@@ -58,6 +58,14 @@ async function uploadStudent(id){
     async function modifyStudent(studentChange) {
     //validar datos
 
+    const studentTemp = studentChange;
+   
+    const skillsN = []
+    studentTemp.skills.forEach((skillV) => {
+        skillsN.push(skillV)});
+
+    studentChange.skills =skillsN
+
     
     const url='http://localhost:8091/api/student/update/'+studentChange.id;
     const response= await updateStudent(url,token,studentChange);	
@@ -97,10 +105,29 @@ async function modifyPdf(file,id) {
 
 }
 
+async function deletePdf(id) {
+    
+    const url='http://localhost:8091/api/student/delete/document/'+id;
+    
+                        
+    const response= await deleteStudentFile(token,url);	
+    
+    if (response.status===200){
+        console.log('documento borrado ok')
+        setStudent(response.data)
+    }
+    else 
+        localStorage.setItem("login_data", '');
+        
+    console.log(response.status)
+    console.log(response.data)
+
+}
+
 useEffect(() => {
     uploadStudent(idstudent)
     
-},[]);
+},[student]);
         
 
    
@@ -127,13 +154,14 @@ useEffect(() => {
                 {studentOk&&<div class="col-4" id="form" >
                     
                     
-                    <FormStudent student={student} modifyStudent={modifyStudent} modifyPdf={modifyPdf}></FormStudent>
+                    <FormStudent student={student} modifyStudent={modifyStudent}
+                         modifyPdf={modifyPdf} deletePdf={deletePdf}></FormStudent>
                 
                 </div>}
         
         
                 <div class="col-8">
-                    <iframe id="visorname" src={student.document} frameborder="0" height="700px" width="100%"></iframe>
+                    <iframe id="visorname" src={student.document} frameBorder="0" height="700px" width="100%"></iframe>
 
                 </div>
             </div>

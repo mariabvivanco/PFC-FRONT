@@ -159,7 +159,7 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
                     <p id="tags">Etiquetas</p>
                     
                      <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar"
-                        autocomplete="off" onChange={()=> {addTag(inputRef.current.value)}}/>
+                        autoComplete="off" onChange={()=> {addTag(inputRef.current.value)}}/>
                         {/*<datalist ref={listRef} id="tagslist" >
                             {listoption}
                         </datalist>*/}

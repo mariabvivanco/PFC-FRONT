@@ -7,7 +7,7 @@ import {getSkills,updateStudent} from '../../../services/loginService'
 
 import '../../../styles/formStudent.css'
 
-const FormStudent = ({student, modifyStudent, modifyPdf}) => {
+const FormStudent = ({student, modifyStudent, modifyPdf, deletePdf}) => {
 
     
 
@@ -33,6 +33,7 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
     const [name, setName] = useState(student.name);
     const [city, setCity] = useState(student.city);
     const [tagsoption, setTagsOption] = useState([])
+    const [tagsOk, setTagsOk] = useState(false)
     const [country, setCountry] = useState(student.country);
     const inputRef = useRef(null);
     const listRef = useRef(null);
@@ -53,12 +54,16 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
         const index = tags.indexOf(tag);
         const tempTags = [...tags];
         tempTags.splice(index,1);
+        const tempStudent=student;
+        tempStudent.skills=tempTags;
         setTags(tempTags);
+        convertSkills(tempStudent)
     }
 
     function addTag(tag){
         var duplic = false;
         var exist= false;
+        setTagsOk(false);
 
 
         for (var i=0; i<tagsoption.length&&!exist;i++){
@@ -78,6 +83,7 @@ const FormStudent = ({student, modifyStudent, modifyPdf}) => {
             const tempTags = [...tags];
             tempTags.push(tag);
             setTags(tempTags);
+            setTagsOk(true);
             inputRef.current.value="";
         }
     }
@@ -153,6 +159,20 @@ function validateEmail(email){
     modifyStudent(studentTemp)
 }
 
+function convertSkills(studentV){
+    
+    
+    const studentTemp = studentV;
+   
+   // const skillsN = []
+   // studentV.skills.forEach((skillV) => {
+   //     skillsN.push({'id': null,'skill':skillV})
+      
+  // });
+    //studentTemp.skills=skillsN;
+    modifyStudent(studentTemp)
+}
+
 
     
 
@@ -190,34 +210,25 @@ function validateEmail(email){
     
     return (
         <div id="student" >
-            <div class="candidate-data">
-             
+            <div className="candidate-data">
              <div class="row">
-                 <div class="col-3">
-                     <img id="photo" src={student.photo}/>
+                 <div class='col-md-4'>
+                    <img id="photo" src={student.photo}/>
 
                  </div>
-                 <div class="col-1">
+                 <div div class='col-md-8'>
+                     <a id="lbStudentName">{name}</a><br></br>
+                     <a id="map" >&#xf041;{city}|{country}</a>
                      
-
                  </div>
-        
-                 <div class="col-8" id='title'>
-                     <div >
-                         <label id="lbStudentName">{name}</label>
-                     </div>
-                     <div  id="city_country">
-                         <a id="map" >&#xf041;</a>  
-                         <a id="lbCityName">  {city}</a>
-                         <a id="lbCountryName">|{country}</a>
 
-                     </div>
-             
-                 </div>
              </div>
+             
+
+             
              <div class="row">
                 <div class="col-auto">
-                    <label class="label" >
+                    <label className="label" id='studentName' >
                         Nombre y Apellidos
                     </label>
                 </div>
@@ -225,30 +236,30 @@ function validateEmail(email){
             </div>
             <div class="row">
                 <div class="col-auto">
-                    <input ref={inputNameRef} name="studentname" id="studentname" class="entry" type="text" placeholder="Nombre Alumno"
-                    autocomplete="off" onBlur={  
+                    <input ref={inputNameRef} name="studentname" id="studentname" className="entry" type="text" placeholder="Nombre Alumno"
+                    autoComplete="off" onBlur={  
                         (event) => validateName(event.target.value)                            
                             } />
                  </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <label  class="label">No Teléfono</label>
+                    <label  className="label">No Teléfono</label>
                  </div>
                 <div class="col-6">
-                    <label  class="label">Email</label>
+                    <label  className="label">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <input ref={inputPhoneNumberRef}  autocomplete="off" class="entry" type="phone"
+                    <input ref={inputPhoneNumberRef}  autoComplete="off" className="entry" type="phone"
                     onBlur={  
                         (event) => validatePhone(event.target.value)                            
                             }/>
                 </div>
          
                 <div class="col-6">
-                    <input ref={inputEmailRef} class="entry" type="email" autocomplete="off" 
+                    <input ref={inputEmailRef} className="entry" type="email" autoComplete="off" 
                             onBlur={  
                                 (event) => validateEmail(event.target.value)} />
                 </div>
@@ -256,17 +267,17 @@ function validateEmail(email){
             </div>
             <div class="row">
                 <div class="col-6">
-                    <label  class="label">País</label  >
+                    <label  className="label">País</label  >
                 </div>
                 
                     <div class="col-6">
-                        <label  class="label">Ciudad</label >
+                        <label  className="label">Ciudad</label >
                     </div>
                 
             </div>
             <div class="row">
                 <div class="col-6">
-                    <select class="entry" id="countryname" ref={selectCountryRef} 
+                    <select className="entry" id="countryname" ref={selectCountryRef} 
                         onChange={event => {
                             const tempStudent = student
                             tempStudent.country=event.target.value
@@ -277,8 +288,8 @@ function validateEmail(email){
                     </select>
                 </div>
                 <div class="col-6" >
-                    <input ref={inputCityRef} name="cityname" id="cityname" class="entry" type="text" placeholder="Elija una Ciudad"
-                        autocomplete="off" onBlur={  
+                    <input ref={inputCityRef} name="cityname" id="cityname" className="entry" type="text" placeholder="Elija una Ciudad"
+                        autoComplete="off" onBlur={  
                             (event) => validateCity(event.target.value)                            
                                 } />   
                     
@@ -286,7 +297,7 @@ function validateEmail(email){
             </div>
             <div class="row">
                 <div class="col-6">
-                    <label  class="label">Traslado</label>
+                    <label  className="label">Traslado</label>
                 </div>
                 <div class="col-6">
                     
@@ -296,7 +307,7 @@ function validateEmail(email){
             </div>
             <div class="row">
                 <div class="col-6">
-                    <select class="entry" ref={selectTransferRef} onChange={event => {
+                    <select className="entry" ref={selectTransferRef} onChange={event => {
                             const tempStudent = student
                             event.target.value==='Si' ? tempStudent.transfer=true: tempStudent.transfer=false
                             modifyStudent(tempStudent)
@@ -306,7 +317,7 @@ function validateEmail(email){
                     </select>
                 </div>
                 <div class="col-6" >
-                    <select class="entry" ref={selectPresenceRef} onChange={event => {
+                    <select className="entry" ref={selectPresenceRef} onChange={event => {
                             const tempStudent = student
                             if (event.target.value==='Presencial') tempStudent.presence='Face_to_face'
                             if (event.target.value==='En remoto') tempStudent.presence='Remote'
@@ -321,7 +332,7 @@ function validateEmail(email){
             </div>
             <div>
                 <div class="col-auto">
-                    <label  class="label">Documento CV</label>
+                    <label  className="label">Documento CV</label>
                 </div>
 
             </div>
@@ -330,8 +341,8 @@ function validateEmail(email){
                             {!pdfSelect ? 
                             <div class='row'>  
                                 <div class="col-4" >
-                                    <label class="custom-file-upload">
-                                        <input name="pdf" id="pdf" class="entry" ref={pdfRef} type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
+                                    <label className="custom-file-upload">
+                                        <input name="pdf" id="pdf" className="entry" ref={pdfRef} type="file" placeholder="&#xf1c1;  NombreArchivo.pdf" 
                                         onChange={(e)=>{
                                             let file = e.target.files[0];
                                             const studentChange=student;
@@ -346,7 +357,10 @@ function validateEmail(email){
                                     <label><a id="light">Tamaño archivo máximo:</a><a id="bold">20 MB</a></label>
                                 </div>
                                 <div class='col-2'>
-                                    <button name="delete" id="delete">&#xF014; Borrar</button>
+                                    <button name="delete" id="delete" 
+                                        onClick={()=>{deletePdf(student.id)}}>
+                                        &#xF014; Borrar 
+                                    </button>
                                 </div>
                             </div>
                             :<div class='row'>
@@ -360,22 +374,27 @@ function validateEmail(email){
             </div>
             <div>
             <div class="col-auto">
-                <label  class="label">Etiquetas</label>
+                <label  className="label">Etiquetas</label>
             </div>
 
             </div>
             <div class="col-auto">
-                <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" 
-                autocomplete="off" onChange={()=> {addTag(inputRef.current.value)
-                    const tempStudent = student
-                    tempStudent.skills = tags;
-                    modifyStudent(tempStudent)}}/>
+                <input ref={inputRef} id="tagname" type="text" className="entry" list="tagslist" placeholder="Escriba para buscar" 
+                autoComplete="off" onChange={()=> {
+                    const tagTemp=   inputRef.current.value;                 
+                    addTag(inputRef.current.value)
+                    if (tagsOk){
+                        const tempStudent = student
+                        tempStudent.skills = tags;
+                        tempStudent.skills.push(tagTemp)
+                        convertSkills(tempStudent)}
+                        }}/>
                 <datalist ref={listRef} id="tagslist" >
                     {listoption}
                 </datalist>
             </div>
                             
-            <div class="contenido">
+            <div className="contenido">
             <div class="col-auto">
                 <a id="tags"></a>
 

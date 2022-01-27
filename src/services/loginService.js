@@ -163,6 +163,15 @@ export const updateStudentFile = (token,document,url) => {
 		
 	}})
 }
+
+export const deleteStudentFile = (token,url) => {
+	return axios.put(url,null,	
+	{headers: {
+		Authorization: 'Bearer ' + token
+		
+	}})
+	
+}
 		
 	
 

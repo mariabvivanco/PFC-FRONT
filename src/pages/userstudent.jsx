@@ -300,7 +300,7 @@ const Userstudent = () => {
             
             
             <div>
-                <body className="user" >
+                <div className="user" >
                     <div class="row" id="firstrow">
                         <div class="col col-sm-10" id="title">
                         <h3  href="/studentfile" >OpenBootcamp<a id="student">|Alumnos</a> </h3>
@@ -350,7 +350,7 @@ const Userstudent = () => {
                         
                     </div>
                    
-                </body>
+                </div>
                 
                 <div id="studentadd" className="modal" tabIndex="-1">
                     <div className="modal-dialog modal-xl" >

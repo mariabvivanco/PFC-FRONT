@@ -155,7 +155,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                 <div class="col-6" id="datastudent">
                     <label class="label" >Nombre y Apellidos</label>
                     <input name="studentname" id="entry" type="text" ref={nameRef}  placeholder="Ej: Juan Pérez Lorca"
-                    maxlength="30" minlength="4" pattern="^[a-zA-Z0-9_.-]*$"  required
+                    maxLength="30" minLength="4" pattern="^[a-zA-Z0-9_.-]*$"  required
                     onChange={(event)=>{
                         const studentTemp = student;
                         studentTemp.name = event.target.value
@@ -318,7 +318,7 @@ const FormAddStudent = ({studentNew,tagsOption}) => {
                     <label>Etiquetas</label>
                     
                     <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar" 
-                        autocomplete="off"
+                        autoComplete="off"
                         onChange={()=> {
                             const tagsTemp = tags;
                             const studentTemp = student;

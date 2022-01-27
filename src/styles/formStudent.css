@@ -31,8 +31,8 @@ label{
 img#photo{
     border: 4px solid #E6E6EA;
     border-radius: 20px;
-    width: 100%;
-    height: "80%";
+    width: 70px;
+    height: 70px;
     padding-left: 5%;
     padding-top: 5%;
 }
@@ -78,6 +78,7 @@ button#back{
 
 a#map{
     font-family: FontAwesome;
+    margin-top: 0;
 }
 
 select#username{
@@ -90,7 +91,7 @@ select#username{
     border-radius: 8px; 
     border-color: transparent;
 }
-label#lbStudentName{
+#lbStudentName{
     font-weight: bold;
     color:  #121625;
     text-size-adjust: 50%;
@@ -112,3 +113,6 @@ div#title{
     text-align: left;
 }
 
+#studentName{
+    margin-top: 20px;
+}
