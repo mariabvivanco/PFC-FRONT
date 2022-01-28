@@ -66,7 +66,7 @@ const Userstudent = () => {
     }
     
      
-    const customStyles = {
+    /*const customStyles = {
         rows: {
             style: {
                 
@@ -87,6 +87,13 @@ const Userstudent = () => {
             },
         },
         
+    };*/
+
+    const paginationComponentOptions = {
+        rowsPerPageText: 'Filas por página',
+        rangeSeparatorText: 'de',
+        selectAllRowsItem: true,
+        selectAllRowsItemText: 'Todos',
     };
 
     
@@ -206,7 +213,7 @@ const Userstudent = () => {
     }
 
 
-    function modifyFilter(city,country,presence,tags,transfer){
+    async function modifyFilter(city,country,presence,tags,transfer){
         
         
         const tempFilter = filter;
@@ -221,21 +228,23 @@ const Userstudent = () => {
         if (!(transfer=='*'))
             tempFilter.transfer=transfer
         setFilter(tempFilter)
-        listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
-			.then((response) => {
-                
-				if(response.status === 200) {
-					setStudents(response.data)
-                    
-					
-				} else {
-					
-					localStorage.setItem("login_data", '');
-					
-				}
-			}).catch(()=>{console.log('error');
-                localStorage.setItem("login_data", '');}
-            );
+        setLoading(true);
+        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+1+'/'+perPage
+
+		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
+        console.log(response.status);
+        console.log(response.data)
+
+        if (response.data.length>0)
+		    {setTotalRows(response.data[0].document);
+            setStudents(response.data);}
+        else
+            {setTotalRows(0);
+            setStudents([]);}
+
+		
+		setPerPage(perPage);
+		setLoading(false);
             
     }
 
@@ -302,6 +311,21 @@ const Userstudent = () => {
 
         fetchUsers(1);
 
+        getSkills(token)
+			.then((response) => {
+                
+				if(response.status === 200) {
+					setTagsOption(response.data)
+					
+				} else {
+					
+					localStorage.setItem("login_data", '');
+					
+				}
+			}).catch(()=>{console.log('error');
+                localStorage.setItem("login_data", '');}
+            );
+
         
             
        /*     listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
@@ -321,20 +345,7 @@ const Userstudent = () => {
             localStorage.setItem("login_data", '');});
 
             
-            getSkills(token)
-			.then((response) => {
-                
-				if(response.status === 200) {
-					setTagsOption(response.data)
-					
-				} else {
-					
-					localStorage.setItem("login_data", '');
-					
-				}
-			}).catch(()=>{console.log('error');
-                localStorage.setItem("login_data", '');}
-            );
+            
 		
             
 
@@ -382,7 +393,8 @@ const Userstudent = () => {
                                 <DataTable
                                     columns={columns}
                                     data={data}
-                                    customStyles={customStyles}
+                                    //customStyles={customStyles}
+                                    paginationComponentOptions={paginationComponentOptions}
                                     onRowDoubleClicked={(row)=>{history.push('/studentfile/'+row.id)}}
                                     progressPending={loading}
                                     pagination
@@ -390,6 +402,7 @@ const Userstudent = () => {
                                     paginationTotalRows={totalRows}
                                     onChangeRowsPerPage={handlePerRowsChange}
                                     onChangePage={handlePageChange}
+                                    noDataComponent={'No hay estudiantes que mostrar'}
                                     
                                     
                                 />

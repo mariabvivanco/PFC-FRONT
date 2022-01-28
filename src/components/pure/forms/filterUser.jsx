@@ -101,6 +101,7 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
         remoteRef.current.checked=false;
         cityRef.current.value='';
         countryRef.current.value=''
+        setTags([]);
     }
 
     useEffect( () =>{
