@@ -101,12 +101,9 @@ const Loginformik = ({tryLogin}) => {
                 onSubmit={async (values) => {
                     await new Promise((r) => setTimeout(r, 1000));
                     alert(JSON.stringify(values, null, 2));
-                    // We save the data in the localstorage
-                    //await localStorage.setItem('credentials', values);
-                    //history.push('/profile');
+                    
                 }}
             >
-                {/* We obtain props from Formik */}
                 
                 {({ values,
                     touched,

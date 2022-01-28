@@ -161,9 +161,7 @@ const FilterUser = ({modifyFilter,tagsOption}) => {
                     
                      <input ref={inputRef} id="tagname" type="text" class="entry" list="tagslist" placeholder="Escriba para buscar"
                         autoComplete="off" onChange={()=> {addTag(inputRef.current.value)}}/>
-                        {/*<datalist ref={listRef} id="tagslist" >
-                            {listoption}
-                        </datalist>*/}
+                        
                     
                     { tags.map((tag, index) => {
                         return (

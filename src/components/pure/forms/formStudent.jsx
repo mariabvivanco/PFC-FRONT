@@ -164,12 +164,6 @@ function convertSkills(studentV){
     
     const studentTemp = studentV;
    
-   // const skillsN = []
-   // studentV.skills.forEach((skillV) => {
-   //     skillsN.push({'id': null,'skill':skillV})
-      
-  // });
-    //studentTemp.skills=skillsN;
     modifyStudent(studentTemp)
 }
 

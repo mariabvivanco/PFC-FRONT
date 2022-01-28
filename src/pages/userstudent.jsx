@@ -65,29 +65,7 @@ const Userstudent = () => {
 
     }
     
-     
-    /*const customStyles = {
-        rows: {
-            style: {
-                
-            },
-        },
-        headCells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for head cells
-                paddingRight: '8px',
-                fontWeight: 'bold',
-                FontFamily: 'Raleway'
-            },
-        },
-        cells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for data cells
-                paddingRight: '8px',
-            },
-        },
-        
-    };*/
+    
 
     const paginationComponentOptions = {
         rowsPerPageText: 'Filas por página',
@@ -326,34 +304,7 @@ const Userstudent = () => {
                 localStorage.setItem("login_data", '');}
             );
 
-        
-            
-       /*     listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
-			.then((response) => {
-                
-				if(response.status === 200) {
-					setStudents(response.data)
-                     
-                 
-					
-				} else {
-					
-					localStorage.setItem("login_data", '');
-					
-				}
-			}).catch(()=>{console.log('error');
-            localStorage.setItem("login_data", '');});
-
-            
-            
-		
-            
-
-            $('#studentadd').on('hidden.bs.modal', function (e) {
-                $(this).removeData('bs.modal');
-                $(this).find('.modal-content').empty();
-            })*/
-
+       
 
        },[])
     
