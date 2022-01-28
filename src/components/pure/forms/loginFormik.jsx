@@ -6,7 +6,8 @@ import * as Yup from 'yup';
 import { appContext } from '../../../App';
 import '../../../styles/loginFormix.css'
 import FormForgot from './formForgot';
-import {forgot as forgotAxios} from "../../../services/loginService"
+import {forgot as forgotAxios} from "../../../services/loginService";
+import * as CryptoJS from "crypto-js"
 
 
 
@@ -23,22 +24,49 @@ const loginSchema = Yup.object().shape(
 
 const Loginformik = ({tryLogin}) => {
 
-    const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
+    
+    const [ encryptPassword, setEncryptPassword ] = useState('');
 	const { isLoading, isLogged, error } = useContext(appContext);
     const[forgotPassword, setForgot] = useState(false);
     const[emailValid, setEmailv] = useState(true);
     const[emailEmpty, setEmailEmpty] = useState(true);
     const inputEmail = useRef();
     const inputPassword = useRef();
+    const remember = useRef();
     const [alert, setAlert] = useState(false);
+    
+    const credentialUser = localStorage.getItem("credentialsuser") ? JSON.parse(localStorage.getItem("credentialsuser")) : "";
+    
+
+     
 
     const initialCredentials = {
-        email: '',
-        password: ''
+        email: credentialUser ? credentialUser.email : "",
+        password:credentialUser ? credentialUser.password: ""
     }
+
+    const [ email, setEmail ] = useState(initialCredentials.email);
+	
+
+    
 	
     const history = useHistory();
+
+    const CryptoJS = require("crypto-js");
+
+    const encrypt = (text) => {
+        const passphrase = "123";
+        return CryptoJS.AES.encrypt(text, passphrase).toString();
+    };
+
+    const decrypt = (ciphertext) => {
+        const passphrase = "123";
+        const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+        const originalText = bytes.toString(CryptoJS.enc.Utf8);
+    return originalText;
+    };
+
+    const [ password, setPassword ] = useState(credentialUser ? decrypt(initialCredentials.password) : '');
 
     const goRegister = (e) => {
 		e.preventDefault();
@@ -73,12 +101,9 @@ const Loginformik = ({tryLogin}) => {
                 onSubmit={async (values) => {
                     await new Promise((r) => setTimeout(r, 1000));
                     alert(JSON.stringify(values, null, 2));
-                    // We save the data in the localstorage
-                    await localStorage.setItem('credentials', values);
-                    //history.push('/profile');
+                    
                 }}
             >
-                {/* We obtain props from Formik */}
                 
                 {({ values,
                     touched,
@@ -98,7 +123,7 @@ const Loginformik = ({tryLogin}) => {
                                   name="email"
                                   placeholder="Introduce tu correo"
                                   
-                                  value={email} 
+                                  value={email}
                                   onChange={(e) => setEmail(e.currentTarget.value)}
                                   />
                                 {errors.email && touched.email && (
@@ -129,11 +154,21 @@ const Loginformik = ({tryLogin}) => {
                             <div class='row' id="otherdata">
                                 <div class="col col-sm-1" id="check">
                                     <div class="form-check" id="check">
-                                    < input id="check" type="checkbox"/>
+                                    < input id="check" type="checkbox" ref={remember}
+                                    checked = {credentialUser ? true : false}
+                                     onChange={()=>
+                                        
+                                        {setEncryptPassword(encrypt(password));
+                                        remember.current.checked 
+                                        
+                                        ? localStorage.setItem('credentialsuser',JSON.stringify({email, password:encryptPassword}))
+                                        :localStorage.setItem('credentialsuser', "")}}/>
                                     </div>
                                     </div>
                                     <div class="col col-sm-5">
-                                    <label id="remember" class="form-check-label" for="exampleCheck1">Recuérdame</label>
+                                    <label id="remember" class="form-check-label" for="exampleCheck1" 
+                                       
+                                    >Recuérdame</label>
                                 </div>
                             
                             <div class="col col-sm-6" id="forgotten" onClick={()=> {
@@ -179,6 +214,7 @@ const Loginformik = ({tryLogin}) => {
                             </div>}
 
                             </div>
+                            
                            
                             
                             

@@ -30,6 +30,15 @@ input#pdf{
     width: 100%;
 }
 
+div#info{
+  font-family: FontAwesome;
+  background: #F8F8F9;
+  border-radius: 16px;
+  margin: 0px;
+  border-color: transparent;
+  width: 100%;
+}
+
 input#photo{
     font-family: FontAwesome;
     background: #F8F8F9;
@@ -39,7 +48,16 @@ input#photo{
     width: 100%;
 }
 
-input#entry{
+input#photo{
+  font-family: FontAwesome;
+  background: #F8F8F9;
+  border-radius: 16px;
+  margin: 0px;
+  border-color: transparent;
+  width: 100%;
+}
+
+input{
     background: #F8F8F9;
     border-radius: 16px;
     margin: 0px;
@@ -93,5 +111,28 @@ a#light{
   font-weight: lighter;
   margin-top: 0;
   padding-top: 0;
+}
+
+/*input[type="file"] {
+  display: none;
+}*/
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: transparent;
+  background:  #A5A8B3;
+  color: white;
+  border-radius: 8px;
+  font-family: FontAwesome;
+  font-size: medium;
+  height: 40px;
+  align-items: left;
+  margin-top:5px;
+  font-weight: lighter;
+  text-align: center;
+  
 }
 
