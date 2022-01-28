@@ -9,13 +9,21 @@ import FilterUser from '../components/pure/forms/filterUser';
 import FormAddStudent from '../components/pure/forms/formAddStudent';
 import {appContext} from "../App"
 import DataTable from 'react-data-table-component';
-import { listStudents, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
+import { listStudents, listStudentsPerPage, findStudentsForKey, getSkills, addStudent, addStudentFile, addStudentPhoto } from '../services/loginService';
 import Student from '../pages/student'
 
 
 
 
 const Userstudent = () => {
+
+
+    //const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [totalRows, setTotalRows] = useState(0);
+	const [perPage, setPerPage] = useState(10);
+
+	
    
 
     const filterInit = {
@@ -57,28 +65,13 @@ const Userstudent = () => {
 
     }
     
-     
-    const customStyles = {
-        rows: {
-            style: {
-                
-            },
-        },
-        headCells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for head cells
-                paddingRight: '8px',
-                fontWeight: 'bold',
-                FontFamily: 'Raleway'
-            },
-        },
-        cells: {
-            style: {
-                paddingLeft: '8px', // override the cell padding for data cells
-                paddingRight: '8px',
-            },
-        },
-        
+    
+
+    const paginationComponentOptions = {
+        rowsPerPageText: 'Filas por página',
+        rangeSeparatorText: 'de',
+        selectAllRowsItem: true,
+        selectAllRowsItemText: 'Todos',
     };
 
     
@@ -130,6 +123,46 @@ const Userstudent = () => {
         },
         
     ];
+
+    const fetchUsers = async page => {
+		setLoading(true);
+        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+page+'/'+perPage
+
+		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
+        console.log(response.status);
+        console.log(response.data)
+
+        if (response.data.length>0)
+		    setTotalRows(response.data[0].document);
+        else
+            setTotalRows(0);
+
+		setStudents(response.data);
+      
+		setLoading(false);
+	};
+
+	const handlePageChange = page => {
+		fetchUsers(page);
+	};
+
+	const handlePerRowsChange = async (newPerPage, page) => {
+		setLoading(true);
+        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+page+'/'+newPerPage
+
+		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
+        console.log(response.status);
+        console.log(response.data)
+
+        if (response.data.length>0)
+		    setTotalRows(response.data[0].document);
+        else
+            setTotalRows(0);
+
+		setStudents(response.data);
+		setPerPage(newPerPage);
+		setLoading(false);
+	};
     
     const data = 
         students.map((student, index) => {
@@ -158,7 +191,7 @@ const Userstudent = () => {
     }
 
 
-    function modifyFilter(city,country,presence,tags,transfer){
+    async function modifyFilter(city,country,presence,tags,transfer){
         
         
         const tempFilter = filter;
@@ -173,21 +206,23 @@ const Userstudent = () => {
         if (!(transfer=='*'))
             tempFilter.transfer=transfer
         setFilter(tempFilter)
-        listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
-			.then((response) => {
-                
-				if(response.status === 200) {
-					setStudents(response.data)
-                    
-					
-				} else {
-					
-					localStorage.setItem("login_data", '');
-					
-				}
-			}).catch(()=>{console.log('error');
-                localStorage.setItem("login_data", '');}
-            );
+        setLoading(true);
+        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+1+'/'+perPage
+
+		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
+        console.log(response.status);
+        console.log(response.data)
+
+        if (response.data.length>0)
+		    {setTotalRows(response.data[0].document);
+            setStudents(response.data);}
+        else
+            {setTotalRows(0);
+            setStudents([]);}
+
+		
+		setPerPage(perPage);
+		setLoading(false);
             
     }
 
@@ -252,26 +287,9 @@ const Userstudent = () => {
        
        useEffect( () =>{
 
-        
-            
-            listStudents(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token)
-			.then((response) => {
-                
-				if(response.status === 200) {
-					setStudents(response.data)
-                     
-                 
-					
-				} else {
-					
-					localStorage.setItem("login_data", '');
-					
-				}
-			}).catch(()=>{console.log('error');
-            localStorage.setItem("login_data", '');});
+        fetchUsers(1);
 
-            
-            getSkills(token)
+        getSkills(token)
 			.then((response) => {
                 
 				if(response.status === 200) {
@@ -285,13 +303,9 @@ const Userstudent = () => {
 			}).catch(()=>{console.log('error');
                 localStorage.setItem("login_data", '');}
             );
-		
-            
 
-            $('#studentadd').on('hidden.bs.modal', function (e) {
-                $(this).removeData('bs.modal');
-                $(this).find('.modal-content').empty();
-            })
+       
+
        },[])
     
 
@@ -330,10 +344,17 @@ const Userstudent = () => {
                                 <DataTable
                                     columns={columns}
                                     data={data}
-                                    customStyles={customStyles}
+                                    //customStyles={customStyles}
+                                    paginationComponentOptions={paginationComponentOptions}
                                     onRowDoubleClicked={(row)=>{history.push('/studentfile/'+row.id)}}
-                                   
-                                   
+                                    progressPending={loading}
+                                    pagination
+                                    paginationServer
+                                    paginationTotalRows={totalRows}
+                                    onChangeRowsPerPage={handlePerRowsChange}
+                                    onChangePage={handlePageChange}
+                                    noDataComponent={'No hay estudiantes que mostrar'}
+                                    
                                     
                                 />
                             </div>
