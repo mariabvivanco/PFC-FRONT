@@ -24,7 +24,7 @@ function App() {
 		if(email === '' || password === '') {
 			dispatch({type: ERROR, payload: {error: 'Los campos correo electrónico y/o contraseña no pueden estar vacíos'}});
 			localStorage.setItem("login_data", '');
-			console.log("deslogueado");
+			
 		} else {
 			dispatch({type: LOGIN});
 			login(email, password)
@@ -34,13 +34,11 @@ function App() {
 					localStorage.setItem("login_data", JSON.stringify({email, token: token}));
 					dispatch({type: TOKEN, payload: {token: token}})
 					dispatch({type: SUCCESS});
-					
-          			console.log("ok");
-					
+									
 				} else {
 					dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión. Inténtalo de nuevo o más tarde.'}});
 					localStorage.setItem("login_data", '');
-					console.log("deslogueado");
+					
 				}
 			}).catch(error => { dispatch({type: ERROR, payload: {error: 'Error al iniciar sesión: ' + error}});
 								localStorage.setItem("login_data", '');});
