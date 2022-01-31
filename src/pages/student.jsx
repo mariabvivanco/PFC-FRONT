@@ -61,8 +61,13 @@ async function uploadStudent(id){
     const studentTemp = studentChange;
    
     const skillsN = []
-    studentTemp.skills.forEach((skillV) => {
-        skillsN.push(skillV)});
+    if (studentTemp.skills.length>0)
+        if(studentTemp.skills[0].skill)
+        studentTemp.skills.forEach((skillV) => {
+            skillsN.push(skillV.skill)});
+        else
+            studentTemp.skills.forEach((skillV) => {
+                skillsN.push(skillV)});
 
     studentChange.skills =skillsN
 
@@ -127,7 +132,7 @@ async function deletePdf(id) {
 useEffect(() => {
     uploadStudent(idstudent)
     
-},[student]);
+},[]);
         
 
    
