@@ -372,8 +372,12 @@ const Userstudent = () => {
                     </div>
                    
                 </div>
+
+                <FormAddStudent studentNew={studentNew} tagsOption={tagsOption} addStudentNew={addStudentNew}></FormAddStudent>
+
                 
-                <div id="studentadd" className="modal" tabIndex="-1">
+                
+               {/* <div id="studentadd" className="modal" tabIndex="-1">
                     <div className="modal-dialog modal-xl" >
                         <div className="modal-content">
                                 <div className="modal-header">
@@ -395,7 +399,7 @@ const Userstudent = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                                    </div>*/}
               
                 
             </div>
