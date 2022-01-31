@@ -231,7 +231,7 @@ function convertSkills(studentV){
             <div class="row">
                 <div class="col-auto">
                     <input ref={inputNameRef} name="studentname" id="studentname" className="entry" type="text" placeholder="Nombre Alumno"
-                    autoComplete="off" onBlur={  
+                    autoComplete="off" onChange={  
                         (event) => validateName(event.target.value)                            
                             } />
                  </div>
