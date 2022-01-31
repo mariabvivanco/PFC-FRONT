@@ -16,6 +16,8 @@ function App() {
 	const [ state, dispatch ] = useReducer(LoginReducer, INITIAL_STATE);
 	const { isLogged } = state;
   	const history = useHistory();
+
+	localStorage.setItem("login_data", '');
   
 
 	const tryLogin = (e, email, password) => {

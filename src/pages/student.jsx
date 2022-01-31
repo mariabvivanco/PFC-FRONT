@@ -36,7 +36,7 @@ const [studentOk, setStudentOk] = useState(false)
 
 async function uploadStudent(id){
 
-    const url='http://localhost:8091/api/student/one/'+id
+    const url='student/one/'+id
     const response = await findStudentForId(url,token);
     if (response.status===200){
         setStudentChange(true);
@@ -72,7 +72,7 @@ async function uploadStudent(id){
     studentChange.skills =skillsN
 
     
-    const url='http://localhost:8091/api/student/update/'+studentChange.id;
+    const url='student/update/'+studentChange.id;
     const response= await updateStudent(url,token,studentChange);	
     
     if (response.status===200){
@@ -92,7 +92,7 @@ async function uploadStudent(id){
 
 async function modifyPdf(file,id) {
     
-    const url='http://localhost:8091/api/student/update/document/'+id;
+    const url='student/update/document/'+id;
     let document = new FormData(); // Crear objeto de formulario
     document.append('document', file);
                         
@@ -112,7 +112,7 @@ async function modifyPdf(file,id) {
 
 async function deletePdf(id) {
     
-    const url='http://localhost:8091/api/student/delete/document/'+id;
+    const url='student/delete/document/'+id;
     
                         
     const response= await deleteStudentFile(token,url);	

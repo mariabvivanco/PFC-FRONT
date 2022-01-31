@@ -1,33 +1,35 @@
 import axios from 'axios';
 
+const urlbase ='http://localhost:8091/api/'
+
 export const login = (email, password) => {
-	return axios.post('http://localhost:8091/api/auth/login', {
+	return axios.post(urlbase + 'auth/login', {
 		email,
 		password
 	});
 }
 
 export const forgot = (email) => {
-	return axios.post('http://localhost:8091/api/user/forgPassword', {
+	return axios.post(urlbase + 'user/forgPassword', {
 		email
 	});
 }
 
 export const verifyCode = (email, code) => {
-	return axios.post('http://localhost:8091/api/user/verifyCode', {
+	return axios.post( urlbase + 'user/verifyCode', {
 		email,code
 	});
 }
 
 export const changePassword = (email,password) => {
-	return axios.post('http://localhost:8091/api/user/changePassword', {
+	return axios.post(urlbase + 'user/changePassword', {
 		email,
 		password
 	});
 }
 
 export const listStudents = (city,country,presence,skills,transfer,token) => {
-	return axios.post('http://localhost:8091/api/student/allFilter', {
+	return axios.post(urlbase + 'student/allFilter', {
 		city,
 		country,
 		presence,
@@ -42,7 +44,7 @@ export const listStudents = (city,country,presence,skills,transfer,token) => {
 }
 
 export const listStudentsPerPage = (city,country,presence,skills,transfer,token,url) => {
-	return axios.post(url, {
+	return axios.post(urlbase+url, {
 		city,
 		country,
 		presence,
@@ -57,7 +59,7 @@ export const listStudentsPerPage = (city,country,presence,skills,transfer,token,
 }
 
 export const findStudentsForKey = (keyWord,token) => {
-	return axios.get('http://localhost:8091/api/student/keyWord', 
+	return axios.get(urlbase + 'student/keyWord', 
 	{headers: {
 		Authorization: 'Bearer ' + token
 	},params: {
@@ -68,7 +70,7 @@ export const findStudentsForKey = (keyWord,token) => {
 }
 
 export const findStudentForId = (url,token) => {
-	return axios.get(url, 
+	return axios.get(urlbase + url, 
 	{headers: {
 		Authorization: 'Bearer ' + token
 	}})
@@ -78,7 +80,7 @@ export const findStudentForId = (url,token) => {
 
 
 export const getSkills = (token) => {
-	return axios.get('http://localhost:8091/api/skill/all', 
+	return axios.get( urlbase + 'skill/all', 
 	{headers: {
 		Authorization: 'Bearer ' + token
 	},})
@@ -87,7 +89,7 @@ export const getSkills = (token) => {
 }
 
 export const getCities = (token) => {
-	return axios.get('http://localhost:8091/api/student/city', 
+	return axios.get( urlbase + 'student/city', 
 	{headers: {
 		Authorization: 'Bearer ' + token
 	},})
@@ -96,7 +98,7 @@ export const getCities = (token) => {
 }
 
 export const getCountries = (token) => {
-	return axios.get('http://localhost:8091/api/student/country', 
+	return axios.get( urlbase + 'student/country', 
 	{headers: {
 		Authorization: 'Bearer ' + token
 	},})
@@ -105,7 +107,7 @@ export const getCountries = (token) => {
 }
 
 export const addStudentFile = (token,document,url) => {
-	return axios.post(url, 	
+	return axios.post(urlbase + url, 	
 	document,
 	{headers: {
 		'Content-Type': 'multipart/form-data',
@@ -116,7 +118,7 @@ export const addStudentFile = (token,document,url) => {
 
 
 export const addStudentPhoto = (token,photo,url) => {
-	return axios.post(url, 	
+	return axios.post(urlbase + url, 	
 	photo,
 	{headers: {
 		'Content-Type': 'multipart/form-data',
@@ -126,7 +128,7 @@ export const addStudentPhoto = (token,photo,url) => {
 }
 
 export const addStudent = (token,student) => {
-	return axios.post('http://localhost:8091/api/student/create', 	
+	return axios.post( urlbase + 'student/create', 	
 	{
 		"id": null,
         "name": student.name,
@@ -148,7 +150,7 @@ export const addStudent = (token,student) => {
 }
 
 export const updateStudent = (url,token,student) => {
-	return axios.put(url, 	
+	return axios.put(urlbase + url, 	
 		{
 			"id": student.id,
 			"name": student.name,
@@ -170,7 +172,7 @@ export const updateStudent = (url,token,student) => {
 }
 
 export const updateStudentFile = (token,document,url) => {
-	return axios.put(url, 	
+	return axios.put(urlbase + url, 	
 	document,
 	{headers: {
 		'Content-Type': 'multipart/form-data',
@@ -180,7 +182,7 @@ export const updateStudentFile = (token,document,url) => {
 }
 
 export const deleteStudentFile = (token,url) => {
-	return axios.put(url,null,	
+	return axios.put(urlbase + url,null,	
 	{headers: {
 		Authorization: 'Bearer ' + token
 		
@@ -192,7 +194,7 @@ export const deleteStudentFile = (token,url) => {
 
 
 export const register = (name, email, password) => {
-	return axios.post('http://localhost:8091/api/auth/register', {
+	return axios.post(urlbase + 'auth/register', {
 		name,
 		email,
 		password

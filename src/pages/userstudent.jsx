@@ -126,7 +126,7 @@ const Userstudent = () => {
 
     const fetchUsers = async page => {
 		setLoading(true);
-        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+page+'/'+perPage
+        const url= 'student/allFilterPerPage/'+page+'/'+perPage
 
 		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
         console.log(response.status);
@@ -148,7 +148,7 @@ const Userstudent = () => {
 
 	const handlePerRowsChange = async (newPerPage, page) => {
 		setLoading(true);
-        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+page+'/'+newPerPage
+        const url= 'student/allFilterPerPage/'+page+'/'+newPerPage
 
 		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
         console.log(response.status);
@@ -207,7 +207,7 @@ const Userstudent = () => {
             tempFilter.transfer=transfer
         setFilter(tempFilter)
         setLoading(true);
-        const url= 'http://localhost:8091/api/student/allFilterPerPage/'+1+'/'+perPage
+        const url= 'student/allFilterPerPage/'+1+'/'+perPage
 
 		const response = await listStudentsPerPage(filter.city,filter.country,filter.presence,filter.skills,filter.transfer,token,url) 
         console.log(response.status);
@@ -242,7 +242,7 @@ const Userstudent = () => {
         catch(error) {console.log(error+ 'en estudiante');}
 
         if (studentPrueba.document!==null){
-            const url = 'http://localhost:8091/api/student/create/document/'+id
+            const url = 'student/create/document/'+id
             let document = new FormData(); // Crear objeto de formulario
              document.append('document', studentPrueba.document);
              await addStudentFile(token,document,url)}
@@ -250,7 +250,7 @@ const Userstudent = () => {
             console.log("voy a mandar a crear la foto y no hay estudiante")
             let photo = new FormData(); // Crear objeto de formulario
             photo.append('photo', studentPrueba.photo);
-            const url = 'http://localhost:8091/api/student/create/photo/'+id
+            const url = 'student/create/photo/'+id
             await addStudentPhoto(token,photo,url)}
 
             
