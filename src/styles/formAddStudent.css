@@ -39,16 +39,9 @@ div#info{
   width: 100%;
 }
 
-input#photo{
-    font-family: FontAwesome;
-    background: #F8F8F9;
-    border-radius: 16px;
-    margin: 0px;
-    border-color: transparent;
-    width: 100%;
-}
 
-input#photo{
+
+.custom-file-upload{
   font-family: FontAwesome;
   background: #F8F8F9;
   border-radius: 16px;
@@ -113,9 +106,6 @@ a#light{
   padding-top: 0;
 }
 
-/*input[type="file"] {
-  display: none;
-}*/
 
 input[type="file"] {
   display: none;

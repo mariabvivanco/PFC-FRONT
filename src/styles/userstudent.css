@@ -41,6 +41,16 @@ span#tags{
     font-size: 89%;
     margin-left: 2px;
     
+    
+}
+
+.tagStudent{
+    background-color: #32D4A4; 
+    color: white;
+    border-radius: 15%;
+    font-size: 89%;
+    margin-left: 2px;
+    border: transparent; 
 }
 
 
