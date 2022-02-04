@@ -157,7 +157,7 @@ const FormAddStudent = ({studentNew,tagsOption,addStudentNew}) => {
         presRef.current.value="";
         countryRef.current.value="";
         setTags([]);
-        setPhotoSelect(false)
+        setPhotoSelect(false);
         setPdfSelect(false);
         
     }
@@ -305,7 +305,7 @@ const FormAddStudent = ({studentNew,tagsOption,addStudentNew}) => {
                                                     <div class='row'>
                                                             <div class="col-auto" >
                                                                 <label class="custom-file-upload">
-                                                                    <input name="photo" id="photo" class="entry" ref={photoRef} type="file" placeholder="&#xf03e;  NombreArchivo.png" 
+                                                                    <input name="photo" id="photo" class="entry" ref={photoRef} type="file" placeholder="&#xF0ee;Subir Imagen" 
                                                                         onChange={(e)=>{
                                                                             let photo = e.target.files[0];
                                                                             changePhoto(photo);}} />

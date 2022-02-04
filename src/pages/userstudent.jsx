@@ -17,8 +17,6 @@ import Student from '../pages/student'
 
 const Userstudent = () => {
 
-
-    //const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [totalRows, setTotalRows] = useState(0);
 	const [perPage, setPerPage] = useState(10);
@@ -173,7 +171,7 @@ const Userstudent = () => {
                 country: student.country,
                 phoneNumber: student.phoneNumber,
                 email: student.email,
-                skills: convertSkills(student.skills), 
+                skills:convertSkills(student.skills)
             })}        
                 )
                         
@@ -181,9 +179,16 @@ const Userstudent = () => {
         
         switch (skills.length) {
             case 0: return ""
-            case 1: return [(skills[0].skill)]
-            case 2: return [skills[0].skill, skills[1].skill]
-            default: return [skills[0].skill, skills[1].skill, ("+"+String(skills.length-2))]
+            case 1: return <button className='tagStudent'>{skills[0].skill}</button>
+            case 2: return <div>
+                                <button className='tagStudent'>{skills[0].skill}</button>
+                                <button className='tagStudent'>{skills[1].skill}</button>
+                            </div>
+            default: return <div>
+                                <button className='tagStudent'>{skills[0].skill}</button>
+                                 <button className='tagStudent'>{skills[1].skill}</button>
+                                 <button className='tagStudent'>{"+"+String(skills.length-2)}</button>
+                             </div>
 
         }
 
@@ -344,7 +349,6 @@ const Userstudent = () => {
                                 <DataTable
                                     columns={columns}
                                     data={data}
-                                    //customStyles={customStyles}
                                     paginationComponentOptions={paginationComponentOptions}
                                     onRowDoubleClicked={(row)=>{history.push('/studentfile/'+row.id)}}
                                     progressPending={loading}
@@ -375,32 +379,7 @@ const Userstudent = () => {
 
                 <FormAddStudent studentNew={studentNew} tagsOption={tagsOption} addStudentNew={addStudentNew}></FormAddStudent>
 
-                
-                
-               {/* <div id="studentadd" className="modal" tabIndex="-1">
-                    <div className="modal-dialog modal-xl" >
-                        <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">Nuevo Alumno</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                            <div className="modal-body">
-                                <FormAddStudent studentNew={studentNew} tagsOption={tagsOption}></FormAddStudent>
-                                
-                                
-                            </div>
-                            <div className="modal-footer">
-                                
-                                <button id="save" type="button" className="btn btn-primary"
-                                     onClick={()=>{addStudentNew(); 
-                                      } } >Guardar</button>
-                                <button id="discard" type="button" className="btn btn-secondary" data-bs-dismiss="modal"
-                                >Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                                    </div>*/}
-              
+                           
                 
             </div>
         );
